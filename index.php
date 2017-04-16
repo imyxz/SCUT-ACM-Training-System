@@ -17,7 +17,7 @@ define ('_View', _ROOT . 'View' . DIRECTORY_SEPARATOR);					// 视图模板目�
 define ('_PathTag', '/');												// 载入下级目录文件标识 例如: 需载入 Model/user/vip.php 即使用 _mode('user/vip');
 
 define ('_Host', (empty($_SERVER["HTTPS"]) || $_SERVER['HTTPS'] == 'off' ? 'http://' : 'https://') . $_SERVER['HTTP_HOST']);		// 主机网址
-define ('_Http', "http://localhost/foodSupply/");			// 网站根目录网址
+define ('_Http', "http://localhost/ACM-System/");			// 网站根目录网址
 
 include(_Amysql . 'Config.php');
 include(_Amysql . 'Amysql.php');
