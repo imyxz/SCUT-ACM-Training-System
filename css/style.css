@@ -1,0 +1,158 @@
+body{
+    background-color: rgb(245,245,245);
+}
+.watchface-row{
+    margin-bottom: 15px;
+    margin-right: -50px;
+    margin-left: -50px;
+}
+.watchface{
+    background-color: #eff0f2;
+    border-radius: 6px;
+    padding: 9px;
+    margin-bottom: 10px;
+    position: relative;
+    text-align: center;
+    margin-right: -12px;
+    margin-left: -12px;
+}
+.watchface-img{
+    height: 176px;
+    margin-top: 76px;
+    margin-left: 0px;
+    width: 176px;
+}
+
+.watchface-img-bg{
+    height: 352px;
+    margin-top: 10px;
+    width: 284px;
+    background: url(../images/watchface_bg.jpg) no-repeat;
+    margin-bottom: 10px;
+}
+.watchface-laud-like-row{
+    margin-bottom: 10px;
+}
+.watchface-maker{
+    padding: 0;
+    margin: 0;
+}
+.watchface-name{
+    padding: 0;
+    margin: 0;
+}
+.watchface-version{
+    margin-top:10px;
+}
+.watchface-version-text-heading{
+    font-family: Microsoft YaHei;
+    font-size: 20px;
+}
+.watchface-version-text{
+    font-family: Microsoft YaHei;
+}
+.watchface-list-laud-like{
+    padding: 0;
+    margin: 0;
+}
+.watchface-list-view-download{
+    padding: 0;
+    margin: 0;
+}
+.watchface-pay-icon{
+    position: absolute;
+    right: 5%;
+    top: 5px;
+    font-family: Microsoft YaHei;
+    font-size: 22px;
+}
+.row {
+
+}
+.watchface-list-row{
+    margin-bottom: 30px;
+    background-color: white;
+    border-radius: 6px;
+    padding: 9px;
+
+}
+.watchface-list-watchface{
+    text-align: center;
+    position: relative;
+}
+.watchface-list-img{
+    height: 230px;
+    width: 176px;
+    text-align: center;
+    position: relative;
+}
+.watchface-list-text{
+    font-family: Microsoft YaHei;
+    text-align: center;
+    margin-top: 70px;
+}
+.watchface-list-button{
+    margin-top: 10px;
+    text-align:center;
+}
+.watchface-upload {
+    padding-bottom: 15px;
+}
+.watchface-upload-tags-row {
+    margin-right: 0px;
+    margin-left: 50px;
+}
+.watchface-tags{
+    margin-right: 5px;
+}
+.input-area{
+    padding-bottom: 10px;
+}
+.describe-header{
+    margin-top: 0px;
+}
+.describe-text{
+    font-family: Microsoft YaHei;
+    font-size: 24px;
+    background-color: white;
+    color: #269abc;
+
+}
+.describe-pic{
+    background-color: #a6e1ec;
+}
+.describe-money{
+    font-family: Microsoft YaHei;
+    font-size: 40px;
+    margin-top: -20px;
+    margin-bottom: -13px;
+}
+.col-center-block {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.typeahead {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+.tags-container{
+    background-color: white;
+    font-family: Microsoft YaHei;
+    font-size: 16px;
+    margin-top: -14px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+
+
+}
+.tags-badge{
+    margin-top: -3px;
+}
+.watchface-version-item-preview{
+
+}
+.watchface-version-tooltip{
+    min-width: 198px;
+}
