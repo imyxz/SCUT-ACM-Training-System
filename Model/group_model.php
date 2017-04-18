@@ -11,6 +11,13 @@ class group_model extends AmysqlModel
     {
         return $this->_row("select * from acm_group where group_id=$group_id");
     }
+    function getGroupIDByVJUsername($vj_username)
+    {
+        $row=$this->_row("select group_id from acm_group where group_vj_name='$vj_username'");
+        if(!$row)
+            return false;
+        return $row['group_id'];
+    }
 }
 
 ?>

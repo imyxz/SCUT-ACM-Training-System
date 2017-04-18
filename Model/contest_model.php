@@ -33,6 +33,16 @@ class contest_model extends AmysqlModel
     {
         return $this->_all("select * from acm_contest ORDER by contest_begin_time desc");
     }
+    function insertBoardSubmission($contest_id,$group_id,$problem_index,$ac_status,$submit_time)
+    {
+        $this->_query("insert into acm_contest_board_submission set contest_id=$contest_id,group_id=$group_id,problem_index=$problem_index,ac_status=$ac_status,submit_time=$submit_time");
+        return $this->InsertId;
+    }
+    function insertBoardInfo($contest_id,$group_id,$problem_solved,$rank_index,$penalty,$ac_info)
+    {
+        $this->_query("insert into acm_contest_board set contest_id=$contest_id,group_id=$group_id,problem_solved=$problem_solved,rank_index=$rank_index,penalty=$penalty,ac_info='$ac_info'");
+        return $this->InsertId;
+    }
 
 }
 

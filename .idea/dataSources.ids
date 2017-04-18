@@ -27,6 +27,17 @@
       <primary-key name="PRIMARY" columns="board_log_id"/>
       <index name="contest_id" unique="false" columns="contest_id"/>
     </table>
+    <table name="acm_contest_board_submission" schema="" catalog="acm_training_system" type="TABLE">
+      <column name="submission_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="contest_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="problem_index" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ac_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="submit_time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="submission_id"/>
+      <index name="contest_id" unique="false" columns="contest_id"/>
+      <index name="player_id" unique="false" columns="group_id"/>
+    </table>
     <table name="acm_contest_summary" schema="" catalog="acm_training_system" type="TABLE">
       <column name="summary_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="contest_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
