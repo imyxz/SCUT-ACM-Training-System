@@ -51,21 +51,47 @@
     <table name="acm_group" schema="" catalog="acm_training_system" type="TABLE">
       <column name="group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="group_name" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
-      <column name="group_vj_name" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="group_vj_name" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
       <column name="group_leader_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="group_id"/>
+      <index name="group_vj_name" unique="false" columns="group_vj_name"/>
     </table>
     <table name="acm_player" schema="" catalog="acm_training_system" type="TABLE">
       <column name="player_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="player_name" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
-      <column name="player_username" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
-      <column name="player_password" sqlType="CHAR" precision="32" scale="0" nullable="false" jdbcType="1"/>
       <column name="player_group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="player_email" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
       <primary-key name="PRIMARY" columns="player_id"/>
       <index name="player_email" unique="false" columns="player_email"/>
       <index name="player_group_id" unique="false" columns="player_group_id"/>
-      <index name="player_username" unique="false" columns="player_username"/>
+    </table>
+    <table name="remember_info" schema="" catalog="acm_training_system" type="TABLE">
+      <column name="remember_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="remember_pass" sqlType="CHAR" precision="32" scale="0" nullable="false" jdbcType="1"/>
+      <column name="user_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="login_time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="login_ip" sqlType="CHAR" precision="16" scale="0" nullable="false" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="remember_id"/>
+    </table>
+    <table name="user_info" schema="" catalog="acm_training_system" type="TABLE">
+      <column name="user_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="player_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="user_name" sqlType="CHAR" precision="64" scale="0" nullable="false" jdbcType="1"/>
+      <column name="user_email" sqlType="CHAR" precision="64" scale="0" nullable="false" jdbcType="1"/>
+      <column name="user_nickname" sqlType="CHAR" precision="64" scale="0" nullable="false" jdbcType="1"/>
+      <column name="ds_userid" sqlType="CHAR" precision="64" scale="0" nullable="false" jdbcType="1"/>
+      <column name="user_password" sqlType="CHAR" precision="32" scale="0" nullable="false" jdbcType="1"/>
+      <column name="reg_time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="reg_ip" sqlType="CHAR" precision="16" scale="0" nullable="false" jdbcType="1" def="Jyc="/>
+      <column name="login_ip" sqlType="CHAR" precision="16" scale="0" nullable="false" jdbcType="1" def="Jyc="/>
+      <column name="login_time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="ds_access_token" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="user_id"/>
+      <index name="ds_userid" unique="true" columns="ds_userid"/>
+      <index name="user_name_2" unique="true" columns="user_name"/>
+      <index name="player_id" unique="false" columns="player_id"/>
+      <index name="user_email" unique="false" columns="user_email"/>
+      <index name="user_name" unique="false" columns="user_name"/>
     </table>
   </data-source>
 </component>

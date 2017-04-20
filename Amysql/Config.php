@@ -3,10 +3,10 @@
 // 系统基本配置 **********************************************
 
 $Config['HttpPath'] = true;				// 是否开启 index.php/Controller/Action/name/value 模式
-$Config['Filter'] = true;					// 是否过滤 $_GET、$_POST、$_COOKIE、$_FILES
+$Config['Filter'] = false;					// 是否过滤 $_GET、$_POST、$_COOKIE、$_FILES
 $Config['XSS'] = true;						// 是否开启 XSS防范
 $Config['SessionStart'] = true;				// 是否开启 SESSION
-$Config['DebugPhp'] = true;				// 是否开启PHP运行报错信息
+$Config['DebugPhp'] = false;				// 是否开启PHP运行报错信息
 $Config['DebugSql'] = true;				// 是否开启源码调试Sql语句
 $Config['CharSet'] = 'utf-8';				// 设置网页编码
 $Config['UrlControllerName'] = 'c';			// 自定义控制器名称 例如: index.php?c=index

@@ -340,9 +340,12 @@ class AmysqlModel {
 		$this -> Affected = 0;
 		if($Config['DebugSql']) $this -> SqlBug .= "\n". '<!--DebugSql: ' . $sql . '-->' . "\n";
 		$result = mysqli_query($this -> MysqlConnect,$sql);
+		if(!$result)
+			echo mysqli_error($this -> MysqlConnect);
 		if (!$result) Return false;
 		$this -> Affected = $this -> MysqlConnect -> affected_rows;
 		$this -> QueryStatus = '(ok)';
+		$this->InsertId=$this -> MysqlConnect->insert_id;
 		Return $result;
 	}
 

@@ -18,6 +18,15 @@ class group_model extends AmysqlModel
             return false;
         return $row['group_id'];
     }
+    function getAllGroup()
+    {
+        return $this->_all("select * from acm_group");
+    }
+    function addGroup($group_name,$vj_username,$leader_id=0)
+    {
+        $this->_query("insert into acm_group set group_name='$group_name',group_vj_name='$vj_username',group_leader_id=$leader_id");
+        return $this->InsertId;
+    }
 }
 
 ?>
