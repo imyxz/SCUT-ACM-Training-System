@@ -21,7 +21,7 @@
                         <label class="login-field-icon fui-lock" for="login-pass"></label>
                     </div>
                 <label class="form-group">
-                    <input type="checkbox" value="remember-me" class="login-field" name="remember" />Remember me!
+                    <input type="checkbox" value="remember-me" class="login-field" name="remember" id="login-remember" />Remember me!
                 </label>
                     <button class="btn btn-primary btn-lg btn-block" href="#" id="login-btn" onclick="submitLogin()">Log in</button>
             </div>
@@ -90,9 +90,11 @@
     {
         var user_name=$('#login-username').val();
         var password=$('#login-password').val();
+        var remember=$('#login-remember')[0].checked;
         $('#login-btn').attr("disabled","disabled");
         $.post("<?php echo _Http;?>user/goLogin","login-username=" + encodeURI(user_name) +
-            "&login-password="  + encodeURI(password)
+            "&login-password="  + encodeURI(password)+
+            "&login-remember="  + encodeURI(remember)
             ,function(response){
 
                 if(response.status==1)

@@ -71,6 +71,14 @@ class user extends AmysqlController
             if(!$user_id)
                 throw new Exception("登录失败！密码错误");
             $this->_model('user_model')->userLogin($user_id,addslashes($user_name));
+            if($_POST['login-remember']=='true')
+            {
+                $remember_pass=$this->getRandMd5();
+                $remember_id=$this->_model('remember_model')->newRemember($remember_pass,$user_id,time(),addslashes($_SERVER["REMOTE_ADDR"]));
+                ob_clean();
+                setcookie('remember_' . $remember_id, $remember_pass , time()+60*60*24*365,'/');
+            }
+
             $return['status']=1;
             header("Content-type: application/json");
             echo json_encode($return);
