@@ -21,9 +21,7 @@
                         }
                         ?>
                     </select>                </div>
-                <label class="form-label label label-danger">请准确填写小组在VJudge上的账号名，区分大小写</label>
-
-                <button class="btn btn-info btn-default pull-left" href="#" id="bindplayer-btn" onclick="submitBindplayer()">添加小组</button>
+                <button class="btn btn-info btn-default pull-left" href="#" id="bindplayer-btn" onclick="submitBindplayer()">确认提交</button>
             </div>
         </div>
 
@@ -41,7 +39,7 @@
 
                     if(response.status==1)
                     {
-                        $("#bindplayer-alert").html("添加成功！").show();
+                        $("#bindplayer-alert").html("绑定成功！").show();
                     }
                     else
                     {

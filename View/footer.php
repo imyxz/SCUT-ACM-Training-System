@@ -1,6 +1,6 @@
 <div id="footer">
     <div class="container">
-        <p class="text-muted text-left"></p>
+        <p class="text-muted text-left">Power By <a href="https://yxz.me/">YXZ</a>@SCUT</p>
 
     </div>
 </div>
