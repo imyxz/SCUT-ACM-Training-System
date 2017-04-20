@@ -192,6 +192,8 @@
                     <h6 class="modal-title" id="myModalLabel">更新做题状况</h6>
                 </div>
                 <div class="modal-body" id="update_ac_body">
+                    <div class="alert alert-info" role="alert" style="display: none;" id="acstatus-alert">
+                    </div>
                     <?php
                     for($i=1;$i<=$problem_count;$i++)
                     {
@@ -204,6 +206,7 @@
                         echo '</form>';
                     }
                     ?>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" onclick="window.location=window.location;">取消</button>
@@ -229,13 +232,12 @@
         {
             if(response.status==1)
             {
-                $("#login-alert").html("登录成功！").show();
-                //delayRefresh(1000);
+                $("#acstatus-alert").html("保存成功！").show();
+                delayRefresh(1000);
             }
             else
             {
-                $('#login-btn').removeAttr("disabled");
-                $("#login-alert").html(decodeURI(response.message)).show();
+                $("#acstatus-alert").html(decodeURI(response.message)).show();
             }
         })
     }

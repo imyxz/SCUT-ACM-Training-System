@@ -17,7 +17,7 @@
                     </div>
                     <label class="form-label label label-danger">请准确填写小队在VJudge上的账号名，区分大小写</label>
 
-                <a class="btn btn-info btn-default pull-left" href="#" id="addgroup-btn" onclick="submitAddgroup()">添加小队</a>
+                <button class="btn btn-info btn-default pull-left" href="#" id="addgroup-btn" onclick="submitAddgroup()">添加小队</button>
             </div>
         </div>
 

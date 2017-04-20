@@ -2,78 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d31ecfd-7cee-4d13-b039-ffc6f43b3804" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/View/add_contest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/View/add_group.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/View/bind_player.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.ar.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.az.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.bg.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.bn.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.ca.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.cs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/bootstrap-datetimepicker.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.da.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.de.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.ee.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.el.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.es.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.fi.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.fr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.he.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.hr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.hu.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.hy.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.id.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.is.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.it.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.ja.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/bootstrap-datetimepicker.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.ka.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.ko.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.lt.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.lv.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/bootstrap-datetimepicker.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/bootstrap-datetimepicker.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.ms.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.nb.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.nl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.no.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.pl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.pt-BR.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.pt.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.ro.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.rs-latin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.rs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.ru.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.sk.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.sl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.sv.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.sw.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.th.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.tr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.ua.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.uk.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.zh-CN.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.zh-TW.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/common.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Model/remember_model.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Controller/user.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Model/user_model.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Amysql/Amysql.php" afterPath="$PROJECT_DIR$/Amysql/Amysql.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Amysql/Config.php" afterPath="$PROJECT_DIR$/Amysql/Config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Controller/api.php" afterPath="$PROJECT_DIR$/Controller/api.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Controller/contest.php" afterPath="$PROJECT_DIR$/Controller/contest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model/contest_model.php" afterPath="$PROJECT_DIR$/Model/contest_model.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/add_group.php" afterPath="$PROJECT_DIR$/View/add_group.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/bind_player.php" afterPath="$PROJECT_DIR$/View/bind_player.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/footer.php" afterPath="$PROJECT_DIR$/View/footer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model/group_model.php" afterPath="$PROJECT_DIR$/Model/group_model.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/header.php" afterPath="$PROJECT_DIR$/View/header.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Controller/index.php" afterPath="$PROJECT_DIR$/Controller/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/summary_page.php" afterPath="$PROJECT_DIR$/View/summary_page.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SCUT-ACM-Training-System.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -233,11 +165,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="contest_model.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Model/contest_model.php">
+      <file leaf-file-name="add_group.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/View/add_group.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.366667">
-              <caret line="32" column="37" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="37" />
+            <state vertical-scroll-proportion="-3.2">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="7" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add_contest.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/View/add_contest.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.53333336">
+              <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="header.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/View/header.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-17.3">
+              <caret line="49" column="73" selection-start-line="49" selection-start-column="73" selection-end-line="49" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -253,71 +205,51 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="header.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/header.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.466667">
-              <caret line="49" column="73" selection-start-line="49" selection-start-column="73" selection-end-line="49" selection-end-column="73" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="footer.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/View/footer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.033334">
-              <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="109" selection-end-column="5" />
+            <state vertical-scroll-proportion="-2.9666667">
+              <caret line="25" column="27" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="summary_page.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="bind_player.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/View/bind_player.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.333333">
+              <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AmysqlNotice.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/View/AmysqlNotice.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="summary_page.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/View/summary_page.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="45.866665">
-              <caret line="50" column="112" selection-start-line="50" selection-start-column="112" selection-end-line="50" selection-end-column="112" />
+            <state vertical-scroll-proportion="0.31049722">
+              <caret line="200" column="44" selection-start-line="200" selection-start-column="44" selection-end-line="200" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="contest.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="contest.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controller/contest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.15911601">
+            <state vertical-scroll-proportion="17.6">
               <caret line="87" column="23" selection-start-line="87" selection-start-column="23" selection-end-line="87" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Config.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Amysql/Config.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.266667">
-              <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="api.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Controller/api.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="16.233334">
-              <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="add_contest.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/add_contest.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.633333">
-              <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -342,22 +274,22 @@
         <option value="$PROJECT_DIR$/Amysql/Config.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/js/common.js" />
-        <option value="$PROJECT_DIR$/View/footer.php" />
         <option value="$PROJECT_DIR$/Controller/index.php" />
         <option value="$PROJECT_DIR$/Model/contest_model.php" />
-        <option value="$PROJECT_DIR$/View/bind_player.php" />
-        <option value="$PROJECT_DIR$/View/add_group.php" />
         <option value="$PROJECT_DIR$/Model/group_model.php" />
         <option value="$PROJECT_DIR$/Amysql/Amysql.php" />
         <option value="$PROJECT_DIR$/Model/user_model.php" />
         <option value="$PROJECT_DIR$/css/style.css" />
-        <option value="$PROJECT_DIR$/View/summary_page.php" />
         <option value="$PROJECT_DIR$/js/locales/bootstrap-datetimepicker.zh-CN.js" />
         <option value="$PROJECT_DIR$/Controller/api.php" />
         <option value="$PROJECT_DIR$/View/add_contest.php" />
         <option value="$PROJECT_DIR$/View/header.php" />
         <option value="$PROJECT_DIR$/Controller/user.php" />
         <option value="$PROJECT_DIR$/Controller/contest.php" />
+        <option value="$PROJECT_DIR$/View/footer.php" />
+        <option value="$PROJECT_DIR$/View/bind_player.php" />
+        <option value="$PROJECT_DIR$/View/add_group.php" />
+        <option value="$PROJECT_DIR$/View/summary_page.php" />
       </list>
     </option>
   </component>
@@ -449,48 +381,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Amysql" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -557,10 +447,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="59" y="-8" width="1869" height="1096" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946378" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13322277" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13322277" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -804,13 +694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/AmysqlNotice.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/common.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -838,14 +721,6 @@
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/bind_player.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.333333">
-          <caret line="25" column="116" selection-start-line="25" selection-start-column="116" selection-end-line="25" selection-end-column="116" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -950,34 +825,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/add_group.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.133333">
-          <caret line="34" column="29" selection-start-line="34" selection-start-column="29" selection-end-line="34" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Model/group_model.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.8">
           <caret line="9" column="25" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/summary_page.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="45.866665">
-          <caret line="50" column="112" selection-start-line="50" selection-start-column="112" selection-end-line="50" selection-end-column="112" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/footer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.033334">
-          <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="109" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -990,26 +841,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/add_contest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.633333">
-          <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Controller/api.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="16.233334">
           <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/header.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.466667">
-          <caret line="49" column="73" selection-start-line="49" selection-start-column="73" selection-end-line="49" selection-end-column="73" />
           <folding />
         </state>
       </provider>
@@ -1040,8 +875,64 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Controller/contest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15911601">
+        <state vertical-scroll-proportion="17.6">
           <caret line="87" column="23" selection-start-line="87" selection-start-column="23" selection-end-line="87" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/AmysqlNotice.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/add_contest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.53333336">
+          <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.3">
+          <caret line="49" column="73" selection-start-line="49" selection-start-column="73" selection-end-line="49" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/add_group.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.2">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="7" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/bind_player.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.333333">
+          <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/footer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.9666667">
+          <caret line="25" column="27" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/summary_page.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31049722">
+          <caret line="200" column="44" selection-start-line="200" selection-start-column="44" selection-end-line="200" selection-end-column="44" />
           <folding />
         </state>
       </provider>

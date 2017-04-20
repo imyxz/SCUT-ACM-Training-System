@@ -23,7 +23,7 @@
                 <label class="form-group">
                     <input type="checkbox" value="remember-me" class="login-field" name="remember" />Remember me!
                 </label>
-                    <a class="btn btn-primary btn-lg btn-block" href="#" id="login-btn" onclick="submitLogin()">Log in</a>
+                    <button class="btn btn-primary btn-lg btn-block" href="#" id="login-btn" onclick="submitLogin()">Log in</button>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
                     <input type="text" class="form-control login-field" value="" placeholder="E-mali" id="register-email" />
                     <label class="login-field-icon fui-mail"></label>
                 </div>
-                <a class="btn btn-primary btn-lg btn-block" href="#" id="register-btn" onclick="submitRegister()">Register Now!</a>
+                <button class="btn btn-primary btn-lg btn-block" href="#" id="register-btn" onclick="submitRegister()">Register Now!</button>
             </div>
         </div>
     </div>
