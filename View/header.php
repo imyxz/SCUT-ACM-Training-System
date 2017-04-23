@@ -25,7 +25,7 @@
     <script src="<?php echo _Http;?>js/flat-ui.min.js"></script>
     <script src="<?php echo _Http;?>js/bootstrap-datetimepicker.min.js"></script>
     <script src="<?php echo _Http;?>js/common.js"></script>
-    <link rel="stylesheet" href="<?php echo _Http;?>css/style.css?20170216">
+    <link rel="stylesheet" href="<?php echo _Http;?>css/style.css?20170424">
     <title><?php echo $title;?> - SCUT Training System</title>
 
 </head>

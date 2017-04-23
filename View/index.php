@@ -16,7 +16,7 @@
                         '<td class="text-danger">'.
                             $one['contest_name'] .
                         '</td>'.
-                        '<td class="text-info">'.
+                        '<td class="text-info long-text">'.
                             $one['contest_description'] .
                         '</td>'.
                         '<td class="text-center">'.

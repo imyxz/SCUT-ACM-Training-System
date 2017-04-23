@@ -79,7 +79,7 @@ class contest extends AmysqlController
         }
 
         $this->contest_id=$contest_id;
-        $this->title=$contest_info['contest_info'];
+        $this->title=$contest_info['contest_name'];
         $this->_view("summary_page");
     }
     function addContest()
@@ -95,7 +95,7 @@ class contest extends AmysqlController
                 throw new Exception("您还未登录，请先登录");
             $problem_count=intval($_POST['addcontest-problem_count']);
             $contest_name=addslashes(trim($_POST['addcontest-name']));
-            $contest_description=addslashes(trim($_POST['addcontest-description']));
+            $contest_description=addslashes(trim($_POST['addcontest-contest_description']));
             $contest_starttime=intval($_POST['addcontest-start_time']);
             $contest_endtime=intval($_POST['addcontest-end_time']);
             if($problem_count<1)

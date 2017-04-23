@@ -8,15 +8,14 @@
             </div>
             <div class="panel-body contest-info">
                 <div class="">
-                    <h4 class="text-primary"><?php echo $contest_name;?></h4>
-                    <h6 class="text-info"><?php echo $contest_description;?></h6>
+                    <p class="text-primary big-text"><?php echo $contest_name;?></p>
+                    <p class="text-info long-text medium-text"><?php echo $contest_description;?></p>
                     <?php
                     foreach($team_info as &$one)
                     {
-                        echo '<p>' . $one['name'] . ': ' . implode(" ",$one['player']) . "</p>";
+                        echo '<p class="text-warning small-text member-group">' . $one['name'] . ': </p>' . '<p class="small-text member-name ">&nbsp;&nbsp;' . implode(" ",$one['player']) .'</span>';
                     }
                     ?>
-
                 </div>
             </div>
         </div>
