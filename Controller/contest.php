@@ -102,86 +102,38 @@ class contest extends AmysqlController
                 throw new Exception("题目数量输入有误");
             if($contest_starttime<1 || $contest_endtime<1)
                 throw new Exception("开始结束时间输入错误");
-            $json=json_decode($_POST['addcontest-contest_board'],true);
-            if(!$json)
-                throw new Exception("Board数据解析出错！");
+            if($_POST['addcontest-source']=='vj')
+            {
+                $json=json_decode($_POST['addcontest-contest_board'],true);
+                if(!$json)
+                    throw new Exception("Board数据解析出错！");
+            }
             $contest_id= $this->_model("contest_model")->newContest($contest_name,$problem_count,$contest_starttime,$contest_endtime);
             if(!$contest_id)
                 throw new Exception("系统内部出错！");
             $this->_model("contest_model")->updateContestDescription($contest_id,$contest_description);
             $groups=array();
-            $end_time=intval ($json['length']/1000);
-            foreach($json['participants'] as $key=> &$one)
+            $is_ok=true;
+            switch($_POST['addcontest-source'])
             {
-                $row=array();
-                $row['group_id']=$this->_model("group_model")->getGroupIDByVJUsername(addslashes($one[0]));
-                $row['group_username']=$one[0];
-                if(!$row['group_id'])
-                    continue;
-                $row['submission']=array();
-                $row['total_ac']=0;
-                $row['total_ac_time']=0;
-                $row['total_penalty']=0;
-                $groups[$key]=$row;
-            }
-            foreach($json['submissions'] as &$one) {
-                $vj_id=intval($one[0]);
-                $problem_id = intval($one[1]) + 1;
-                $ac_status=intval($one[2]);
-                $ac_time=intval($one[3]);
-                if (isset($groups[$vj_id]) && $ac_time<=$end_time) {
-                    $row = array();
-                    $row['ac_status'] = $ac_status;
-                    $row['submit_time'] = $ac_time;
-                    $groups[$vj_id]['submission'][$problem_id]['info'][] = $row;
-                    if ($row['ac_status'] == 1) {
-                        if (!isset($groups[$vj_id]['submission'][$problem_id]['ac'])) {
-                            $groups[$vj_id]['submission'][$problem_id]['ac'] = true;
-                            $groups[$vj_id]['submission'][$problem_id]['ac_time'] = $ac_time;
-                            $groups[$vj_id]['total_ac_time'] += $ac_time;
-                            $groups[$vj_id]['total_ac']++;
-                        }
+                case 'vj':
+                    $groups=$this->addFromVj($json,$contest_id);
+                    break;
+                case 'zoj':
+                    $groups=$this->addFromZoj($_POST['addcontest-contest_board'],$problem_count);
+                    break;
+                case 'seoj':
+                    $groups=$this->addFromSeoj($_POST['addcontest-contest_board'],$problem_count);
+                    break;
+                default:
+                    $is_ok=false;
 
-                    } else {
-                        $groups[$vj_id]['submission'][$problem_id]['try'] += 1;
-
-                    }
-                    $this->_model('contest_model')->insertBoardSubmission($contest_id, $groups[$one[0]]['group_id'], $problem_id, $row['ac_status'], $row['submit_time']);
-                }
             }
+            if(!$is_ok)
+                throw new Exception("未知的board信息来源！");
             foreach($groups as &$one)
             {
-                foreach($one['submission'] as $problem)
-                {
-                    if($problem['ac'])
-                    {
-                        foreach($problem['info'] as $three)
-                        {
-                            if($three['ac_status']==0)
-                                $one['total_penalty']+=20;
-                            else
-                                $one['total_penalty']+=$problem['ac_time']/60;
-                        }
-                    }
-                }
-            }
-            uasort($groups,function($a,$b)
-            {
-
-                if($a['total_ac']==$b['total_ac'])
-                    return $a['total_penalty']>=$b['total_penalty'];
-                return $a['total_ac']<$b['total_ac'];
-            });
-            $i=1;
-            foreach($groups as &$one)
-            {
-                uksort($one['submission'],function($a,$b)
-                {
-                    return $a>=$b;
-                });
-                $this->_model('contest_model')->insertBoardInfo($contest_id, $one['group_id'], $one['total_ac'], $i, intval($one['total_penalty']),addslashes(json_encode($one)));
-                $i++;
-
+                $this->_model('contest_model')->insertBoardInfo($contest_id, $one['group_id'], $one['total_ac'], $one['rank_index'], intval($one['total_penalty']),addslashes(json_encode($one)));
             }
             $return['result']=var_export($groups,true);
             $return['contest_id']=$contest_id;
@@ -195,6 +147,229 @@ class contest extends AmysqlController
             header("Content-type: application/json");
             echo json_encode($return);
         }
+    }
+    protected function addFromZoj($data,$problem_count)
+    {
+        $data=explode("\n",$data);
+        $format="%d %s %s %d";
+        for($i=0;$i<$problem_count;$i++)
+            $format = $format . ' %s';
+        $format=$format . ' %d';
+        $arr_size=5+$problem_count;
+        $groups=array();
+        $rank=1;
+        for($i=6;$i<count($data);$i++)
+        {
+            $info=sscanf($data[$i],$format);
+            if(count($info)<$arr_size)
+                continue;
+            $row=array();
+            $row['group_id']=$this->_model("group_model")->getGroupIDByZOJUsername(addslashes($info[1]));
+            $row['group_username']=$info[1];
+            if(!$row['group_id'])
+                continue;
+            $row['submission']=array();
+            $row['total_ac']=intval($info[3]);
+            $row['total_ac_time']=0;
+            $row['total_penalty']=$info[$arr_size -1];
+
+            for($pi=1;$pi<=$problem_count;$pi++)
+            {
+                $try=0;
+                $ac_time=0;
+                if(strpos($info[3+$pi],')'))
+                {
+                    sscanf($info[3+$pi],"%d(%d)",$ac_time,$try);
+                }
+                else
+                    $try=intval($info[3+$pi]);
+                if($try>0)
+                {
+                    $row['submission'][$pi]=array();
+                    $row['submission'][$pi]['info']=array();
+                    if($ac_time>0)
+                    {
+                        $row['submission'][$pi]['ac']=true;
+                        $row['submission'][$pi]['ac_time']=60*$ac_time;
+                        $row['total_ac_time']+=60*$ac_time;
+                        $row['submission'][$pi]['try']=$try-1;
+                    }
+                    else
+                    {
+                        $row['submission'][$pi]['ac']=false;
+                        $row['submission'][$pi]['ac_time']=0;
+                        $row['submission'][$pi]['try']=$try;
+                    }
+
+                }
+            }
+            $row['rank_index']=$rank;
+            $rank++;
+            $groups[]=$row;
+        }
+        return $groups;
+
+    }
+    protected function addFromSeoj($data,$problem_count)
+    {
+        $data=explode("\n",$data);
+        $format="%d %s %s %d %d";
+        for($i=0;$i<$problem_count;$i++)
+            $format = $format . ' %s';
+        $arr_size=5+$problem_count;
+        $groups=array();
+        $rank=1;
+        for($i=1;$i<count($data);$i++)
+        {
+            $info=sscanf($data[$i],$format);
+            if(count($info)<$arr_size)
+                continue;
+            $row=array();
+            $row['group_id']=$this->_model("group_model")->getGroupIDBySEOJUsername(addslashes($info[1]));
+            $row['group_username']=$info[1];
+            if(!$row['group_id'])
+                continue;
+            $row['submission']=array();
+            $row['total_ac']=intval($info[3]);
+            $row['total_ac_time']=0;
+            $row['total_penalty']=0;
+            for($pi=1;$pi<=$problem_count;$pi++)
+            {
+                $try=0;
+                $ac_time=0;
+                $h=0;
+                $m=0;
+                $s=0;
+
+                if(strpos($info[4+$pi],':') || strpos($info[4+$pi],')'))
+                {
+                    if(strpos($info[4+$pi],':') && strpos($info[4+$pi],')'))
+                    {
+                        sscanf($info[4+$pi],"%d:%d:%d(%d)",$h,$m,$s,$try);
+                        $ac_time=$h*3600+$m*60+$s;
+                        $try= $try*-1;
+                        $row['total_penalty']+=$try*20;
+                        $row['total_penalty']+=$ac_time/60;
+
+                    }
+                    else if(strpos($info[4+$pi],':'))
+                    {
+                        sscanf($info[4+$pi],"%d:%d:%d",$h,$m,$s);
+                        $ac_time=$h*3600+$m*60+$s;
+                        $try= 0;
+                        $row['total_penalty']+=$ac_time/60;
+                    }
+                    else if(strpos($info[4+$pi],')'))
+                    {
+                        sscanf($info[4+$pi],"(%d)",$try);
+                        $try= $try*-1;
+                    }
+                }
+                else
+                    continue;
+                if($ac_time>0 || $try>0)
+                {
+                    $row['submission'][$pi]=array();
+                    $row['submission'][$pi]['info']=array();
+                    if($ac_time>0)
+                    {
+                        $row['submission'][$pi]['ac']=true;
+                        $row['submission'][$pi]['ac_time']=$ac_time;
+                        $row['total_ac_time']+=$ac_time;
+                        $row['submission'][$pi]['try']=$try;
+                    }
+                    else
+                    {
+                        $row['submission'][$pi]['ac']=false;
+                        $row['submission'][$pi]['ac_time']=0;
+                        $row['submission'][$pi]['try']=$try;
+                    }
+
+                }
+            }
+            $row['rank_index']=$rank;
+            $rank++;
+            $groups[]=$row;
+        }
+        return $groups;
+
+    }
+    protected function addFromVj($json,$contest_id)
+    {
+        $groups=array();
+        $end_time=intval ($json['length']/1000);
+        foreach($json['participants'] as $key=> &$one)
+        {
+            $row=array();
+            $row['group_id']=$this->_model("group_model")->getGroupIDByVJUsername(addslashes($one[0]));
+            $row['group_username']=$one[0];
+            if(!$row['group_id'])
+                continue;
+            $row['submission']=array();
+            $row['total_ac']=0;
+            $row['total_ac_time']=0;
+            $row['total_penalty']=0;
+            $groups[$key]=$row;
+        }
+        foreach($json['submissions'] as &$one) {
+            $vj_id=intval($one[0]);
+            $problem_id = intval($one[1]) + 1;
+            $ac_status=intval($one[2]);
+            $ac_time=intval($one[3]);
+            if (isset($groups[$vj_id]) && $ac_time<=$end_time) {
+                $row = array();
+                $row['ac_status'] = $ac_status;
+                $row['submit_time'] = $ac_time;
+                $groups[$vj_id]['submission'][$problem_id]['info'][] = $row;
+                if ($row['ac_status'] == 1) {
+                    if (!isset($groups[$vj_id]['submission'][$problem_id]['ac'])) {
+                        $groups[$vj_id]['submission'][$problem_id]['ac'] = true;
+                        $groups[$vj_id]['submission'][$problem_id]['ac_time'] = $ac_time;
+                        $groups[$vj_id]['total_ac_time'] += $ac_time;
+                        $groups[$vj_id]['total_ac']++;
+                    }
+
+                } else {
+                    $groups[$vj_id]['submission'][$problem_id]['try'] += 1;
+
+                }
+                $this->_model('contest_model')->insertBoardSubmission($contest_id, $groups[$one[0]]['group_id'], $problem_id, $row['ac_status'], $row['submit_time']);
+            }
+        }
+        foreach($groups as &$one)
+        {
+            foreach($one['submission'] as $problem)
+            {
+                if($problem['ac'])
+                {
+                    foreach($problem['info'] as $three)
+                    {
+                        if($three['ac_status']==0)
+                            $one['total_penalty']+=20;
+                        else
+                            $one['total_penalty']+=$problem['ac_time']/60;
+                    }
+                }
+            }
+        }
+        uasort($groups,function($a,$b)
+        {
+
+            if($a['total_ac']==$b['total_ac'])
+                return $a['total_penalty']>=$b['total_penalty'];
+            return $a['total_ac']<$b['total_ac'];
+        });
+        $i=1;
+        foreach($groups as &$one)
+        {
+            uksort($one['submission'],function($a,$b)
+            {
+                return $a>=$b;
+            });
+            $one['rank_index']=$i;
+            $i++;
+        }
+        return $groups;
     }
 
 

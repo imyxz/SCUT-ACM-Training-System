@@ -18,6 +18,20 @@ class group_model extends AmysqlModel
             return false;
         return $row['group_id'];
     }
+    function getGroupIDByZOJUsername($zoj_username)
+    {
+        $row=$this->_row("select group_id from acm_group where group_zoj_name='$zoj_username'");
+        if(!$row)
+            return false;
+        return $row['group_id'];
+    }
+    function getGroupIDBySEOJUsername($seoj_username)
+    {
+        $row=$this->_row("select group_id from acm_group where group_seoj_name='$seoj_username'");
+        if(!$row)
+            return false;
+        return $row['group_id'];
+    }
     function getAllGroup()
     {
         return $this->_all("select * from acm_group");

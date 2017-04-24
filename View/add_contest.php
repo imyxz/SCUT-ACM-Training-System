@@ -30,9 +30,22 @@
                 </div>
                 <div class="input-group">
                     <label class="form-label label label-info">Board数据</label>
+                    <form class="form-inline ">
+                        <label class="ac_label">数据来源：</label>
+                        <label class="ac_label">
+                            <input class="board_source_radio" type="radio" name="board_source" value="vj" checked>VJudge
+                        </label>
+                        <label class="ac_label">
+                            <input class="board_source_radio" type="radio" name="board_source" value="zoj">ZOJ
+                        </label>
+                        <label class="ac_label">
+                            <input class="board_source_radio" type="radio" name="board_source" value="seoj">软院oj
+                        </label>
+
+                    </form>
                     <textarea class="form-control" cols="100" rows="8" placeholder="此处粘贴来自vjudge的比赛数据，格式为JSON" id="addcontest-board"></textarea>
                 </div>
-                <label class="form-label label label-danger">获取方式：https://vjudge.net/contest/rank/single/ + contest-id</label>
+                <label class="form-label label label-danger" id="source_board_tip">获取方式：https://vjudge.net/contest/rank/single/ + contest-id</label>
                 <div class="input-group">
                     <label class="form-label label label-info">比赛备注</label>
                     <textarea class="form-control" cols="100" rows="8" placeholder="如比赛网址，题目来源" id="addcontest-description"></textarea>
@@ -55,14 +68,16 @@
             var problem_count=$("#addcontest-count").val();
             var contest_board=$("#addcontest-board").val();
             var contest_description=$("#addcontest-description").val();
+            var source=$("input[name='board_source']:checked").val();
             $('#addcontest-btn').attr("disabled","disabled");
-            $('#addcontest-btn').html("正在添加...数据量较大，请耐心等待")
+            $('#addcontest-btn').html("正在添加...数据量较大，请耐心等待");
             $.post("<?php echo _Http;?>contest/goAddContest","addcontest-name=" + encodeURI(contest_name) +
                 "&addcontest-problem_count="  + encodeURI(problem_count)+
                 "&addcontest-start_time="  + encodeURI(start_time)+
                 "&addcontest-end_time="  + encodeURI(end_time)+
                 "&addcontest-contest_board="  + encodeURI(contest_board) +
-                "&addcontest-contest_description="  + encodeURI(contest_description)
+                "&addcontest-contest_description="  + encodeURI(contest_description) +
+                "&addcontest-source="+encodeURI(source)
                 ,function(response){
 
                     if(response.status==1)
@@ -98,6 +113,23 @@
             startView: 2,
             forceParse: 0,
             showMeridian: 1
+        });
+        $('.board_source_radio').on("change",function(e){
+            switch($("input[name='board_source']:checked").val())
+            {
+                case 'vj':
+                    $('#addcontest-board')[0].placeholder="此处粘贴来自vjudge的比赛数据，格式为JSON";
+                    $('#source_board_tip').text("获取方式：https://vjudge.net/contest/rank/single/ + contest-id");
+                    break;
+                case 'zoj':
+                    $('#addcontest-board')[0].placeholder="此处粘贴来自zoj的比赛数据，格式为文本，在榜单页点Export to txt";
+                    $('#source_board_tip').text("获取方式：http://acm.zju.edu.cn/onlinejudge/showContestRankList.do?export=txt&contestId= + contest-id");
+                    break;
+                case 'seoj':
+                    $('#addcontest-board')[0].placeholder="此处粘贴来自软院oj的比赛数据，格式为文本，复制榜单区域并经过填0处理";
+                    $('#source_board_tip').text("获取方式：复制榜单区域并经过填0处理");
+                    break;
+            }
         });
     </script>
 
