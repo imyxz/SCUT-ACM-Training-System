@@ -41,6 +41,9 @@
                         <label class="ac_label">
                             <input class="board_source_radio" type="radio" name="board_source" value="seoj">软院oj
                         </label>
+                        <label class="ac_label">
+                            <input class="board_source_radio" type="radio" name="board_source" value="csoj">计院oj
+                        </label>
 
                     </form>
                     <textarea class="form-control" cols="100" rows="8" placeholder="此处粘贴来自vjudge的比赛数据，格式为JSON" id="addcontest-board"></textarea>
@@ -128,6 +131,10 @@
                 case 'seoj':
                     $('#addcontest-board')[0].placeholder="此处粘贴来自软院oj的比赛数据，格式为文本，复制榜单区域并经过填0处理";
                     $('#source_board_tip').text("获取方式：复制榜单区域并经过填0处理");
+                    break;
+                case 'csoj':
+                    $('#addcontest-board')[0].placeholder="此处粘贴来自计院oj的比赛数据，格式为JSON";
+                    $('#source_board_tip').text("获取方式：http://222.201.145.232/ajax/Contest/GetRank?id= + contest-id");
                     break;
             }
         });

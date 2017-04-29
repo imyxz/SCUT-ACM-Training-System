@@ -102,7 +102,7 @@ class contest extends AmysqlController
                 throw new Exception("题目数量输入有误");
             if($contest_starttime<1 || $contest_endtime<1)
                 throw new Exception("开始结束时间输入错误");
-            if($_POST['addcontest-source']=='vj')
+            if($_POST['addcontest-source']=='vj' || $_POST['addcontest-source']=='csoj')
             {
                 $json=json_decode($_POST['addcontest-contest_board'],true);
                 if(!$json)
@@ -124,6 +124,9 @@ class contest extends AmysqlController
                     break;
                 case 'seoj':
                     $groups=$this->addFromSeoj($_POST['addcontest-contest_board'],$problem_count);
+                    break;
+                case 'csoj':
+                    $groups=$this->addFromCsoj($json);
                     break;
                 default:
                     $is_ok=false;
@@ -371,6 +374,82 @@ class contest extends AmysqlController
         }
         return $groups;
     }
+    protected function addFromCsoj($json)
+    {
+        $groups=array();
+        $rank=1;
+        foreach($json as &$one)
+        {
+            $row=array();
+            $row['group_id']=$this->_model("group_model")->getGroupIDByCSOJUsername(addslashes( $one['name']));
+            $row['group_username']=$one['name'];
+            if(!$row['group_id'])
+                continue;
+            $row['submission']=array();
+            $problem_id=0;
+            foreach($one['problem'] as &$two)
+            {
+                $problem_id++;
+                $h=0;
+                $m=0;
+                $s=0;
+                $try=0;
+                $ac_time=0;
+                if(strpos($two['text'],':') || strpos($two['text'],')'))
+                {
+                    if(strpos($two['text'],':') && strpos($two['text'],')'))
+                    {
+                        sscanf($two['text'],"%d:%d:%d</br>(%d)",$h,$m,$s,$try);
+                        $ac_time=$h*3600+$m*60+$s;
+                        $try= $try*-1;
 
+
+                    }
+                    else if(strpos($two['text'],':'))
+                    {
+                        sscanf($two['text'],"%d:%d:%d",$h,$m,$s);
+                        $ac_time=$h*3600+$m*60+$s;
+                        $try= 0;
+                    }
+                    else if(strpos($two['text'],')'))
+                    {
+                        sscanf($two['text'],"(%d)",$try);
+                        $try= $try*-1;
+                        $ac_time=0;
+                    }
+                }
+                else
+                    continue;
+                if($ac_time>0 || $try>0)
+                {
+                    $row['submission'][$problem_id]=array();
+                    $row['submission'][$problem_id]['info']=array();
+                    if($ac_time>0)
+                    {
+                        $row['submission'][$problem_id]['ac']=true;
+                        $row['submission'][$problem_id]['ac_time']=$ac_time;
+                        $row['total_ac_time']+=$ac_time;
+                        $row['submission'][$problem_id]['try']=$try;
+                    }
+                    else
+                    {
+                        $row['submission'][$problem_id]['ac']=false;
+                        $row['submission'][$problem_id]['ac_time']=0;
+                        $row['submission'][$problem_id]['try']=$try;
+                    }
+
+                }
+
+            }
+            sscanf($one['time'],"%d:%d:%d",$h,$m,$s);
+            $row['total_penalty']=($h*3600+$m*60+$s)/60;
+            $row['total_ac']=intval($one['accept']);
+            $row['total_ac_time']=0;
+            $row['rank_index']=$rank;
+            $rank++;
+            $groups[$row['group_id']]=$row;
+        }
+        return $groups;
+    }
 
 }
