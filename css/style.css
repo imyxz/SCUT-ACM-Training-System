@@ -20,12 +20,14 @@
     word-break: break-all;
     word-wrap: break-word;
 }
+/**
 .medium-text{
     font-size:18px;
     border-top:8px;
     border-bottom: 0;
     margin: 0;
 }
+
 .big-text{
     font-size:20px;
     border-top:8px;
@@ -37,7 +39,7 @@
     border-top:8px;
     border-bottom: 0;
     margin: 0;
-}
+}**/
 .member-group{
     font-size:16px;
 }
