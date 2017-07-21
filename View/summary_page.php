@@ -1,6 +1,20 @@
 <?php include('header.php');?>
     <div class="" id="summary_container">
-
+        <div style="position: fixed;top:80px;width:100%;left:0;z-index:10">
+            <div v-show="loading" class="center-align" id="loading" style="position: relative">
+                <div class="preloader-wrapper small active">
+                    <div class="spinner-layer spinner-green-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                            <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col l3  s12">
                 <div class="card">
@@ -169,7 +183,7 @@
                             summary_container.contest_desc=response.data.contest_desc;
                             summary_container.contest_board=response.data.contest_board;
                             $('.modal').modal();
-                            setTimeout(function(){this.loading=false;},2000);
+                            setTimeout(function(){summary_container.loading=false;},500);
 
                         });
                 },
@@ -179,10 +193,10 @@
                         var second,minute,hour;
                         second=sec%60;
                         sec/=60;
-                        sec=sec.toFixed(0);
+                        sec=Math.floor(sec);
                         minute=sec%60;
                         sec/=60;
-                        sec=sec.toFixed(0);
+                        sec=Math.floor(sec);
                         hour=sec;
                         return this.addZero(hour) + ":" + this.addZero(minute) + ":" + this.addZero(second);
 

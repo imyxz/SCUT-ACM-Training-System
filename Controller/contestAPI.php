@@ -142,7 +142,7 @@ class contestAPI extends SlimvcController
 
                 if(count($oneline)<4+$problem_count+1)
                     continue;
-                if(empty(trim($oneline[0])))
+                if(empty(trim($oneline[0])) || intval($oneline[0])<=0)
                     continue;
                 $rank_index=intval($oneline[0]);
                 $group_name=trim($oneline[1]);
