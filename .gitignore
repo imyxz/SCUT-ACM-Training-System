@@ -1,3 +1,9 @@
 .idea/workspace.xml
 *.xml
 lib/*
+*.ids
+*.iml
+composer.phar
+composer.lock
+vendor/*
+
