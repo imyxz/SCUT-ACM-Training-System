@@ -23,6 +23,10 @@
 
     <script src="<?php echo _Http;?>lib/axios/dist/axios.min.js"></script>
     <script src="<?php echo _Http;?>lib/vue/dist/vue.min.js"></script>
+    <script src="<?php echo _Http;?>lib/ace-builds/src-min/ace.js"></script>
+    <script src="<?php echo _Http;?>lib/ace-builds/src-min/ext-language_tools.js"></script>
+
+
     <script src="<?php echo _Http;?>js/common.js"></script>
     <link rel="stylesheet" href="<?php echo _Http;?>css/style.css?20170424">
     <title><?php echo $title;?> - SCUT Training System</title>
@@ -46,6 +50,9 @@
             </li>
             <li <?php echo $active == $index ? "class=\"active\"" : ' ';
             $index++; ?>><a href="<?php echo _Http;?>user/bindPlayer" class="waves-effect waves-teal">绑定小队</a>
+            </li>
+            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+            $index++; ?>><a href="<?php echo _Http;?>vJudge/problemList" class="waves-effect waves-teal">SCUTVJ</a>
             </li>
             <li>
                 <?php if($isLogin)
@@ -74,6 +81,9 @@
             </li>
             <li <?php echo $active == $index ? "class=\"active\"" : ' ';
             $index++; ?>><a href="<?php echo _Http;?>user/bindPlayer" class="waves-effect waves-teal">绑定队员</a>
+            </li>
+            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+            $index++; ?>><a href="<?php echo _Http;?>vJudge/problemList" class="waves-effect waves-teal">SCUTVJ</a>
             </li>
             <li>
                 <?php if($isLogin)

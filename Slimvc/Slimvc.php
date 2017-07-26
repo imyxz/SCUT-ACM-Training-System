@@ -113,6 +113,11 @@ class SlimvcControllerBasic
     }
 
 
+    /**
+     * @param $filename
+     * @param null $className
+     * @return $filename
+     */
     public function model($filename, $className = NULL)
     {
         $target = _Model . _DS_ . $filename . '.php';

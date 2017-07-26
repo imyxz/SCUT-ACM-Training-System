@@ -40,4 +40,6 @@ abstract class SpiderBasic
     abstract function queryJob();
     abstract function getSubmitResult();
     abstract function getQueryResult();
+    abstract function checkLogin();
+    abstract function login();
 }

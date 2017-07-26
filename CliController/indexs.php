@@ -6,9 +6,6 @@ class indexs extends SlimvcControllerCli{
     }
     function test()
     {
-        $tmp=$this->newClass("SpiderCodeforces");
-        $tmp->test();
-        $tmp->queryJob();
-        var_dump($tmp->getQueryResult());
+        $this->newClass("acStatus");
     }
 }

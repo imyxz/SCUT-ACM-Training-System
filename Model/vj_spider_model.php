@@ -26,11 +26,11 @@ class vj_spider_model extends SlimvcModel
             "ii",
             $oj_id,$limit)->all();
     }
-    function addSpiderLookingJob($spider_id,$howmuch)
+    function addSpiderLookingJob($spider_id,$how_much)
     {
         return $this->queryStmt("update spider_info set spider_looking_job=spider_looking_job+(?) where spider_id=?",
             "ii",
-            $howmuch,
+            $how_much,
             $spider_id);
     }
     function getSpiderMotherInfo($oj_id)
@@ -53,17 +53,18 @@ class vj_spider_model extends SlimvcModel
     }
     function getSpiderMotherUnAlive($minutes)
     {
-        return $this->queryStmt("select oj_id from spider_mother_info where is_enable=true and last_alive_time<DATEADD(MONTH,?,now())",
+        return $this->queryStmt("select oj_id from spider_mother_info where is_enable=true and last_alive_time<DATE_ADD(now(),INTERVAL ? MINUTE )",
             "i",
-            -$minutes)->all();
+            $minutes*-1)->all();
     }
     function getOjSpiderUnAlive($oj_id,$minutes)
     {
-        return $this->queryStmt("select spider_id from spider_info where oj_id=? and spider_enable=true and  last_alive_time<DATEADD(MONTH,?,now())",
+        return $this->queryStmt("select spider_id from spider_info where oj_id=? and spider_enable=true and  last_alive_time<DATE_ADD(now(),INTERVAL ? MINUTE )",
             "ii",
             $oj_id,
-            -$minutes)->all();
+            $minutes*-1)->all();
     }
+
 
 
 

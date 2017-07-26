@@ -19,9 +19,9 @@ class vj_job_model extends SlimvcModel
             "i",
             $oj_id)->all();
     }
-    function getSpiderUnfinishJobs($spider_id)
+    function getSpiderWatchingJobs($spider_id)
     {
-        return $this->queryStmt("select * from run_job where spider_id=? and (running_status=1 or running_status=2)",
+        return $this->queryStmt("select * from run_job where spider_id=? and running_status=2",
             "i",
             $spider_id)->all();
     }
@@ -32,5 +32,71 @@ class vj_job_model extends SlimvcModel
             $spider_id,
             $job_id);
     }
+    function updateJobRunningStatus($job_id,$running_status)
+    {
+        return $this->queryStmt("update run_job set running_status=? where job_id=?",
+            "ii",
+            $running_status,
+            $job_id);
+    }
+    function getSpiderUnSubmitJobs($spider_id)
+    {
+        return $this->queryStmt("select * from run_job where spider_id=? and running_status=1",
+            "i",
+            $spider_id)->all();
+    }
+    function updateRemoteRunID($job_id,$remote_run_id)
+    {
+        return $this->queryStmt("update run_job set remote_run_id=? where job_id=?",
+            "ii",
+            $remote_run_id,
+            $job_id);
+    }
 
+    function updateJobResultInfo($job_id,$ac_status,$wrong_info,$time_usage,$ram_usage,$addition_info)
+    {
+        return $this->queryStmt("update run_job set ac_status=?,wrong_info=?,time_usage=?,ram_usage=?,addition_info=? where job_id=?",
+            "isiisi",
+            $ac_status,
+            $wrong_info,
+            $time_usage,
+            $ram_usage,
+            $addition_info,
+            $job_id);
+    }
+    function newJob($problem_id,$oj_id,$user_id,$source_code,$compiler_id)
+    {
+        $this->queryStmt("insert into run_job set problem_id=?,oj_id=?,user_id=?,source_code=?,compiler_id=?,submit_time=now()",
+            "iiisi",
+            $problem_id,
+            $oj_id,
+            $user_id,
+            $source_code,
+            $compiler_id);
+        return $this->InsertId;
+    }
+
+    function getUserJobStatus($user_id,$limits)
+    {
+        return $this->queryStmt("select run_job.job_id,run_job.problem_id,run_job.oj_id,run_job.user_id,run_job.ac_status,run_job.submit_time,run_job.time_usage,run_job.ram_usage,run_job.wrong_info,problem_info.problem_identity,oj_site_info.oj_name,user_info.user_nickname,problem_info.problem_url,run_job.running_status
+        from run_job,problem_info,oj_site_info,user_info where run_job.user_id=? and problem_info.problem_id=run_job.problem_id and oj_site_info.oj_id=run_job.oj_id and user_info.user_id=run_job.user_id
+        order by job_id desc limit 0,?",
+            "ii",
+            $user_id,
+            $limits)->all();
+    }
+    function getOneJobStatus($job_id)
+    {
+        return $this->queryStmt("select run_job.job_id,run_job.problem_id,run_job.oj_id,run_job.user_id,run_job.ac_status,run_job.submit_time,run_job.time_usage,run_job.ram_usage,run_job.wrong_info,problem_info.problem_identity,oj_site_info.oj_name,user_info.user_nickname,problem_info.problem_url,run_job.running_status
+        from run_job,problem_info,oj_site_info,user_info where run_job.job_id=? and problem_info.problem_id=run_job.problem_id and oj_site_info.oj_id=run_job.oj_id and user_info.user_id=run_job.user_id
+        ",
+            "i",
+            $job_id)->row();
+    }
+    function getJobInfo($job_id)
+    {
+        return $this->queryStmt("select * from run_job where job_id=?",
+            "i",
+            $job_id)->row();
+    }
 }

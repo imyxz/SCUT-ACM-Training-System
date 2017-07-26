@@ -19,4 +19,5 @@ class acStatus extends enum
     public $SKIPPED=14;
     public $TESTING=15;
     public $REJECTED=16;
+    public $default=15;
 }

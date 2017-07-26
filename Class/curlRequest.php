@@ -46,13 +46,14 @@ class curlRequest{
             curl_setopt($ch,CURLOPT_HTTPHEADER,$this->header);
         $cookie_filename=tempnam(sys_get_temp_dir(),"scutvj");
         curl_setopt($ch,CURLOPT_COOKIEJAR,$cookie_filename);
+        $this->response_code=0;
         if( ! $result = curl_exec($ch))
         {
             echo curl_error($ch);
+            $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
             return false;
         }
         $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
-        var_dump($this->response_code);
         curl_close($ch);
         $this->response_cookie=$this->processCookieJar(file_get_contents($cookie_filename));
         unlink($cookie_filename);
@@ -72,12 +73,19 @@ class curlRequest{
         $ch = curl_init();
         curl_setopt_array($ch, ( $defaults));
         curl_setopt($ch,CURLOPT_COOKIE,$this->cookie);
+        $this->response_code=0;
+
         if(!empty($this->header))
             curl_setopt($ch,CURLOPT_HTTPHEADER,$this->header);
         $cookie_filename=tempnam(sys_get_temp_dir(),"scutvj");
         curl_setopt($ch,CURLOPT_COOKIEJAR,$cookie_filename);
+        $this->response_code=0;
+
         if( ! $result = curl_exec($ch))
         {
+            echo curl_error($ch);
+            $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
+
             return false;
         }
         $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
@@ -101,10 +109,8 @@ class curlRequest{
         $arr=explode("\n",$str);
         $ret=array();
         foreach ($arr as $one) {
-            if(empty($one) || $one[0]=='#')
-                continue;
             $two=explode(" ",$one);
-            if(count($two)<7)
+            if(count($two)!=7)
                 continue;
             $ret[$two[5]]=$two[6];
         }

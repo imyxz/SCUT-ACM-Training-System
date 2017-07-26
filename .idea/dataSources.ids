@@ -52,44 +52,122 @@
       <column name="group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="group_name" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
       <column name="group_vj_name" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
+      <column name="group_zoj_name" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
+      <column name="group_seoj_name" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
+      <column name="group_csoj_name" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
       <column name="group_leader_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="group_id"/>
+      <index name="group_csoj_name" unique="false" columns="group_csoj_name"/>
+      <index name="group_seoj_name" unique="false" columns="group_seoj_name"/>
       <index name="group_vj_name" unique="false" columns="group_vj_name"/>
     </table>
     <table name="acm_player" schema="" catalog="acm_training_system" type="TABLE">
       <column name="player_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="player_name" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
       <column name="player_group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="player_email" sqlType="CHAR" precision="128" scale="0" nullable="false" jdbcType="1"/>
       <primary-key name="PRIMARY" columns="player_id"/>
-      <index name="player_email" unique="false" columns="player_email"/>
       <index name="player_group_id" unique="false" columns="player_group_id"/>
     </table>
-    <table name="remember_info" schema="" catalog="acm_training_system" type="TABLE">
-      <column name="remember_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
-      <column name="remember_pass" sqlType="CHAR" precision="32" scale="0" nullable="false" jdbcType="1"/>
-      <column name="user_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="login_time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="login_ip" sqlType="CHAR" precision="16" scale="0" nullable="false" jdbcType="1"/>
-      <primary-key name="PRIMARY" columns="remember_id"/>
+    <table name="oj_site_info" schema="" catalog="acm_training_system" type="TABLE">
+      <column name="oj_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="oj_name" sqlType="TINYTEXT" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="oj_url" sqlType="TINYTEXT" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="oj_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="oj_id"/>
+    </table>
+    <table name="problem_info" schema="" catalog="acm_training_system" type="TABLE">
+      <column name="problem_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="oj_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="problem_identity" sqlType="CHAR" precision="32" scale="0" nullable="false" jdbcType="1"/>
+      <column name="problem_title" sqlType="TINYTEXT" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="problem_desc" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="problem_url" sqlType="TINYTEXT" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="compiler_info" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="time_limit" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="memory_limit" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="add_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="problem_id"/>
+      <index name="oj_id" unique="false" columns="oj_id"/>
+      <index name="problem_identity" unique="false" columns="problem_identity"/>
+    </table>
+    <table name="run_job" schema="" catalog="acm_training_system" type="TABLE">
+      <column name="job_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="problem_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="oj_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="user_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="remote_run_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="source_code" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="compiler_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ac_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="time_usage" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ram_usage" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="running_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="wrong_info" sqlType="TINYTEXT" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="submit_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="process_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="done_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="addition_info" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="spider_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="job_id"/>
+      <index name="oj_id" unique="false" columns="oj_id"/>
+      <index name="problem_id" unique="false" columns="problem_id"/>
+      <index name="remote_run_id" unique="false" columns="remote_run_id"/>
+      <index name="user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="session_info" schema="" catalog="acm_training_system" type="TABLE">
+      <column name="session_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="session_pass" sqlType="CHAR" precision="32" scale="0" nullable="false" jdbcType="1"/>
+      <column name="session_info" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="session_start_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="session_last_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="session_end_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="session_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="session_id"/>
+    </table>
+    <table name="spider_info" schema="" catalog="acm_training_system" type="TABLE">
+      <column name="spider_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="oj_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="processor_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="last_alive_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="oj_username" sqlType="TINYTEXT" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="oj_password" sqlType="TINYTEXT" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="oj_logintime" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="spider_enable" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="spider_addition_info" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="spider_status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="spider_looking_job" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="spider_class_name" sqlType="TINYTEXT" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="spider_id"/>
+      <index name="oj_id" unique="false" columns="oj_id"/>
+      <index name="processor_id" unique="false" columns="processor_id"/>
+      <index name="spider_enable" unique="false" columns="spider_enable"/>
+      <index name="spider_status" unique="false" columns="spider_status"/>
+    </table>
+    <table name="spider_mother_info" schema="" catalog="acm_training_system" type="TABLE">
+      <column name="oj_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="is_enable" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="last_alive_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="oj_id"/>
     </table>
     <table name="user_info" schema="" catalog="acm_training_system" type="TABLE">
       <column name="user_id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
-      <column name="player_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="user_name" sqlType="CHAR" precision="64" scale="0" nullable="false" jdbcType="1"/>
+      <column name="player_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="user_email" sqlType="CHAR" precision="64" scale="0" nullable="false" jdbcType="1"/>
+      <column name="user_avatar" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
       <column name="user_nickname" sqlType="CHAR" precision="64" scale="0" nullable="false" jdbcType="1"/>
-      <column name="ds_userid" sqlType="CHAR" precision="64" scale="0" nullable="false" jdbcType="1"/>
       <column name="user_password" sqlType="CHAR" precision="32" scale="0" nullable="false" jdbcType="1"/>
-      <column name="reg_time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="encuss_userid" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="encuss_token_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="encuss_token_key" sqlType="CHAR" precision="32" scale="0" nullable="false" jdbcType="1"/>
+      <column name="reg_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <column name="reg_ip" sqlType="CHAR" precision="16" scale="0" nullable="false" jdbcType="1" def="Jyc="/>
       <column name="login_ip" sqlType="CHAR" precision="16" scale="0" nullable="false" jdbcType="1" def="Jyc="/>
-      <column name="login_time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
-      <column name="ds_access_token" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="login_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="user_id"/>
-      <index name="ds_userid" unique="true" columns="ds_userid"/>
+      <index name="player_id" unique="true" columns="player_id"/>
       <index name="user_name_2" unique="true" columns="user_name"/>
-      <index name="player_id" unique="false" columns="player_id"/>
+      <index name="encuss_userid" unique="false" columns="encuss_userid"/>
       <index name="user_email" unique="false" columns="user_email"/>
       <index name="user_name" unique="false" columns="user_name"/>
     </table>

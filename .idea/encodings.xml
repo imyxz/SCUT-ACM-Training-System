@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/CliController/spiderPool.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CliController/spiderProblems.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Controller/contest.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Controller/indexs.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Controller/user.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Controller/userAPI.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Controller/vJudge.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/View/add_contest.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/View/add_group.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/View/bind_player.php" charset="UTF-8" />
@@ -12,5 +15,7 @@
     <file url="file://$PROJECT_DIR$/View/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/View/jump.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/View/summary_page.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/View/vj_view_my_status.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/View/vj_view_problem.php" charset="UTF-8" />
   </component>
 </project>

@@ -2,7 +2,6 @@
 abstract class enum{
     private $int2str=array();
     private $str2int=array();
-    public $default=0;
     public function __construct()
     {
         $vars=get_class_vars(get_class($this));
