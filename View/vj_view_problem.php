@@ -33,7 +33,6 @@
                         <div class="time-limit">Time: {{ problem_info.time_limit | time_filter}}</div>
                     </div>
                     <div class="content" v-html="problem_info.problem_desc">
-
                     </div>
                 </div>
             </div>
@@ -156,6 +155,10 @@
                                         enableSnippets: true,
                                         enableLiveAutocompletion: true
                                     });
+                                    if($('#pdf-div').length>0)
+                                        PDFObject.embed(vj_view_problem.basic_url+$('#pdf-div').data("pdf-url"), "#pdf-div",{width:"100%",height:$(window).height() +"px"});
+
+
                                 });
                             }
                             else

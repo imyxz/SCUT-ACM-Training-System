@@ -107,4 +107,98 @@ class spiderProblems extends SlimvcControllerCli
             }
         }
     }
+    function gym()
+    {
+        /** @var curlRequest $curl */
+        $curl=$this->newClass("curlRequest");
+        $curl->setHeader("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
+        $curl->setHeader("Referer: http://codeforces.com/");
+        $curl->setHeader("Origin: http://codeforces.com");
+        $curl->setHeader("Upgrade-Insecure-Requests: 1");
+        $curl->setHeader("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+        $start_contest_id=intval(self::$cliArg['start']);
+        $end_contest_id=intval(self::$cliArg['end']);
+        for($contest_id=$start_contest_id;$contest_id<=$end_contest_id;$contest_id++)
+        {
+            while(!($html=$curl->get("http://codeforces.com/gym/$contest_id/attachments",10)) && $curl->getResponseCode()!=302)
+            {
+                echo "Retry attachments $contest_id\n";
+                sleep(1);
+            }
+            if($curl->getResponseCode()=='302')
+                continue;
+            $dom=new Dom();
+            $dom->load($html);
+
+            $file_url="http://codeforces.com". $dom->find(".datatable a",0)->getTag()->getAttribute("href")['value'];
+
+            while(!($file=$curl->get($file_url,60)) && $curl->getResponseCode()!=302)
+            {
+                echo "Retry pdf $contest_id\n";
+                sleep(1);
+            }
+            if($curl->getResponseCode()=='302')
+                continue;
+            $tmp1=strrpos($file_url,".");
+            $back=substr($file_url,$tmp1+1,strlen($file_url)-$tmp1-1);
+            if($back=='pdf')
+            {
+                $pdf_filename="gym_$contest_id" . ".pdf";
+                $resource=fopen(_Root . "files/$pdf_filename","wb");
+                fwrite($resource,$file);
+                fclose($resource);
+                $problem_desc='<div id="pdf-div" data-pdf-url="files/' . $pdf_filename . '"></div>';
+
+            }
+            else if(in_array($back,array("doc","docx","xls")))
+            {
+                $pdf_filename="gym_$contest_id" . ".$back";
+                $resource=fopen(_Root . "files/$pdf_filename","wb");
+                fwrite($resource,$file);
+                fclose($resource);
+                $problem_desc='<div>'. "<iframe src='https://view.officeapps.live.com/op/embed.aspx?src=". urlencode($file_url) ."' width='100%' height='800px' frameborder='0'>This is an embedded <a target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank' href='http://office.com/webapps'>Office Online</a>.</iframe>" .'<a href="'. _Http .'files/'. $pdf_filename .'" target="_blank">Click here to download statement</a></div>';
+            }
+            else if(in_array($back,array("zip","rar","txt")))
+            {
+                $pdf_filename="gym_$contest_id" . ".$back";
+                $resource=fopen(_Root . "files/$pdf_filename","wb");
+                fwrite($resource,$file);
+                fclose($resource);
+                $problem_desc='<div><a href="'. _Http .'files/'. $pdf_filename .'" target="_blank">Click here to download statement</a></div>';
+            }
+            else
+            {
+                $problem_desc='<div><a href="'. $file_url .'" target="_blank">Click here to download statement</a></div>';
+
+            }
+
+            while(!($html=$curl->get("http://codeforces.com/gym/$contest_id",10)) && $curl->getResponseCode()!=302)
+            {
+                echo "Retry $contest_id\n";
+                sleep(1);
+            }
+            if($curl->getResponseCode()=='302')
+                continue;
+            $dom->load($html);
+            $list=$dom->find(".problems td");
+            for($i=0;$i<$list->count();$i++)//库有bug，这样反而能取
+            {
+
+                $tmp= $list[$i]->find("div a",0);
+                if(!$tmp)
+                    continue;
+                $problem_id=substr($tmp->getTag()->getAttribute("href")['value'],-1,1);
+                $problem_title=$problem_id . ". ". $tmp->text();
+                $list[$i]->find("div > div > div",0)->delete();
+                $tmp=trim($list[$i]->find("div > div",1)->text(true));
+                list($time_limit,$memory_limit)=sscanf($tmp,"%f s, %f MB");
+                $time_limit*=1000;
+                $memory_limit*=1024*1024;
+                $compiler='{"1":"GNU G++ 5.1.0","2":"Microsoft Visual C++ 2010","3":"Delphi 7","4":"Free Pascal 2.6.4","6":"PHP 7.0.12","7":"Python 2.7.12","8":"Ruby 2.0.0p645","9":"C# Mono 3.12.1.0","10":"GNU GCC 5.1.0","12":"Haskell GHC 7.8.3","13":"Perl 5.20.1","19":"OCaml 4.02.1","20":"Scala 2.11.8","28":"D DMD32 v2.071.2","29":"MS C# .NET 4.0.30319","31":"Python 3.5.2","32":"Go 1.7.3","34":"JavaScript V8 4.8.0","36":"Java 1.8.0_112","40":"PyPy 2.7.10 (2.6.1)","41":"PyPy 3.2.5 (2.4.0)","42":"GNU G++11 5.1.0","43":"GNU GCC C11 5.1.0","48":"Kotlin 1.0.5-2","49":"Rust 1.12.1","50":"GNU G++14 6.2.0"}';
+                $problem_url="http://codeforces.com/gym/$contest_id/problem/$problem_id";
+                $this->model("vj_problem_model")->insertProblem(2,"$contest_id/$problem_id",$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
+
+            }
+        }
+    }
 }

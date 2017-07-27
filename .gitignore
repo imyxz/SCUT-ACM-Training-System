@@ -6,5 +6,6 @@ lib/*
 composer.phar
 composer.lock
 vendor/*
+.idea/*
+files/*
 
-.idea/dataSources.ids

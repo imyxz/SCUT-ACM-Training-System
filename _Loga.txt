@@ -1,1 +1,0 @@
-PHP Notice:  Undefined index: REQUEST_URI in /mnt/d/workspace/SCUT-ACM-Training-System/Slimvc/Config.php on line 19

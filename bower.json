@@ -21,6 +21,7 @@
     "materialize": "^0.100.0",
     "axios": "^0.16.2",
     "vue": "^2.4.1",
-    "ace-builds": "ace-build#^1.2.8"
+    "ace-builds": "ace-build#^1.2.8",
+    "pdfobject": "pipwerks/PDFObject"
   }
 }

@@ -17,6 +17,8 @@ define('_Class',_Root . 'Class' . _DS_);
 define('_Helper',_Root . 'Helper' . _DS_);
 define('_Log',_Root . 'Log' . _DS_);
 define('_HTTP','');
+define('_Http','http://localhost/ACM-System/');
+
 include(_Slimvc . 'Config.php');
 include(_Slimvc . 'Slimvc.php');
 

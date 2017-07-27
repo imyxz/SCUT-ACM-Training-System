@@ -5,42 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d31ecfd-7cee-4d13-b039-ffc6f43b3804" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CliController/spiderProblems.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Controller/vJudge.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Controller/vJudgeAPI.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/View/vj_view_my_status.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/View/vj_view_problem.php" />
-      <change type="DELETED" beforePath="D:\workspace\SCUT-ACM-Training-System\lib\materialize\dist\fonts\roboto\Roboto-Bold.woff2" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\SCUT-ACM-Training-System\lib\materialize\dist\fonts\roboto\Roboto-Bold.woff" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\SCUT-ACM-Training-System\lib\materialize\dist\fonts\roboto\Roboto-Light.woff2" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\SCUT-ACM-Training-System\lib\materialize\dist\fonts\roboto\Roboto-Light.woff" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\SCUT-ACM-Training-System\lib\materialize\dist\fonts\roboto\Roboto-Medium.woff2" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\SCUT-ACM-Training-System\lib\materialize\dist\fonts\roboto\Roboto-Medium.woff" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\SCUT-ACM-Training-System\lib\materialize\dist\fonts\roboto\Roboto-Regular.woff2" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\SCUT-ACM-Training-System\lib\materialize\dist\fonts\roboto\Roboto-Regular.woff" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\SCUT-ACM-Training-System\lib\materialize\dist\fonts\roboto\Roboto-Thin.woff2" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\SCUT-ACM-Training-System\lib\materialize\dist\fonts\roboto\Roboto-Thin.woff" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Slimvc/Config.php" afterPath="$PROJECT_DIR$/Slimvc/Config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/SCUT-ACM-Training-System.iml" afterPath="$PROJECT_DIR$/.idea/SCUT-ACM-Training-System.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Slimvc/Slimvc.php" afterPath="$PROJECT_DIR$/Slimvc/Slimvc.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Class/SpiderBasic.php" afterPath="$PROJECT_DIR$/Class/SpiderBasic.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Class/SpiderCodeforces.php" afterPath="$PROJECT_DIR$/Class/SpiderCodeforces.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Class/acStatus.php" afterPath="$PROJECT_DIR$/Class/acStatus.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Class/SpiderGym.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower.json" afterPath="$PROJECT_DIR$/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Class/curlRequest.php" afterPath="$PROJECT_DIR$/Class/curlRequest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Class/enum.php" afterPath="$PROJECT_DIR$/Class/enum.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/header.php" afterPath="$PROJECT_DIR$/View/header.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index_cli.php" afterPath="$PROJECT_DIR$/index_cli.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CliController/indexs.php" afterPath="$PROJECT_DIR$/CliController/indexs.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CliController/spiderPool.php" afterPath="$PROJECT_DIR$/CliController/spiderPool.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model/vj_job_model.php" afterPath="$PROJECT_DIR$/Model/vj_job_model.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model/vj_problem_model.php" afterPath="$PROJECT_DIR$/Model/vj_problem_model.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model/vj_spider_model.php" afterPath="$PROJECT_DIR$/Model/vj_spider_model.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CliController/spiderProblems.php" afterPath="$PROJECT_DIR$/CliController/spiderProblems.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/vj_view_problem.php" afterPath="$PROJECT_DIR$/View/vj_view_problem.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SCUT-ACM-Training-System.iws" />
@@ -101,99 +71,63 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="indexs.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CliController/indexs.php">
+      <file leaf-file-name="SpiderGym.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Class/SpiderGym.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.266667">
-              <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
+            <state vertical-scroll-proportion="13.333333">
+              <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jump.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/jump.php">
+      <file leaf-file-name="spiderProblems.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CliController/spiderProblems.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
+            <state vertical-scroll-proportion="0.11333334">
+              <caret line="167" column="13" selection-start-line="167" selection-start-column="13" selection-end-line="167" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index_cli.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index_cli.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.0">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.6">
+              <caret line="18" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HtmlNode.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/HtmlNode.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="90.5">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vj_view_my_status.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/vj_view_my_status.php">
+      <file leaf-file-name="AbstractNode.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/AbstractNode.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.333333">
-              <caret line="142" column="60" selection-start-line="142" selection-start-column="60" selection-end-line="142" selection-end-column="60" />
+            <state vertical-scroll-proportion="-2.9666667">
+              <caret line="125" column="29" selection-start-line="125" selection-start-column="23" selection-end-line="125" selection-end-column="29" />
               <folding>
-                <element signature="e#2112#2163#0#HTML" expanded="true" />
-                <element signature="e#2960#3007#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="header.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/header.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.533334">
-              <caret line="55" column="17" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vJudgeAPI.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Controller/vJudgeAPI.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-52.8">
-              <caret line="99" column="29" selection-start-line="99" selection-start-column="13" selection-end-line="99" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vJudge.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Controller/vJudge.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.62300885">
-              <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpiderCodeforces.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Class/SpiderCodeforces.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.0">
-              <caret line="139" column="0" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
-              <folding>
-                <element signature="n#getSubmitResult#0;n#SpiderCodeforces#0;n#!!top" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vj_job_model.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Model/vj_job_model.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.3166666">
-              <caret line="95" column="23" selection-start-line="95" selection-start-column="13" selection-end-line="95" selection-end-column="23" />
-              <folding>
-                <marker date="1501084516809" expanded="true" signature="224:283" placeholder="select * fro..run_job..." />
-                <marker date="1501084516809" expanded="true" signature="420:471" placeholder="select * fro..run_job..." />
-                <marker date="1501084516809" expanded="true" signature="611:671" placeholder="select * fro..run_job..." />
-                <marker date="1501084516809" expanded="true" signature="814:859" placeholder="update run_j..." />
-                <marker date="1501084516809" expanded="true" signature="1032:1082" placeholder="update run_j..." />
-                <marker date="1501084516809" expanded="true" signature="1246:1306" placeholder="select * fro..run_job..." />
-                <marker date="1501084516809" expanded="true" signature="1458:1507" placeholder="update run_j..." />
-                <marker date="1501084516809" expanded="true" signature="1727:1826" placeholder="update run_j..." />
-                <marker date="1501084516809" expanded="true" signature="2112:2212" placeholder="insert into ..." />
-                <marker date="1501084516809" expanded="true" signature="2482:3011" placeholder="select run_j..run_job..." />
-                <marker date="1501084516809" expanded="true" signature="3166:3655" placeholder="select run_j..run_job..." />
-                <marker date="1501084516809" expanded="true" signature="3791:3827" placeholder="select * fro..run_job..." />
+                <element signature="e#36#83#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -202,19 +136,47 @@
       <file leaf-file-name="vj_view_problem.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/View/vj_view_problem.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.5">
-              <caret line="143" column="0" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
+            <state vertical-scroll-proportion="-8.266666">
+              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
               <folding>
-                <element signature="e#471#489#0#HTML" expanded="true" />
-                <element signature="e#660#678#0#HTML" expanded="true" />
-                <element signature="e#1675#1711#0#HTML" expanded="true" />
-                <element signature="e#2760#2797#0#HTML" expanded="true" />
-                <element signature="e#2899#2918#0#HTML" expanded="true" />
-                <element signature="e#3103#3122#0#HTML" expanded="true" />
-                <element signature="e#3378#3397#0#HTML" expanded="true" />
-                <marker date="1501085403800" expanded="true" signature="3597:3689" placeholder="..." />
-                <marker date="1501085403800" expanded="true" signature="3668:3689" placeholder="{...}" />
+                <element signature="e#1674#1710#0#HTML" expanded="true" />
+                <element signature="e#2759#2796#0#HTML" expanded="true" />
+                <element signature="e#2898#2917#0#HTML" expanded="true" />
+                <element signature="e#3102#3121#0#HTML" expanded="true" />
+                <element signature="e#3377#3396#0#HTML" expanded="true" />
+                <marker date="1501137849227" expanded="true" signature="3596:3688" placeholder="..." />
+                <marker date="1501137849227" expanded="true" signature="3667:3688" placeholder="{...}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bower.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bower.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-12.266666">
+              <caret line="25" column="3" selection-start-line="25" selection-start-column="3" selection-end-line="25" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="header.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/View/header.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="17.6">
+              <caret line="27" column="77" selection-start-line="26" selection-start-column="77" selection-end-line="27" selection-end-column="77" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="curlRequest.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Class/curlRequest.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-14.933333">
+              <caret line="73" column="45" selection-start-line="73" selection-start-column="45" selection-end-line="73" selection-end-column="45" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -234,8 +196,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Model/admin_model.php" />
-        <option value="$PROJECT_DIR$/Model/session_model.php" />
         <option value="$PROJECT_DIR$/js/common.js" />
         <option value="$PROJECT_DIR$/css/materialize-icon.css" />
         <option value="$PROJECT_DIR$/View/footer.php" />
@@ -262,7 +222,6 @@
         <option value="$PROJECT_DIR$/CliController/spiderMother.php" />
         <option value="$PROJECT_DIR$/Class/jobRunningStatus.php" />
         <option value="$PROJECT_DIR$/Slimvc/Slimvc.php" />
-        <option value="$PROJECT_DIR$/index_cli.php" />
         <option value="$PROJECT_DIR$/Class/SpiderBasic.php" />
         <option value="$PROJECT_DIR$/Class/curlRequest.php" />
         <option value="$PROJECT_DIR$/Slimvc/Config.php" />
@@ -271,7 +230,6 @@
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/InnerNode.php" />
         <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/CliController/spiderProblems.php" />
         <option value="$PROJECT_DIR$/Class/acStatus.php" />
         <option value="$PROJECT_DIR$/CliController/spiderPool.php" />
         <option value="$PROJECT_DIR$/css/style.css" />
@@ -281,10 +239,14 @@
         <option value="$PROJECT_DIR$/Class/SpiderCodeforces.php" />
         <option value="$PROJECT_DIR$/Model/vj_job_model.php" />
         <option value="$PROJECT_DIR$/Controller/vJudgeAPI.php" />
-        <option value="$PROJECT_DIR$/View/vj_view_problem.php" />
         <option value="$PROJECT_DIR$/View/vj_view_my_status.php" />
-        <option value="$PROJECT_DIR$/View/header.php" />
         <option value="$PROJECT_DIR$/Controller/vJudge.php" />
+        <option value="$PROJECT_DIR$/Class/SpiderGym.php" />
+        <option value="$PROJECT_DIR$/bower.json" />
+        <option value="$PROJECT_DIR$/View/header.php" />
+        <option value="$PROJECT_DIR$/View/vj_view_problem.php" />
+        <option value="$PROJECT_DIR$/index_cli.php" />
+        <option value="$PROJECT_DIR$/CliController/spiderProblems.php" />
       </list>
     </option>
   </component>
@@ -300,10 +262,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="PHP 7" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="x" value="505" />
+    <option name="y" value="561" />
+    <option name="width" value="1414" />
+    <option name="height" value="861" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -392,34 +354,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Slimvc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -438,7 +372,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="materialize" />
+              <option name="myItemId" value="pdfobject" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -452,97 +386,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="materialize" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="materialize" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Helper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SCUT-ACM-Training-System" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CliController" />
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -583,11 +427,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace\SCUT-ACM-Training-System\Class" />
       <recent name="D:\workspace\SCUT-ACM-Training-System\Slimvc" />
       <recent name="D:\workspace\SCUT-ACM-Training-System\View" />
       <recent name="D:\workspace\SCUT-ACM-Training-System\js" />
       <recent name="D:\workspace\SCUT-ACM-Training-System\css" />
-      <recent name="D:\workspace\SCUT-ACM-Training-System\fonts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\workspace\SCUT-ACM-Training-System\css" />
@@ -598,7 +442,7 @@
     <configuration default="false" name="indexs.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/CliController/indexs.php">
       <method />
     </configuration>
-    <configuration default="false" name="index_cli.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/index_cli.php" scriptParameters="spiderPool startSpiderThread spider_id 1">
+    <configuration default="false" name="index_cli.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/index_cli.php" scriptParameters="spiderProblems gym start 100002 end 101464">
       <method />
     </configuration>
     <configuration default="false" name="spiderPool.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/CliController/spiderPool.php">
@@ -657,7 +501,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="7" />
+    <frame x="505" y="561" width="1414" height="861" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -668,11 +512,11 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18360996" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1098081" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1369936" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15214181" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18980798" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2498618" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3526971" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4663923" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -717,134 +561,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="44" />
+      <option name="time" value="54" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Model/group_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1500528729124" expanded="true" signature="-1:-1" placeholder="select * fro..acm_player..." />
-            <marker date="1500528729124" expanded="true" signature="-1:-1" placeholder="select * fro..acm_group..." />
-            <marker date="1500528729124" expanded="true" signature="-1:-1" placeholder="select * fro..acm_group..." />
-            <marker date="1500528729124" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1500528729124" expanded="true" signature="-1:-1" placeholder="select group..acm_group..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Model/contest_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="select acm_c..acm_group..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="select * fro..acm_contest_summary..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="select acm_c..acm_contest_board..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="select * fro..acm_player..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="select * fro..acm_contest..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="update acm_c..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="select * fro..acm_contest..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="select summa..acm_contest_summary..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="update acm_c..." />
-            <marker date="1500523518636" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Model/player_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1500529618505" expanded="true" signature="-1:-1" placeholder="select * fro..acm_player..." />
-            <marker date="1500529618505" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Model/session_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.366667">
-          <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
-          <folding>
-            <marker date="1500376964320" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1500376964320" expanded="true" signature="-1:-1" placeholder="select * fro..session_info..." />
-            <marker date="1500376964320" expanded="true" signature="-1:-1" placeholder="update sessi..." />
-            <marker date="1500376964320" expanded="true" signature="-1:-1" placeholder="update sessi..." />
-            <marker date="1500376964320" expanded="true" signature="-1:-1" placeholder="update sessi..." />
-            <marker date="1500376964320" expanded="true" signature="-1:-1" placeholder="update sessi..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Model/user_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="select user_..user_info..." />
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="select user_..user_info..." />
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="select user_..user_info..." />
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="select * fro..user_info..." />
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="update user_..." />
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="update user_..." />
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="select user_..user_info..." />
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="update user_..." />
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="insert into ..." />
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="update user_..." />
-            <marker date="1500529665329" expanded="true" signature="-1:-1" placeholder="update user_..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/ArrayNode.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/HtmlNode.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/LeafNode.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/MockNode.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="12.833333">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/TextNode.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="40.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Content.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="118.433334">
@@ -861,36 +582,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/InnerNode.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.8">
-          <caret line="72" column="31" selection-start-line="72" selection-start-column="20" selection-end-line="72" selection-end-column="31" />
-          <folding>
-            <element signature="e#36#88#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/AbstractNode.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.366667">
-          <caret line="366" column="0" selection-start-line="366" selection-start-column="0" selection-end-line="366" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Selector.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.366667">
           <caret line="205" column="0" selection-start-line="205" selection-start-column="0" selection-end-line="205" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.066667">
-          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -1023,14 +718,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Class/curlRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.53333336">
-          <caret line="73" column="45" selection-start-line="73" selection-start-column="45" selection-end-line="73" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/View/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="5.6">
@@ -1051,14 +738,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.266667">
           <caret line="218" column="0" selection-start-line="218" selection-start-column="0" selection-end-line="218" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/Collection.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.5">
-          <caret line="164" column="0" selection-start-line="164" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1121,14 +800,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CliController/spiderProblems.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.2333333">
-          <caret line="82" column="8" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CliController/indexs.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.266667">
@@ -1142,18 +813,18 @@
         <state vertical-scroll-proportion="-7.3166666">
           <caret line="95" column="23" selection-start-line="95" selection-start-column="13" selection-end-line="95" selection-end-column="23" />
           <folding>
-            <marker date="1501084516809" expanded="true" signature="224:283" placeholder="select * fro..run_job..." />
-            <marker date="1501084516809" expanded="true" signature="420:471" placeholder="select * fro..run_job..." />
-            <marker date="1501084516809" expanded="true" signature="611:671" placeholder="select * fro..run_job..." />
-            <marker date="1501084516809" expanded="true" signature="814:859" placeholder="update run_j..." />
-            <marker date="1501084516809" expanded="true" signature="1032:1082" placeholder="update run_j..." />
-            <marker date="1501084516809" expanded="true" signature="1246:1306" placeholder="select * fro..run_job..." />
-            <marker date="1501084516809" expanded="true" signature="1458:1507" placeholder="update run_j..." />
-            <marker date="1501084516809" expanded="true" signature="1727:1826" placeholder="update run_j..." />
-            <marker date="1501084516809" expanded="true" signature="2112:2212" placeholder="insert into ..." />
-            <marker date="1501084516809" expanded="true" signature="2482:3011" placeholder="select run_j..run_job..." />
-            <marker date="1501084516809" expanded="true" signature="3166:3655" placeholder="select run_j..run_job..." />
-            <marker date="1501084516809" expanded="true" signature="3791:3827" placeholder="select * fro..run_job..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="select * fro..run_job..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="select * fro..run_job..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="select * fro..run_job..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="update run_j..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="update run_j..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="select * fro..run_job..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="update run_j..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="update run_j..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="insert into ..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="select run_j..run_job..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="select run_j..run_job..." />
+            <marker date="1501084516809" expanded="true" signature="-1:-1" placeholder="select * fro..run_job..." />
           </folding>
         </state>
       </provider>
@@ -1164,24 +835,6 @@
           <caret line="139" column="0" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
           <folding>
             <element signature="n#getSubmitResult#0;n#SpiderCodeforces#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/vj_view_problem.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5">
-          <caret line="143" column="0" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
-          <folding>
-            <element signature="e#471#489#0#HTML" expanded="true" />
-            <element signature="e#660#678#0#HTML" expanded="true" />
-            <element signature="e#1675#1711#0#HTML" expanded="true" />
-            <element signature="e#2760#2797#0#HTML" expanded="true" />
-            <element signature="e#2899#2918#0#HTML" expanded="true" />
-            <element signature="e#3103#3122#0#HTML" expanded="true" />
-            <element signature="e#3378#3397#0#HTML" expanded="true" />
-            <marker date="1501085403800" expanded="true" signature="3597:3689" placeholder="..." />
-            <marker date="1501085403800" expanded="true" signature="3668:3689" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -1197,14 +850,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/header.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.533334">
-          <caret line="55" column="17" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Controller/vJudgeAPI.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-52.8">
@@ -1215,8 +860,140 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Controller/vJudge.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62300885">
+        <state vertical-scroll-proportion="-11.733334">
           <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/LeafNode.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/InnerNode.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="114.5">
+          <caret line="72" column="31" selection-start-line="72" selection-start-column="20" selection-end-line="72" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/HtmlNode.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="90.5">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/Collection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-84.9">
+          <caret line="164" column="0" selection-start-line="164" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/ArrayNode.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="5.1666665">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/paquettg/php-html-parser/src/PHPHtmlParser/Dom/AbstractNode.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.9666667">
+          <caret line="125" column="29" selection-start-line="125" selection-start-column="23" selection-end-line="125" selection-end-column="29" />
+          <folding>
+            <element signature="e#36#83#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bower.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.266666">
+          <caret line="25" column="3" selection-start-line="25" selection-start-column="3" selection-end-line="25" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pdfobject/pdfobject.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.1512606">
+          <caret line="227" column="0" selection-start-line="227" selection-start-column="0" selection-end-line="227" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Class/curlRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.933333">
+          <caret line="73" column="45" selection-start-line="73" selection-start-column="45" selection-end-line="73" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="17.6">
+          <caret line="27" column="77" selection-start-line="26" selection-start-column="77" selection-end-line="27" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Class/SpiderGym.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="13.333333">
+          <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/vj_view_problem.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.266666">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="e#1674#1710#0#HTML" expanded="true" />
+            <element signature="e#2759#2796#0#HTML" expanded="true" />
+            <element signature="e#2898#2917#0#HTML" expanded="true" />
+            <element signature="e#3102#3121#0#HTML" expanded="true" />
+            <element signature="e#3377#3396#0#HTML" expanded="true" />
+            <marker date="1501137849227" expanded="true" signature="3596:3688" placeholder="..." />
+            <marker date="1501137849227" expanded="true" signature="3667:3688" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.6">
+          <caret line="18" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index_cli.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CliController/spiderProblems.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11333334">
+          <caret line="167" column="13" selection-start-line="167" selection-start-column="13" selection-end-line="167" selection-end-column="13" />
           <folding />
         </state>
       </provider>

@@ -25,7 +25,7 @@
     <script src="<?php echo _Http;?>lib/vue/dist/vue.min.js"></script>
     <script src="<?php echo _Http;?>lib/ace-builds/src-min/ace.js"></script>
     <script src="<?php echo _Http;?>lib/ace-builds/src-min/ext-language_tools.js"></script>
-
+    <script src="<?php echo _Http;?>lib/pdfobject/pdfobject.min.js"></script>
 
     <script src="<?php echo _Http;?>js/common.js"></script>
     <link rel="stylesheet" href="<?php echo _Http;?>css/style.css?20170424">
