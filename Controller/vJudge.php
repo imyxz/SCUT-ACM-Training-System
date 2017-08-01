@@ -13,7 +13,8 @@ class vJudge extends SlimvcController
         $this->active=5;
         $this->problem_id=intval($_GET['id']);
         $this->isLogin=$this->helper("user_helper")->isLogin();
-
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=0;
 
         $this->view("vj_view_problem");
     }
@@ -22,8 +23,59 @@ class vJudge extends SlimvcController
         $this->title="My Status";
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
-
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=3;
 
         $this->view("vj_view_my_status");
+    }
+    function allProblem()
+    {
+        $this->title="所有题目";
+        $this->active=5;
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=1;
+
+        $this->view("vj_view_all_problem");
+    }
+    function problemList()
+    {
+        $this->title="查看题目集";
+        $this->active=5;
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=0;
+        $this->list_id=intval($_GET['id']);
+        $this->view("vj_list_problems");
+
+    }
+    function editList()
+    {
+        $this->title="编辑题目集";
+        $this->active=5;
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=4;
+        $this->list_id=intval($_GET['id']);
+        $this->view("vj_edit_problem_list");
+    }
+    function newList()
+    {
+        $this->title="新建题目集";
+        $this->active=5;
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=4;
+        $this->list_id=0;
+        $this->view("vj_edit_problem_list");
+    }
+    function allProblemList()
+    {
+        $this->title="新建题目集";
+        $this->active=5;
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=2;
+        $this->view("vj_view_all_list");
     }
 }

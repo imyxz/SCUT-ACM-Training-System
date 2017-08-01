@@ -21,6 +21,7 @@ class contestAPI extends SlimvcController
         }
         $return['status']=0;
         $this->outputJson($return);
+
     }
     function getContestSummary()
     {
@@ -126,12 +127,12 @@ class contestAPI extends SlimvcController
             $csv_data=$json['csv_data'];
             $csv_data=explode("\n",$csv_data);
             if($problem_count<1)
-                throw new Exception("ÌâÄ¿ÊýÁ¿ÊäÈëÓÐÎó");
+                throw new Exception("é¢˜ç›®æ•°é‡è¾“å…¥æœ‰è¯¯");
             if($contest_starttime<1 || $contest_endtime<1)
-                throw new Exception("¿ªÊ¼½áÊøÊ±¼äÊäÈë´íÎó");
+                throw new Exception("å¼€å§‹ç»“æŸæ—¶é—´è¾“å…¥é”™è¯¯");
             $contest_id= $this->model("contest_model")->newContest($contest_name,$problem_count,$contest_starttime,$contest_endtime);
             if(!$contest_id)
-                throw new Exception("ÏµÍ³ÄÚ²¿³ö´í£¡");
+                throw new Exception("ç³»ç»Ÿå†…éƒ¨å‡ºé”™ï¼");
             $this->model("contest_model")->updateContestDescription($contest_id,$contest_description);
 
 

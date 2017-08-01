@@ -27,5 +27,25 @@ class vj_problem_model extends SlimvcModel
             $memory_limit);
         return $this->InsertId;
     }
+    function getProblemList($page,$limit)
+    {
+        $page--;
+        if($page>0)
+            $start=$page*$limit;
+        else
+            $start=0;
+        return $this->queryStmt("select problem_info.problem_id,problem_info.oj_id,problem_info.add_time,problem_info.problem_title,problem_info.time_limit,problem_info.memory_limit,problem_info.problem_identity,oj_site_info.oj_name from problem_info,oj_site_info
+              where oj_site_info.oj_id=problem_info.oj_id order by problem_info.problem_id desc limit ?,?",
+            "ii",
+            $start,
+            $limit)->all();
+    }
+    function getProblemByOjIDAndProblemIdentity($oj_id,$problem_id)
+    {
+        return $this->queryStmt("select * from problem_info where oj_id=? and problem_identity=? limit 1",
+            "is",
+            $oj_id,
+            $problem_id)->row();
+    }
 
 }

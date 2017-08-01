@@ -47,16 +47,18 @@ class curlRequest{
         $cookie_filename=tempnam(sys_get_temp_dir(),"scutvj");
         curl_setopt($ch,CURLOPT_COOKIEJAR,$cookie_filename);
         $this->response_code=0;
-        if( ! $result = curl_exec($ch))
-        {
-            echo curl_error($ch);
-            $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
-            return false;
-        }
+        $result = curl_exec($ch);
         $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
+        unlink($cookie_filename);
+        $error=curl_error($ch);
         curl_close($ch);
         $this->response_cookie=$this->processCookieJar(file_get_contents($cookie_filename));
-        unlink($cookie_filename);
+        if( ! $result)
+        {
+            echo $error;
+            return false;
+        }
+
         return $result;
     }
     public function get($url,$timeout=5)
@@ -80,18 +82,18 @@ class curlRequest{
         $cookie_filename=tempnam(sys_get_temp_dir(),"scutvj");
         curl_setopt($ch,CURLOPT_COOKIEJAR,$cookie_filename);
         $this->response_code=0;
-
-        if( ! $result = curl_exec($ch))
-        {
-            echo curl_error($ch);
-            $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
-
-            return false;
-        }
+        $result = curl_exec($ch);
         $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
-        curl_close($ch);
         $this->response_cookie=$this->processCookieJar(file_get_contents($cookie_filename));
         unlink($cookie_filename);
+        $error=curl_error($ch);
+        curl_close($ch);
+        if( ! $result)
+        {
+            echo $error;
+            return false;
+        }
+
         return $result;
     }
     public function getResponseCookie()

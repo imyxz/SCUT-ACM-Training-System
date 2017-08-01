@@ -23,6 +23,9 @@
             ampmclickable: true,
             aftershow: function(){}
         });
+        $('.tabs-transparent').each(function(){
+            $(this).unbind("click");
+        })
     })
 </script>
 </body>

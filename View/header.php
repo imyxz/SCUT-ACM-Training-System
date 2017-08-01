@@ -26,14 +26,14 @@
     <script src="<?php echo _Http;?>lib/ace-builds/src-min/ace.js"></script>
     <script src="<?php echo _Http;?>lib/ace-builds/src-min/ext-language_tools.js"></script>
     <script src="<?php echo _Http;?>lib/pdfobject/pdfobject.min.js"></script>
-
+    <script src="<?php echo _Http;?>lib/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="<?php echo _Http;?>js/common.js"></script>
-    <link rel="stylesheet" href="<?php echo _Http;?>css/style.css?20170424">
+    <link rel="stylesheet" href="<?php echo _Http;?>css/style.css?20170731">
     <title><?php echo $title;?> - SCUT Training System</title>
 
 </head>
 <body>
-<nav>
+<nav class="nav-extended">
     <div class="nav-wrapper light-blue">
         <a href="<?php echo _Http?>" class="brand-logo">SCUT-ACM</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -52,7 +52,7 @@
             $index++; ?>><a href="<?php echo _Http;?>user/bindPlayer" class="waves-effect waves-teal">绑定小队</a>
             </li>
             <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>vJudge/problemList" class="waves-effect waves-teal">SCUTVJ</a>
+            $index++; ?>><a href="<?php echo _Http;?>vJudge/allProblem" class="waves-effect waves-teal">SCUTVJ</a>
             </li>
             <li>
                 <?php if($isLogin)
@@ -83,7 +83,7 @@
             $index++; ?>><a href="<?php echo _Http;?>user/bindPlayer" class="waves-effect waves-teal">绑定队员</a>
             </li>
             <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>vJudge/problemList" class="waves-effect waves-teal">SCUTVJ</a>
+            $index++; ?>><a href="<?php echo _Http;?>vJudge/allProblem" class="waves-effect waves-teal">SCUTVJ</a>
             </li>
             <li>
                 <?php if($isLogin)
@@ -99,5 +99,12 @@ else {
                 }?>
             </li>
         </ul>
+
     </div>
+    <?php
+        if(isset($addon_header))
+            include($addon_header);
+    ?>
+
+
 </nav>

@@ -1,11 +1,17 @@
 <?php
 include_once("curlRequest.php");
+include_once(_Class . "acStatus.php");
+include_once(_Class . "jobResult.php");
+include_once(_Class . "submitResult.php");
+require (_Root."vendor/autoload.php");
+use PHPHtmlParser\Dom;
 abstract class SpiderBasic
 {
     protected $job_info,$problem_info,$spider_info;
     protected $additionInfoUpdated=false;
     protected $additionInfo;
     protected $query_jobs;
+
     public function setSpiderInfo($spider_info)
     {
         $this->spider_info=$spider_info;

@@ -11,18 +11,17 @@
 
     <div class="container" id="vj_view_problem">
         <div class="row">
-            <div class="col l3">
+            <div class="col l3 s12">
                 <div class="card-panel " >
 
                     <div class="center-align row"><button class="btn blue btn-float" style="width: 90%" onclick="$('#code-modal').modal('open');">提交</button></div>
                     <div class="center-align row">
                             <a class="btn green btn-float" style="width: 90%" href="<?php echo _Http;?>vJudge/myStatus/">status</a>
-
                     </div>
 
                 </div>
             </div>
-            <div class="col l9">
+            <div class="col l9 s12">
                 <div class="card-panel hoverable" >
 
                     <div class="title">
@@ -32,7 +31,7 @@
                         <div class="memory-limit">Memory: {{ problem_info.memory_limit | ram_filter }}</div>
                         <div class="time-limit">Time: {{ problem_info.time_limit | time_filter}}</div>
                     </div>
-                    <div class="content" v-html="problem_info.problem_desc">
+                    <div class="content" data-disable-for-latex-v-html="problem_info.problem_desc" id="problem_desc">
                     </div>
                 </div>
             </div>
@@ -52,7 +51,7 @@
                             </select>
                         </div>
                         <div class="col l9">
-                            <button class="waves-effect waves-green btn blue" :class="{'disabled':compiler==0}" @click="submitCode">提交</button>
+                            <button class="waves-effect waves-green btn blue" :class="{'disabled':compiler==-1}" @click="submitCode">提交</button>
                         </div>
                     </div>
                 </template>
@@ -92,7 +91,7 @@
                     loading: true,
                     problem_id:<?php echo $problem_id;?>,
                     basic_url:'<?php echo _Http;?>',
-                    compiler:0,
+                    compiler:-1,
                     submited:false,
                     job_status:[],
                     job_id:0
@@ -155,8 +154,21 @@
                                         enableSnippets: true,
                                         enableLiveAutocompletion: true
                                     });
+                                    document.getElementById("problem_desc").innerHTML=vj_view_problem.problem_info.problem_desc;
                                     if($('#pdf-div').length>0)
                                         PDFObject.embed(vj_view_problem.basic_url+$('#pdf-div').data("pdf-url"), "#pdf-div",{width:"100%",height:$(window).height() +"px"});
+                                    //for mathjax
+                                    MathJax.Hub.Config({
+                                        extensions: ["tex2jax.js"],
+                                        jax: ["input/TeX", "output/HTML-CSS"],
+                                        tex2jax: {
+                                            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                                            processEscapes: true
+                                        },
+                                        "HTML-CSS": { availableFonts: ["TeX"] }
+                                    });
+                                    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+
 
 
                                 });

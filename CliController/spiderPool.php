@@ -90,6 +90,9 @@ class spiderPool extends SlimvcControllerCli
         $this->startProcess("spiderPool startSpiderMother oj_id " . $oj_id);
     }
 
+    /**
+     *
+     */
     function startSpiderThread()
     {
         $start_time = time();
@@ -131,8 +134,9 @@ class spiderPool extends SlimvcControllerCli
                 $problem_info = $this->model("vj_problem_model")->getProblemInfo($one["problem_id"]);
                 $spider->setSubmitJobInfo($one, $problem_info);
                 if ($spider->submitJob()) {
+                    /** @var submitResult $result_info */
                     $result_info = $spider->getSubmitResult();
-                    $this->model("vj_job_model")->updateRemoteRunID($one['job_id'], $result_info['remote_run_id']);
+                    $this->model("vj_job_model")->updateRemoteRunID($one['job_id'], $result_info->remote_run_id);
                     $this->model("vj_job_model")->updateJobRunningStatus($one['job_id'], $jobRunningStatus->SUBMITTED_WAITING_RESULT);
                     $job_success++;
                     $this->log("Submit job " . $one['job_id'] . " succeed!");
@@ -156,12 +160,13 @@ class spiderPool extends SlimvcControllerCli
                 if ($spider->queryJob()) {
                     $result_info = $spider->getQueryResult();
                     foreach ($result_info as &$one) {
-                        $this->model("vj_job_model")->updateJobResultInfo($one['job_id'], $one['ac_status'], $one['wrong_info'], $one['time_usage'], $one['ram_usage'], $one['result_info']);
-                        $this->log("Get Job " . $one['job_id'] . " status");
-                        if ($one['ac_status'] != $ac_status->TESTING) {
-                            $this->model("vj_job_model")->updateJobRunningStatus($one['job_id'], $jobRunningStatus->FINISH);
+                        /** @var jobResult $one */
+                        $this->model("vj_job_model")->updateJobResultInfo($one->job_id, $one->ac_status, $one->wrong_info, $one->time_usage, $one->ram_usage, $one->result_info);
+                        $this->log("Get Job " . $one->job_id . " status");
+                        if ($one->ac_status != $ac_status->TESTING) {
+                            $this->model("vj_job_model")->updateJobRunningStatus($one->job_id, $jobRunningStatus->FINISH);
                             $this->model("vj_spider_model")->addSpiderLookingJob($spider_id,-1);
-                            $this->log("Job " . $one['job_id'] . " finish " . $one['ac_status']);
+                            $this->log("Job " . $one->job_id . " finish " . $one->ac_status);
 
                         }
 

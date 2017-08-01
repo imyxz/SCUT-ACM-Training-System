@@ -19,5 +19,6 @@ class acStatus extends enum
     public $SKIPPED=14;
     public $TESTING=15;
     public $REJECTED=16;
-    public $default=15;
+    public $OUTPUT_LIMIT_EXCEEDED=17;
+    public $IN_QUEUE=18;
 }

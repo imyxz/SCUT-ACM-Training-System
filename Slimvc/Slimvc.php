@@ -52,14 +52,14 @@ class SlimvcProcessor{
         {
             $this->controllerName=$parameter[0];
             $this->actionName=$parameter[1];
-            for($i=3;$i<count($parameter);$i+=2)//Ìî³äGET²ÎÊý
+            for($i=3;$i<count($parameter);$i+=2)//å¡«å……GETå‚æ•°
             {
                 $_GET[$parameter[$i-1]]=$parameter[$i];
             }
         }
         $this->controllerFilePath=_Controller . $this->controllerName . '.php';
         if(dirname($this->controllerFilePath) . _DS_ !=_Controller)
-            Slimvc::ErrorNotice("Controller Not Exist!");//·ÀÖ¹include²»¸ÃincludeµÄÎÄ¼þ
+            Slimvc::ErrorNotice("Controller Not Exist!");//é˜²æ­¢includeä¸è¯¥includeçš„æ–‡ä»¶
         if($Config['Session'])
             session_start();
     }
@@ -77,7 +77,7 @@ class SlimvcProcessor{
         {
             $this->controllerName=$argv[1];
             $this->actionName=$argv[2];
-            for($i=4;$i<count($argv);$i+=2)//Ìî³äcli²ÎÊý
+            for($i=4;$i<count($argv);$i+=2)//å¡«å……cliå‚æ•°
             {
                 $cliArg[$argv[$i-1]]=$argv[$i];
             }
@@ -85,7 +85,7 @@ class SlimvcProcessor{
         SlimvcControllerCli::$cliArg=$cliArg;
         $this->controllerFilePath=_Controller . $this->controllerName . '.php';
         if(dirname($this->controllerFilePath) . _DS_ !=_Controller)
-            Slimvc::ErrorNotice("Controller Not Exist!");//·ÀÖ¹include²»¸ÃincludeµÄÎÄ¼þ
+            Slimvc::ErrorNotice("Controller Not Exist!");//é˜²æ­¢includeä¸è¯¥includeçš„æ–‡ä»¶
     }
     public function startController()
     {
@@ -180,6 +180,7 @@ class SlimvcController extends SlimvcControllerBasic
         else
             $viewer->vars=$this->view_var;
         $viewer->view($filename);
+
 
     }
     public function outputJson($arr)

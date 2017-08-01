@@ -66,7 +66,7 @@
     font-size:18px;
     text-indent: 2em;
 }
-.problem-input-div div,.problem-output-div div{
+.problem-input-div > :first-child,.problem-output-div > :first-child,.problem-examples > :first-child,.problem-hint > :first-child{
      font-weight: bold;
      font-size:32px;
  }

@@ -22,6 +22,7 @@
     "axios": "^0.16.2",
     "vue": "^2.4.1",
     "ace-builds": "ace-build#^1.2.8",
-    "pdfobject": "pipwerks/PDFObject"
+    "pdfobject": "pipwerks/PDFObject",
+    "MathJax": "^2.7.1"
   }
 }

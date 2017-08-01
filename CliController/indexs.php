@@ -6,6 +6,6 @@ class indexs extends SlimvcControllerCli{
     }
     function test()
     {
-        $this->newClass("acStatus");
+        var_dump($this->model("vj_oj_model")->getOjByName('wedf'));
     }
 }

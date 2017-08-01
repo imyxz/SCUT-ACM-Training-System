@@ -1,12 +1,11 @@
 <?php
 include_once(_Class . "SpiderBasic.php");
-include_once(_Class . "acStatus.php");
-require (_Root."vendor/autoload.php");
-use PHPHtmlParser\Dom;
+
 class SpiderCodeforces extends SpiderBasic
 {
     private $remote_runid;
     private $query_job_info=array();
+    private $submit_result;
     function submitJob()
     {
         $ac_status=new acStatus();
@@ -142,7 +141,19 @@ class SpiderCodeforces extends SpiderBasic
                 }
                 $row['result_info']=json_encode($one);
                 $row['job_id']=$this->query_jobs[$one['id']];
-                $query_job_info[$row['remote_run_id']]=$row;
+
+
+                $query_result=new jobResult();
+                $query_result->remote_run_id=$row['remote_run_id'];
+                $query_result->ac_status=$row['ac_status'];
+                $query_result->job_id=$row['job_id'];
+                $query_result->ram_usage=$row['ram_usage'];
+                $query_result->time_usage=$row['time_usage'];
+                $query_result->result_info=$row['result_info'];
+                $query_result->wrong_info=$row['wrong_info'];
+
+
+                $query_job_info[$row['remote_run_id']]=$query_result;
             }
         }
         $curl->setCookieRaw($this->additionInfo['cookie']);
@@ -165,15 +176,16 @@ class SpiderCodeforces extends SpiderBasic
                 //$time=$tr->find("td",6)->text();
                 //$ram=$tr->find("td",7)->text();
                 if(isset($query_job_info[$remote_runid]))
-                    $query_job_info[$remote_runid]['wrong_info']=$wrong_info;
+                    $query_job_info[$remote_runid]->wrong_info=$wrong_info;
             });
         $this->query_job_info=$query_job_info;
         return true;
     }
     function getSubmitResult()
     {
-        return
-            array("remote_run_id"=>$this->remote_runid);
+        $tmp=new submitResult();
+        $tmp->remote_run_id=$this->remote_runid;
+        return $tmp;
     }
     function getQueryResult()
     {

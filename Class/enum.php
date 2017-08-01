@@ -17,13 +17,13 @@ abstract class enum{
     public function getName($int)
     {
         if(!array_key_exists ($int,$this->int2str))
-            return "default";
+            return "TESTING";
         return $this->int2str[$int];
     }
     public function getInt($str)
     {
         if(!array_key_exists ($str,$this->str2int))
-            return $this->default;
+            return 15;
         return $this->str2int[$str];
     }
 }
