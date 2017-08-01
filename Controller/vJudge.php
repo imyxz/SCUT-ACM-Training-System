@@ -71,11 +71,20 @@ class vJudge extends SlimvcController
     }
     function allProblemList()
     {
-        $this->title="新建题目集";
+        $this->title="所有题目集";
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
         $this->sub_active=2;
         $this->view("vj_view_all_list");
+    }
+    function onlineIDE()
+    {
+        $this->title="online IDE";
+        $this->active=5;
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=5;
+        $this->view("vj_online_ide");
     }
 }

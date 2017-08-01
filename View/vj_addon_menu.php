@@ -13,5 +13,8 @@
         <li class="tab"><a href="<?php echo _Http;?>vJudge/newList/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
             $index++; ?>">新建题目列表</a>
         </li>
+        <li class="tab"><a href="<?php echo _Http;?>vJudge/onlineIDE/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
+            $index++; ?>">Online IDE</a>
+        </li>
     </ul>
 </div>
