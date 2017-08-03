@@ -4,6 +4,7 @@ class curlRequest{
     private $response_cookie;
     private $header=array();
     private $response_code;
+    private $response;
     public function setCookie($arr)
     {
         $this->cookie='';
@@ -23,11 +24,19 @@ class curlRequest{
     }
     public function post($url, $post,$timeout=5)
     {
-        $request_array=array();
-        foreach($post as $key=>&$one)
+        $request_data='';
+        if(is_array($post))
         {
-            $request_array[]=urlencode($key) . "=" . urlencode($one);
+            $request_array=array();
+            foreach($post as $key=>&$one)
+            {
+                $request_array[]=urlencode($key) . "=" . urlencode($one);
+            }
+            $request_data=implode("&",$request_array);
         }
+        else
+            $request_data=$post;
+
         $defaults = array(
             CURLOPT_POST => 1,
             CURLOPT_HEADER => 0,
@@ -36,10 +45,11 @@ class curlRequest{
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_FORBID_REUSE => 1,
             CURLOPT_TIMEOUT => $timeout,
-            CURLOPT_POSTFIELDS => implode("&",$request_array)
+            CURLOPT_POSTFIELDS =>$request_data
         );
 
         $ch = curl_init();
+        curl_setopt ($ch, CURLOPT_PROXY, "127.0.0.1:8888");
         curl_setopt_array($ch, ( $defaults));
         curl_setopt($ch,CURLOPT_COOKIE,$this->cookie);
         if(!empty($this->header))
@@ -48,6 +58,7 @@ class curlRequest{
         curl_setopt($ch,CURLOPT_COOKIEJAR,$cookie_filename);
         $this->response_code=0;
         $result = curl_exec($ch);
+        $this->response=$result;
         $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
         unlink($cookie_filename);
         $error=curl_error($ch);
@@ -83,6 +94,7 @@ class curlRequest{
         curl_setopt($ch,CURLOPT_COOKIEJAR,$cookie_filename);
         $this->response_code=0;
         $result = curl_exec($ch);
+        $this->response=$result;
         $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
         $this->response_cookie=$this->processCookieJar(file_get_contents($cookie_filename));
         unlink($cookie_filename);

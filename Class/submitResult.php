@@ -8,4 +8,5 @@
 class submitResult
 {
     public $remote_run_id;
+    public $is_faild=false;
 }

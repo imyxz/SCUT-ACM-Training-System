@@ -38,7 +38,7 @@ abstract class SpiderBasic
     {
         $pos1=strpos($str,$needle1,$start_pos);
         if($pos1===false) return false;
-        $pos2=strpos($str,$needle2,$pos1+1);
+        $pos2=strpos($str,$needle2,$pos1+strlen($needle1));
         if($pos2===false)   return false;
         return substr($str,$pos1+strlen($needle1),$pos2-$pos1-strlen($needle1));
     }

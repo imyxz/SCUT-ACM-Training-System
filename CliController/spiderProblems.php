@@ -383,9 +383,150 @@ class spiderProblems extends SlimvcControllerCli
 
         }
     }
+    function _51nod()
+    {
+        /** @var curlRequest $curl */
+        $curl=$this->newClass("curlRequest");
+        $curl->setHeader("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
+        $curl->setHeader("Referer: http://www.51nod.com/onlineJudge/problemList.html");
+        $curl->setHeader("Accept: */*");
+        $curl->setHeader("Accept-Language: zh-CN,zh;q=0.8");
+        $page_start=intval(self::$cliArg['start']);
+        $page_end=intval(self::$cliArg['end']);
+        for($page_id=$page_start;$page_id<=$page_end;$page_id++)
+        {
+            $problem_list=array();
+            while(!($html=$curl->get("http://www.51nod.com/ajax?n=/onlineJudge/problemList.html&v=&c=fastCSharp.IndexPool.Get%284%2C1%29.CallBack&j=%7B%22groupId%22%3A%22-1%22%2C%22isAsc%22%3A1%2C%22page%22%3A". $page_id ."%7D&t=1501771361223",10)))
+            {
+                echo "Retry $page_id\n";
+                sleep(1);
+            }
+            $html=$this->getSubStr($html,"problems:",".FormatView()",0);
+
+            $html=iconv("gb2312","UTF-8//IGNORE",$html);
+            $html=$this->jsonFormatHex($html);
+            $json=json_decode($html);
+            unset($json[0]);
+            foreach($json as &$one)
+            {
+                if(count($one)!=6)
+                    continue;
+                $two=$one[5];
+                /** @var problemInfo $problem_info */
+                $problem_info=$this->newClass("problemInfo");
+                $problem_info->examples=array();
+                $problem_info->examples[0]=new problemExample();
+                $problem_id=$two[3];
+                $time_limit=$two[8];
+                $memory_limit=$two[5];
+                $all_tags=array();
+                foreach($two[7][1][0] as $three)
+                {
+                    $all_tags[$three[1]]=0;
+                }
+                if(strpos($memory_limit,"0x")!==false)
+                {
+                    $memory_limit=str_replace("0x","",$memory_limit);
+                    $memory_limit=hexdec($memory_limit);
+                }
+                $problem_title=$two[9];
+                $problem_url="http://www.51nod.com/onlineJudge/questionCode.html#!problemId=" . $problem_id;
+                while(!($html=$curl->get("http://www.51nod.com/ajax?n=/onlineJudge/questionCode.html&c=fastCSharp.Pub.AjaxCallBack&j=%7B%22problemId%22%3A%22". $problem_id ."%22%7D",10)))
+                {
+                    echo "Retry $problem_id\n";
+                    sleep(1);
+                }
+
+                $json1=$this->getSubStr($html,"diantou.problem.Get(",",Remote:{",0) . "}";
+                $json1=iconv("gb2312","UTF-8//IGNORE",$json1);
+                $json1=str_replace('\n',"<br />",$json1);
+                $problem_info->description=$this->getSubStr($json1,'Description:"','",',0);
+
+                $problem_info->input= $this->getSubStr($json1,'InputDescription:"','",',0) ;
+                $problem_info->output= $this->getSubStr($json1,'OutputDescription:"','",',0) ;
+                $problem_info->examples[0]->example_input=$this->getSubStr($json1,'Input:"','",',0);
+                $problem_info->examples[0]->example_output=$this->getSubStr($json1,'Output:"','",',0);
+                /*
+                $problem_info->input=$this->filter($problem_info->input,"http://www.51nod.com/",array());
+                $problem_info->output=$this->filter($problem_info->output,"http://www.51nod.com/",array());
+                $problem_info->examples[0]->example_input=$this->filter($problem_info->examples[0]->example_input,"http://www.51nod.com/",array());
+                $problem_info->examples[0]->example_output=$this->filter($problem_info->examples[0]->example_output,"http://www.51nod.com/",array());
+                */
+                $problem_info->description=$this->filter($problem_info->description,"http://www.51nod.com/",array());
+                $problem_info->description=str_replace('<div>',"<p>",$problem_info->description);
+                $problem_info->description=str_replace('</div>',"</p>",$problem_info->description);
+
+
+                $problem_desc=$problem_info->generate();
+                $compiler='{"1":"C","2":"C 11","11":"C++","12":"C++ 11","21":"C#","31":"Java","41":"Python2","42":"Python3","45":"PyPy2","46":"PyPy3","51":"Ruby","61":"PHP","71":"Haskell","81":"Scala","91":"Javascript","101":"Go","111":"Visual C++","121":"Objective-C","131":"Pascal"}';
+                $id=$this->model("vj_problem_model")->insertProblem(4,$problem_id,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
+
+                foreach($all_tags as $key=>&$one)
+                {
+                    $tag_info=$this->model("tag_model")->getTagInfoByTagAlias($key);
+                    if(!$tag_info)
+                    {
+                        $tag_id=$this->model("tag_model")->newTag($key,"");
+                        $this->model("tag_model")->addTagAlias($tag_id,$key);
+                        $tag_info=$this->model("tag_model")->getTagInfoByTagAlias($key);
+                    }
+
+                    $this->model("tag_model")->addProblemTag($id,$tag_info['tag_id']);
+
+                }
+
+                echo "import $problem_id\n";
+
+
+            }
+
+        }
+    }
+
+    function importCodeForcesTags()
+    {
+
+        $json=json_decode(file_get_contents("http://codeforces.com/api/problemset.problems"),true);
+        $problems=$json['result']['problems'];
+        $all_tags=array();
+        foreach($problems as $one)
+        {
+            foreach($one['tags'] as $two)
+            {
+                $all_tags[$two]=0;
+            }
+        }
+        foreach($all_tags as $key=>&$one)
+        {
+            $tag_info=$this->model("tag_model")->getTagInfoByTagAlias($key);
+            if(!$tag_info)
+            {
+                $tag_id=$this->model("tag_model")->newTag($key,"");
+                $this->model("tag_model")->addTagAlias($tag_id,$key);
+                $tag_info=$this->model("tag_model")->getTagInfoByTagAlias($key);
+            }
+            $one=$tag_info['tag_id'];
+        }
+        foreach($problems as $one)
+        {
+            $problem_info=$this->model("vj_problem_model")->getProblemByOjIDAndProblemIdentity(1,$one['contestId'] . "/" . $one['index']);
+            if(!$problem_info)  continue;
+            $problem_id=$problem_info['problem_id'];
+
+            foreach($one['tags'] as $two)
+            {
+                if(isset($all_tags[$two]))
+                {
+                    $this->model("tag_model")->addProblemTag($problem_id,$all_tags[$two]);
+                }
+            }
+            echo $problem_id . " ". count($one['tags']) ."\n";
+        }
+    }
     protected function filter($html,$oj_url,$replace_class)
     {
         $dom=new Dom();
+
         $dom->load($html);
 
         $dom->find("script,style,iframe")->each(function($value,$key)
@@ -419,7 +560,6 @@ class spiderProblems extends SlimvcControllerCli
         });
         return strval($dom);
     }
-
     protected function getSubStr($str,$needle1,$needle2,$start_pos)
     {
         $pos1=strpos($str,$needle1,$start_pos);
@@ -427,5 +567,33 @@ class spiderProblems extends SlimvcControllerCli
         $pos2=strpos($str,$needle2,$pos1+1);
         if($pos2===false)   return false;
         return substr($str,$pos1+strlen($needle1),$pos2-$pos1-strlen($needle1));
+    }
+    protected function jsonFormatHex($html)
+    {
+        while(true)
+        {
+            $tmp=$this->getSubStr($html,",0x",",",0);
+            if($tmp===false)
+                break;
+            $tmp='0x' . $tmp;
+            $html=str_replace($tmp,'"' . $tmp . '"',$html);
+        }
+        while(true)
+        {
+            $tmp=$this->getSubStr($html,"[0x",",",0);
+            if($tmp===false)
+                break;
+            $tmp='0x' . $tmp;
+            $html=str_replace($tmp,'"' . $tmp . '"',$html);
+        }
+        while(true)
+        {
+            $tmp=$this->getSubStr($html,":0x",",",0);
+            if($tmp===false)
+                break;
+            $tmp='0x' . $tmp;
+            $html=str_replace($tmp,'"' . $tmp . '"',$html);
+        }
+        return $html;
     }
 }

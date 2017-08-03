@@ -16,6 +16,7 @@ class vJudgeAPI extends SlimvcController
             if (!$problem_info) throw new Exception("Problem 不存在");
             //unset($problem_info['compiler_info']);
             $return['problem_info'] = $problem_info;
+            $return['problem_tags']=$this->model("tag_model")->getProblemTags($problem_id);
             $return['status'] = 0;
             $this->outputJson($return);
 

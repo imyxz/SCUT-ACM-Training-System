@@ -20,6 +20,14 @@
                     </div>
 
                 </div>
+                <div class="card " >
+                    <div class="card-content">
+                        <span class="card-title">Tags:</span>
+                            <span class="chip" v-for="tag in problem_tags">{{ tag.tag_name }}</span>
+
+                    </div>
+
+                </div>
             </div>
             <div class="col l9 s12">
                 <div class="card-panel hoverable" >
@@ -94,7 +102,8 @@
                     compiler:-1,
                     submited:false,
                     job_status:[],
-                    job_id:0
+                    job_id:0,
+                    problem_tags:[]
                 },
                 filters:{
                     ram_filter:function(val)
@@ -140,6 +149,7 @@
                             if(response.data.status==0){
                                 vj_view_problem.problem_info=response.data.problem_info;
                                 vj_view_problem.compiler_info=JSON.parse(response.data.problem_info.compiler_info);
+                                vj_view_problem.problem_tags=response.data.problem_tags;
                                 setTimeout(function(){vj_view_problem.loading=false;},1000);
                                 Vue.nextTick(function () {
                                     $('select').material_select();

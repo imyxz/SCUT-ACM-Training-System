@@ -10,7 +10,7 @@ class SpiderHdu extends SpiderBasic
     function submitJob()
     {
         $ac_status=new acStatus();
-        $submit_result=new submitResult();
+        $this->submit_result=new submitResult();
         $this->job_info['source_code']=$this->job_info['source_code'] . "\n/**\n  *https://acm.scut.space/\n  *Job ID:". $this->job_info['job_id'] . "\n  *Time: ".time() . "\n****************************************************************\n**/";
         $problem_id=intval($this->problem_info['problem_identity']);
         $username=$this->spider_info['oj_username'];
@@ -40,8 +40,7 @@ class SpiderHdu extends SpiderBasic
             }
             $this->remote_runid=$this->getSubStr($html,'<td height=22px>','</td>',0);
 
-            $submit_result->remote_run_id=$this->remote_runid;
-            $this->submit_result=$submit_result;
+            $this->submit_result->remote_run_id=$this->remote_runid;
             return true;
         }
         else
