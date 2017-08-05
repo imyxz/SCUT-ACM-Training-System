@@ -47,5 +47,13 @@ class vj_problem_model extends SlimvcModel
             $oj_id,
             $problem_id)->row();
     }
+    function getProblemAcRank($problem_id,$limit=5)
+    {
+        return $this->queryStmt("select run_job.problem_id,run_job.ram_usage,run_job.time_usage,run_job.submit_time,user_info.user_nickname,user_info.user_avatar from run_job,user_info
+                                where run_job.problem_id=? and run_job.ac_status=1 and user_info.user_id=run_job.user_id group by user_info.user_id order by time_usage desc limit ?",
+            "ii",
+            $problem_id,
+            $limit)->all();
+    }
 
 }

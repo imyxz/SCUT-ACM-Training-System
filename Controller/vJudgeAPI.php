@@ -27,6 +27,23 @@ class vJudgeAPI extends SlimvcController
 
         }
     }
+    function getProblemAcRank()
+    {
+
+        try {
+            $problem_id = intval($_GET['id']);
+            $rank = $this->model("vj_problem_model")->getProblemAcRank($problem_id);
+            $return['rank']=$rank;
+            $return['status'] = 0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
 
     function submitCode()
     {

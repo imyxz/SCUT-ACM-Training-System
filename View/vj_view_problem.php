@@ -26,8 +26,21 @@
                             <span class="chip" v-for="tag in problem_tags">{{ tag.tag_name }}</span>
 
                     </div>
-
                 </div>
+                <div class="card " >
+                    <div class="card-content">
+                        <span class="card-title">Rank:</span>
+                        <ul class="collection">
+                            <li class="collection-item avatar" v-for="(one,rank) in ranks">
+                                <img :src="one.user_avatar" alt="" class="circle">
+                                <span class="title"><span class="red-text">{{one.user_nickname}}</span> Rank #{{ rank+1 }}</span>
+                                <p>Time: {{ one.time_usage | time_filter}}<br />Ram: {{ one.ram_usage | ram_filter}}</p>
+                                <a href="#" class="secondary-content"><i class="material-icons">grade</i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
             <div class="col l9 s12">
                 <div class="card-panel hoverable" >
@@ -103,7 +116,8 @@
                     submited:false,
                     job_status:[],
                     job_id:0,
-                    problem_tags:[]
+                    problem_tags:[],
+                    ranks:[]
                 },
                 filters:{
                     ram_filter:function(val)
@@ -189,6 +203,19 @@
 
                             }
 
+                        });
+                    axios.get(this.basic_url+'vJudgeAPI/getProblemAcRank/id/'+this.problem_id)
+                        .then(function(response)
+                        {
+                            if(response.data.status==0){
+                                vj_view_problem.ranks=response.data.rank;
+
+                            }
+                            else
+                            {
+                                Materialize.toast('<span class="">'+response.data.err_msg+'</span>' , 2000);
+
+                            }
                         });
 
                 },

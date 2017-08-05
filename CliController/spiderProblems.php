@@ -461,6 +461,12 @@ class spiderProblems extends SlimvcControllerCli
                 $compiler='{"1":"C","2":"C 11","11":"C++","12":"C++ 11","21":"C#","31":"Java","41":"Python2","42":"Python3","45":"PyPy2","46":"PyPy3","51":"Ruby","61":"PHP","71":"Haskell","81":"Scala","91":"Javascript","101":"Go","111":"Visual C++","121":"Objective-C","131":"Pascal"}';
                 $id=$this->model("vj_problem_model")->insertProblem(4,$problem_id,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
 
+
+                $tag=$this->getSubStr($html,'diantou.problemGroup.Get(','),',0);
+                $tag=iconv("gb2312","UTF-8//IGNORE",$tag);
+                $tag=$this->getSubStr($tag,'Name:"','"',0);
+                if(!empty($tag))
+                    $all_tags[$tag]=0;
                 foreach($all_tags as $key=>&$one)
                 {
                     $tag_info=$this->model("tag_model")->getTagInfoByTagAlias($key);
@@ -564,7 +570,7 @@ class spiderProblems extends SlimvcControllerCli
     {
         $pos1=strpos($str,$needle1,$start_pos);
         if($pos1===false) return false;
-        $pos2=strpos($str,$needle2,$pos1+1);
+        $pos2=strpos($str,$needle2,$pos1+strlen($needle1));
         if($pos2===false)   return false;
         return substr($str,$pos1+strlen($needle1),$pos2-$pos1-strlen($needle1));
     }

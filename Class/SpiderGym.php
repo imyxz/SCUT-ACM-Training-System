@@ -21,7 +21,7 @@ class SpiderGym extends SpiderBasic
         $curl->setHeader("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
         $html=$curl->get("http://codeforces.com/gym/$contest_id/submit",20);
         $cookie=$curl->cookieStr2Arr($this->additionInfo['cookie']);
-        $dom=new Dom();
+        $dom=new PHPHtmlParser\Dom();
         $dom->load($html);
         $tmp=$dom->find(".submit-form > input",0);
         if(!$tmp)
@@ -123,7 +123,7 @@ class SpiderGym extends SpiderBasic
         $curl->setHeader("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
         $html=$curl->get("http://codeforces.com/submissions/$username",10);
         if(!$html) return false;
-        $dom=new Dom();
+        $dom=new PHPHtmlParser\Dom();
         $dom->load($html);
         $dom->find(".status-frame-datatable tr")->each(function($tr,$key) use(&$query_job_info)
             {

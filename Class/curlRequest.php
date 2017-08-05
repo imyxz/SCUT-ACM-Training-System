@@ -49,7 +49,7 @@ class curlRequest{
         );
 
         $ch = curl_init();
-        curl_setopt ($ch, CURLOPT_PROXY, "127.0.0.1:8888");
+        //curl_setopt ($ch, CURLOPT_PROXY, "127.0.0.1:8888");
         curl_setopt_array($ch, ( $defaults));
         curl_setopt($ch,CURLOPT_COOKIE,$this->cookie);
         if(!empty($this->header))
@@ -60,10 +60,10 @@ class curlRequest{
         $result = curl_exec($ch);
         $this->response=$result;
         $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
-        unlink($cookie_filename);
         $error=curl_error($ch);
         curl_close($ch);
         $this->response_cookie=$this->processCookieJar(file_get_contents($cookie_filename));
+        unlink($cookie_filename);
         if( ! $result)
         {
             echo $error;
@@ -96,10 +96,11 @@ class curlRequest{
         $result = curl_exec($ch);
         $this->response=$result;
         $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
-        $this->response_cookie=$this->processCookieJar(file_get_contents($cookie_filename));
-        unlink($cookie_filename);
         $error=curl_error($ch);
         curl_close($ch);
+        $this->response_cookie=$this->processCookieJar(file_get_contents($cookie_filename));
+        unlink($cookie_filename);
+
         if( ! $result)
         {
             echo $error;

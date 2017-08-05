@@ -51,6 +51,7 @@ class user extends SlimvcController
                 Slimvc::ErrorNotice("系统错误！");
 
         }
+        $this->model("user_model")->updateUserAvatar($userid,$encuss_info['avatar']);
         $user_name=addslashes($encuss_info['nickname']);
         $this->helper("user_helper")->loginUser($userid);
         $this->info="登录成功！<br />欢迎您：$user_name<br />正在跳转至登录前访问的页面...";
