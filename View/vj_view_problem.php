@@ -9,7 +9,7 @@
         }
     </style>
 
-    <div class="container" id="vj_view_problem">
+    <div class="" id="vj_view_problem">
         <div class="row">
             <div class="col l3 s12">
                 <div class="card-panel " >
@@ -42,7 +42,7 @@
                 </div>
 
             </div>
-            <div class="col l9 s12">
+            <div class="col l8 s12">
                 <div class="card-panel hoverable" >
 
                     <div class="title">

@@ -22,7 +22,7 @@ class curlRequest{
     {
         $this->cookie=$cookie;
     }
-    public function post($url, $post,$timeout=5)
+    public function post($url, $post,$timeout=10)
     {
         $request_data='';
         if(is_array($post))
@@ -72,7 +72,7 @@ class curlRequest{
 
         return $result;
     }
-    public function get($url,$timeout=5)
+    public function get($url,$timeout=10)
     {
         $defaults = array(
             CURLOPT_HEADER => 0,

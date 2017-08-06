@@ -55,4 +55,73 @@ class onlineIDE extends SlimvcController
 
         }
     }
+    function saveDraft()
+    {
+        try {
+            if($this->helper("user_helper")->isLogin()==false) throw new Exception("您未登录，无法保存代码");
+            $json=$this->getRequestJson();
+            $title=@$json['draft_title'];
+            if($title==null)    $title=' ';
+            $source_code=$json['source_code'];
+            $is_autosave=$json['is_autosave'];
+            if(empty($source_code)) throw new Exception("代码不能为空！");
+            if($is_autosave==true)
+                $is_autosave=true;
+            else
+                $is_autosave=false;
+            $user_id=$this->helper("user_helper")->getUserID();
+            if(!$draft_id=$this->model("draft_model")->newDraft($user_id,$title,$source_code,$is_autosave))   throw new Exception("系统出错");
+
+            $return['draft_id']=$draft_id;
+            $return['status'] = 0;
+            $this->outputJson($return);
+
+        }
+        catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
+    function getUserDraft()
+    {
+        try {
+            if($this->helper("user_helper")->isLogin()==false) throw new Exception("您未登录，无法读取代码列表");
+            $user_id=$this->helper("user_helper")->getUserID();
+
+            $return['drafts']=$this->model("draft_model")->getUserDraft($user_id,30);
+            $return['autosave']=$this->model("draft_model")->getUserAutoSave($user_id,30);
+
+            $return['status'] = 0;
+            $this->outputJson($return);
+
+        }
+        catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
+    function getDraftCode()
+    {
+        try {
+            if($this->helper("user_helper")->isLogin()==false) throw new Exception("您未登录，无法读取代码");
+            $user_id=$this->helper("user_helper")->getUserID();
+            $id=intval($_GET['id']);
+            $draft=$this->model("draft_model")->getDraftInfo($id);
+            if($draft['user_id']!=$user_id) throw new Exception("无权限");
+            $return['code']=$draft['source_code'];
+            $return['status'] = 0;
+            $this->outputJson($return);
+
+        }
+        catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
 }

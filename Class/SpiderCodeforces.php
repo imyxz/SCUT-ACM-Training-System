@@ -58,11 +58,12 @@ class SpiderCodeforces extends SpiderBasic
             "action"=>"submitSolutionFormSubmitted",
             "sourceFile"=>'',
             "_tta"=>183,
-            "contestId"=>$contest_id
+            "contestId"=>$contest_id,
+            "doNotShowWarningAgain"=>'on'
         );
         $return=$curl->post("http://codeforces.com/contest/$contest_id/submit" . $submit_addon,$request,10);
-        /* ÀÏ°æ
-        if($curl->getResponseCode()=="200" && empty($return))//Õý³£Çé¿öÎÞ·µ»Ø£¨Ìø×ª£©
+        /* ï¿½Ï°ï¿½
+        if($curl->getResponseCode()=="200" && empty($return))//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ï¿½Ø£ï¿½ï¿½ï¿½×ªï¿½ï¿½
         {
             $html=$curl->get("http://codeforces.com/contest/$contest_id/my",10);
             $dom->load($html);
@@ -75,7 +76,7 @@ class SpiderCodeforces extends SpiderBasic
 
         }
         */
-        if($curl->getResponseCode()=="302" && empty($return))//Õý³£Çé¿öÎÞ·µ»Ø£¨Ìø×ª£©
+        if($curl->getResponseCode()=="302" && empty($return))//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ï¿½Ø£ï¿½ï¿½ï¿½×ªï¿½ï¿½
         {
             $html=$curl->get("http://codeforces.com/api/user.status?handle=$username&from=1&count=1",10);
             $json=json_decode($html,true);

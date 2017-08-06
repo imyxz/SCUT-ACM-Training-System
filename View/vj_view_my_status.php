@@ -158,7 +158,7 @@
                             {
                                 if(response.data.status==0)
                                 {
-                                    editor.setValue(response.data.source_code);
+                                    editor.setValue(response.data.source_code,1);
                                     $('#code-modal').modal('open');
                                 }
                                 else

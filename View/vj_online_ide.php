@@ -17,17 +17,17 @@
             right: 50px;
             bottom: 150px;
         }
-        .tabs .tab a{
+        #result-modal .tabs .tab a{
             color:white;
         }
-        .tabs .tab a:hover,.tabs .tab a.active {
+        #result-modal .tabs .tab a:hover,.tabs .tab a.active {
             background-color:transparent;
             color:white;
         }
-        .tabs .tab.disabled a,.tabs .tab.disabled a:hover {
+        #result-modal .tabs .tab.disabled a,.tabs .tab.disabled a:hover {
             color:rgba(255,255,255,0.7);
         }
-        .tabs .indicator {
+        #result-modal .tabs .indicator {
             background-color:white;
         }
     </style>
@@ -40,7 +40,7 @@ int main()
     cout&lt;&lt;"Hello World!"&lt;&lt;endl;
 }</div>
         <div class="button-save">
-            <a class="btn-floating btn-large waves-effect waves-light blue "><i class="material-icons">save</i></a>
+            <a class="btn-floating btn-large waves-effect waves-light blue " onclick="$('#modal_draft').modal('open');"><i class="material-icons">save</i></a>
         </div>
         <div class="button-run">
             <a class="btn-floating btn-large waves-effect waves-light green " onclick="$('#result-modal').modal('open');"><i class="material-icons">play_arrow</i></a>
@@ -82,34 +82,31 @@ int main()
                 </div>
             </div>
         </div>
+        <div id="modal_draft" class="modal bottom-sheet">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col l6">
+                        <h4>手动保存：</h4>
+                        <div class="collection">
+                            <div class="collection-item input-field"><span class="badge"><a href="#" @click="saveCode(false)"><i class="material-icons green-text text-darken-1">save</i></a></span><input type="text" style="width:80%;margin:0;height:22px;" placeholder="请输入保存代码的标题" v-model="new_draft_title"/></div>
+                            <a href="#" v-for="draft in drafts" @click="readCode(draft.draft_id)" class="collection-item" ><span class="badge">{{draft.save_time}}</span>{{draft.draft_title}}</a>
+                        </div>
+                    </div>
+                    <div class="col l6">
+                        <h4>自动保存：</h4>
+                        <div class="collection">
+                            <a href="#"  class="collection-item" v-for="draft in auto_saves" @click="readCode(draft.draft_id)"><span class="new badge" data-badge-caption="自动保存"></span>{{draft.save_time}}</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
     <script>
         var editor;
-        $(document).ready(function(){
-            ace.require("ace/ext/language_tools");
-            editor = ace.edit("editor");
-            editor.getSession().setMode("ace/mode/c_cpp");
-            editor.setTheme("ace/theme/vibrant_ink");
-            editor.setFontSize(16);
-            editor.setOptions({
-                enableBasicAutocompletion: true,
-                enableSnippets: true,
-                enableLiveAutocompletion: true
-            });
-            $('.modal').modal({
-                    ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-                        $('ul.tabs').tabs();
-                        $('ul.tabs').tabs('select_tab', 'input_div');
-                    }
-                }
-            );
-
-
-
-        });
-    </script>
-    <script>
         var problem_list_table=new Vue(
             {
                 el: "#problem_list_table",
@@ -121,12 +118,19 @@ int main()
                     output_code:'',
                     error_code:'',
                     job_id:0,
-                    is_updating:false
+                    is_updating:false,
+                    drafts:[],
+                    auto_saves:[],
+                    new_draft_title:'',
+                    old_code:''
                 },
                 filters:{
                 },
                 created: function(){
                     setTimeout(this.updateStatus,1000);
+                    setTimeout(this.autoSave,60000);
+                    this.getUserDraft();
+
                 },
                 methods:{
                     submitJob:function()
@@ -196,21 +200,125 @@ int main()
                                     }
                                     setTimeout(problem_list_table.updateStatus,1000);
 
-                                })
-                                .catch(function(error)
-                                {
-                                    Materialize.toast('<span class="">更新失败：'+'网络通信错误'+'</span>' , 2000);
-                                    setTimeout(problem_list_table.updateStatus,1000);
-
                                 });
                         }
                         else
                             setTimeout(problem_list_table.updateStatus,1000);
+                    },
+                    getUserDraft:function()
+                    {
+                        axios.get(this.basic_url+'onlineIDE/getUserDraft/')
+                            .then(function(response)
+                            {
+                                if(response.data.status==0)
+                                {
+                                    problem_list_table.drafts=response.data.drafts;
+                                    problem_list_table.auto_saves=response.data.autosave;
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">读取失败：'+response.data.err_msg+'</span>' , 2000);
+                                }
+
+                            });
+                    },
+                    autoSave:function()
+                    {
+                        var code=editor.getValue();
+                        if(code!=this.old_code)
+                        {
+                            this.saveCode(true);
+                        }
+                        setTimeout(this.autoSave,60000);
+                    },
+                    readCode:function(id)
+                    {
+                        axios.get(this.basic_url+'onlineIDE/getDraftCode/id/'+id)
+                            .then(function(response)
+                            {
+                                if(response.data.status==0)
+                                {
+                                    editor.setValue(response.data.code,1);
+                                    problem_list_table.old_code=response.data.code;
+                                    Materialize.toast('<span class="">读取成功！</span>' , 2000);
+                                    $('#modal_draft').modal('close');
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">读取失败：'+response.data.err_msg+'</span>' , 2000);
+                                }
+
+                            });
+                    },
+                    saveCode:function(is_autosave)
+                    {
+                        var obj=new Object;
+                        if(is_autosave)
+                        {
+                            obj.is_autosave=true;
+                            obj.draft_title='';
+                            this.old_code=editor.getValue();
+                        }
+                        else
+                        {
+                            obj.is_autosave=false;
+                            obj.draft_title=this.new_draft_title;
+                        }
+                        obj.source_code=editor.getValue();
+                        axios.post(this.basic_url+'onlineIDE/saveDraft/',JSON.stringify(obj))
+                            .then(function(response)
+                            {
+                                if(response.data.status==0)
+                                {
+                                    if(is_autosave)
+                                    {
+                                        Materialize.toast('<span class="">自动保存成功！</span>' , 2000);
+                                    }
+                                    else
+                                    {
+                                        Materialize.toast('<span class="">保存成功！</span>' , 2000);
+                                        $('#modal_draft').modal('close');
+
+                                    }
+                                    this.getUserDraft();
+
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">保存失败：'+response.data.err_msg+'</span>' , 2000);
+                                }
+                            });
                     }
                 }
 
 
             }
         );
+    </script>
+    <script>
+
+        $(document).ready(function(){
+            ace.require("ace/ext/language_tools");
+            editor = ace.edit("editor");
+            editor.getSession().setMode("ace/mode/c_cpp");
+            editor.setTheme("ace/theme/vibrant_ink");
+            editor.setFontSize(16);
+            editor.setOptions({
+                enableBasicAutocompletion: true,
+                enableSnippets: true,
+                enableLiveAutocompletion: true
+            });
+            $('.modal').modal({
+                    ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                        $('ul.tabs').tabs();
+                        $('ul.tabs').tabs('select_tab', 'input_div');
+                    }
+                }
+            );
+            problem_list_table.old_code=editor.getValue();
+
+
+
+        });
     </script>
 <?php include('footer.php');?>

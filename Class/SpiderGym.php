@@ -50,7 +50,8 @@ class SpiderGym extends SpiderBasic
             "action"=>"submitSolutionFormSubmitted",
             "sourceFile"=>'',
             "_tta"=>364,
-            "contestId"=>$contest_id
+            "contestId"=>$contest_id,
+            "doNotShowWarningAgain"=>'on'
         );
         $return=$curl->post("http://codeforces.com/gym/$contest_id/submit" . $submit_addon,$request,10);
 
@@ -154,7 +155,7 @@ class SpiderGym extends SpiderBasic
     {
         $curl=new curlRequest();
         $curl->setCookieRaw($this->additionInfo['cookie']);
-        $html=$curl->get("http://codeforces.com/");
+        $html=$curl->get("http://codeforces.com/",20);
         if(strpos($html,'<a href="/register">')!==false || $curl->getResponseCode()=='302')
             return false;
         else
