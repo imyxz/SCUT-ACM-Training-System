@@ -23,7 +23,7 @@
                 <div class="card " >
                     <div class="card-content">
                         <span class="card-title">Tags:</span>
-                            <span class="chip" v-for="tag in problem_tags">{{ tag.tag_name }}</span>
+                            <a class="chip" v-for="tag in problem_tags" :href="tag.tag_name | generate_tag_url">{{ tag.tag_name }}</a>
 
                     </div>
                 </div>
@@ -154,6 +154,10 @@
                             unit='s';
                         }
                         return  val.toFixed(2)+ " "+unit;
+                    },
+                    generate_tag_url:function(val)
+                    {
+                        return vj_view_problem.basic_url+"vJudge/viewTag/name/"+ encodeURIComponent(val);
                     }
                 },
                 created: function(){

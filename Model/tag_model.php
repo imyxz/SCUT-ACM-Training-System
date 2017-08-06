@@ -60,4 +60,22 @@ class tag_model extends SlimvcModel
             return false;
         return $row;
     }
+    function getTagProblems($tag_id,$page,$limit)
+    {
+        $page--;
+        if($page>0)
+            $start=$page*$limit;
+        else
+            $start=0;
+        return $this->queryStmt("select problem_tag_relation.problem_id,problem_info.memory_limit,problem_info.problem_title,problem_info.time_limit,problem_info.problem_identity,oj_site_info.oj_name,problem_info.add_time from problem_tag_relation,problem_info,oj_site_info
+                                  where problem_tag_relation.tag_id=? and problem_info.problem_id=problem_tag_relation.problem_id and oj_site_info.oj_id=problem_info.oj_id limit ?,?",
+            "iii",
+            $tag_id,
+            $start,
+            $limit)->all();
+    }
+    function getAllTag()
+    {
+        return $this->query("select problem_tags.tag_count,problem_tags.tag_name from problem_tags order by tag_count DESC ")->all();
+    }
 }

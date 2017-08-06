@@ -9,7 +9,7 @@ class vj_problem_list_model extends SlimvcModel
 {
     function getProblemListProblems($problem_list_id)
     {
-        return $this->queryStmt("select problem_list_relation.*,problem_info.problem_id,problem_info.problem_title,problem_info.problem_identity from problem_list_relation,problem_info where problem_list_relation.list_id=? and problem_info.problem_id=problem_list_relation.problem_id order by problem_list_relation.problem_index asc",
+        return $this->queryStmt("select problem_list_relation.*,problem_info.problem_id,problem_list_relation.problem_title,problem_info.problem_identity from problem_list_relation,problem_info where problem_list_relation.list_id=? and problem_info.problem_id=problem_list_relation.problem_id order by problem_list_relation.problem_index asc",
             "i",
             $problem_list_id)->all();
     }

@@ -24,7 +24,7 @@ class vJudge extends SlimvcController
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
-        $this->sub_active=3;
+        $this->sub_active=4;
 
         $this->view("vj_view_my_status");
     }
@@ -55,7 +55,7 @@ class vJudge extends SlimvcController
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
-        $this->sub_active=4;
+        $this->sub_active=5;
         $this->list_id=intval($_GET['id']);
         $this->view("vj_edit_problem_list");
     }
@@ -65,7 +65,7 @@ class vJudge extends SlimvcController
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
-        $this->sub_active=4;
+        $this->sub_active=5;
         $this->list_id=0;
         $this->view("vj_edit_problem_list");
     }
@@ -84,7 +84,17 @@ class vJudge extends SlimvcController
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
-        $this->sub_active=5;
+        $this->sub_active=6;
         $this->view("vj_online_ide");
+    }
+    function viewTag()
+    {
+        $this->title="Tags";
+        $this->active=5;
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=3;
+        $this->tag_name=urldecode(@$_GET['name']);
+        $this->view("vj_view_tag_list");
     }
 }

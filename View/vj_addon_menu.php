@@ -7,6 +7,9 @@
         <li class="tab"><a href="<?php echo _Http;?>vJudge/allProblemList/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
             $index++; ?>">题目列表</a>
         </li>
+        <li class="tab"><a href="<?php echo _Http;?>vJudge/viewTag/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
+            $index++; ?>">标签列表</a>
+        </li>
         <li class="tab"><a href="<?php echo _Http;?>vJudge/myStatus/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
             $index++; ?>">提交状态</a>
         </li>

@@ -335,4 +335,45 @@ class vJudgeAPI extends SlimvcController
         }
 
     }
+    function getTagList()
+    {
+        try {
+            $page = intval(@$_GET['page']);
+            if ($page < 1)
+                $page = 1;
+            $tag_name=trim(urldecode($_GET['name']));
+            $tag_info=$this->model("tag_model")->getTagInfoByTagName($tag_name);
+            if(!$tag_info)
+                throw new Exception("Tag name 不存在");
+            $tag_id=$tag_info['tag_id'];
+            $tmp = $this->model("tag_model")->getTagProblems($tag_id,$page, 30);
+            $return['problem_list'] = $tmp;
+            if (count($tmp) < 30)
+                $return['is_end'] = true;
+            else
+                $return['is_end'] = false;
+            $return['status'] = 0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
+    function getAllTags()
+    {
+        try {
+            $return['tags']=$this->model("tag_model")->getAllTag();
+            $return['status'] = 0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
 }
