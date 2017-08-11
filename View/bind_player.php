@@ -1,5 +1,7 @@
 <?php include('header.php');?>
     <div class="container" id="bind_player">
+    <div class="card">
+    <div class="card-content  ">
         <p class="big-test">绑定小队</p>
         <div class="row">
             <div class="col l4">
@@ -29,7 +31,8 @@
             <div class="col l8">
             </div>
         </div>
-
+    </div>
+        </div>
     </div>
     <script>
         var bind_player=new Vue(

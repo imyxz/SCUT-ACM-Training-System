@@ -78,7 +78,7 @@ class vj_job_model extends SlimvcModel
 
     function getUserJobStatus($user_id,$limits)
     {
-        return $this->queryStmt("select run_job.job_id,run_job.problem_id,run_job.oj_id,run_job.user_id,run_job.ac_status,run_job.submit_time,run_job.time_usage,run_job.ram_usage,run_job.wrong_info,problem_info.problem_identity,oj_site_info.oj_name,user_info.user_nickname,problem_info.problem_url,run_job.running_status
+        return $this->queryStmt("select run_job.job_id,run_job.problem_id,run_job.oj_id,run_job.user_id,run_job.ac_status,run_job.submit_time,run_job.time_usage,run_job.ram_usage,run_job.wrong_info,problem_info.problem_identity,oj_site_info.oj_name,user_info.user_nickname,problem_info.problem_url,run_job.running_status,run_job.is_shared
         from run_job,problem_info,oj_site_info,user_info where run_job.user_id=? and problem_info.problem_id=run_job.problem_id and oj_site_info.oj_id=run_job.oj_id and user_info.user_id=run_job.user_id
         order by job_id desc limit 0,?",
             "ii",
@@ -98,5 +98,12 @@ class vj_job_model extends SlimvcModel
         return $this->queryStmt("select * from run_job where job_id=?",
             "i",
             $job_id)->row();
+    }
+    function setJobShare($job_id,$is_shared)
+    {
+        return $this->queryStmt("update run_job set is_shared=? where job_id=?",
+            "ii",
+            $is_shared,
+            $job_id);
     }
 }

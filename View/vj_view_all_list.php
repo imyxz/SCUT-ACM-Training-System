@@ -1,7 +1,7 @@
 <?php include('header.php');?>
     <div class="container" id="problem_list_table">
 
-        <div class="card-panel hoverable" >
+        <div class="card-panel hoverable over-flow-auto" >
             <div class="row">
                 <div class="col s6"  style="margin-top:15px;">
                     <ul class="pagination">

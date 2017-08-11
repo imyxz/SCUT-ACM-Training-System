@@ -124,4 +124,29 @@ class onlineIDE extends SlimvcController
 
         }
     }
+    function formatCode()
+    {
+        try {
+            $json=$this->getRequestJson();
+            $code=$json['source_code'];
+            $input_file=tempnam(sys_get_temp_dir(),"scutvj") . ".cpp";
+            $output_file=tempnam(sys_get_temp_dir(),"scutvj") . ".cpp";
+            if(strlen($code)>65536) throw new Exception("代码长度不得超过64k");
+            file_put_contents($input_file,$code);
+            shell_exec("/usr/bin/astyle --style=ansi --stdin=$input_file --stdout=$output_file");
+            $return['format_code']=file_get_contents($output_file);
+            if(empty($return['format_code']))   throw new Exception("原因未知！");
+            @unlink($input_file);
+            @unlink($output_file);
+            $return['status'] = 0;
+            $this->outputJson($return);
+
+        }
+        catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
 }

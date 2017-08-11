@@ -17,6 +17,11 @@
             right: 50px;
             bottom: 150px;
         }
+        .button-format{
+            position: absolute;
+            right: 50px;
+            bottom: 220px;
+        }
         #result-modal .tabs .tab a{
             color:white;
         }
@@ -45,6 +50,10 @@ int main()
         <div class="button-run">
             <a class="btn-floating btn-large waves-effect waves-light green " onclick="$('#result-modal').modal('open');"><i class="material-icons">play_arrow</i></a>
         </div>
+        <div class="button-format">
+            <a class="btn-floating btn-large waves-effect waves-light yellow darken-4 " @click="formatCode"><i class="material-icons">spellcheck</i></a>
+        </div>
+
         <div id="result-modal" class="modal modal-fixed-footer black white-text" style="overflow: visible;">
             <div class="modal-content " style="padding:0;overflow: visible;">
 
@@ -122,7 +131,8 @@ int main()
                     drafts:[],
                     auto_saves:[],
                     new_draft_title:'',
-                    old_code:''
+                    old_code:'',
+                    job_code_id:<?php echo $job_code_id;?>
                 },
                 filters:{
                 },
@@ -130,6 +140,7 @@ int main()
                     setTimeout(this.updateStatus,1000);
                     setTimeout(this.autoSave,60000);
                     this.getUserDraft();
+
 
                 },
                 methods:{
@@ -238,10 +249,28 @@ int main()
                             {
                                 if(response.data.status==0)
                                 {
-                                    editor.setValue(response.data.code,1);
+                                    editor.setValue(response.data.code,-1);
                                     problem_list_table.old_code=response.data.code;
                                     Materialize.toast('<span class="">读取成功！</span>' , 2000);
                                     $('#modal_draft').modal('close');
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">读取失败：'+response.data.err_msg+'</span>' , 2000);
+                                }
+
+                            });
+                    },
+                    readJobCode:function(id)
+                    {
+                        axios.get(this.basic_url+'vJudgeAPI/getJobSourceCode/id/'+id)
+                            .then(function(response)
+                            {
+                                if(response.data.status==0)
+                                {
+                                    editor.setValue(response.data.source_code,-1);
+                                    problem_list_table.old_code=response.data.source_code;
+                                    Materialize.toast('<span class="">读取成功！</span>' , 2000);
                                 }
                                 else
                                 {
@@ -280,12 +309,31 @@ int main()
                                         $('#modal_draft').modal('close');
 
                                     }
-                                    this.getUserDraft();
+                                    problem_list_table.getUserDraft();
 
                                 }
                                 else
                                 {
                                     Materialize.toast('<span class="">保存失败：'+response.data.err_msg+'</span>' , 2000);
+                                }
+                            });
+                    },
+                    formatCode:function()
+                    {
+                        var obj=new Object;
+                        obj.source_code=editor.getValue();
+                        axios.post(this.basic_url+'onlineIDE/formatCode/',JSON.stringify(obj))
+                            .then(function(response)
+                            {
+                                if(response.data.status==0)
+                                {
+                                    editor.setValue(response.data.format_code,-1);
+                                    Materialize.toast('<span class="">格式化代码成功！</span>' , 2000);
+
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">格式化代码失败：'+response.data.err_msg+'</span>' , 2000);
                                 }
                             });
                     }
@@ -316,7 +364,8 @@ int main()
                 }
             );
             problem_list_table.old_code=editor.getValue();
-
+            if(problem_list_table.job_code_id>0)
+                problem_list_table.readJobCode(problem_list_table.job_code_id);
 
 
         });

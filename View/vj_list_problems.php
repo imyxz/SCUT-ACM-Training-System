@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="col l9 s12">
-            <div class="card-panel hoverable" style="position: relative">
+            <div class="card-panel hoverable over-flow-auto" style="position: relative">
                 <table class="highlight bordered" style="font-size: 20px;">
                     <thead>
                     <tr>

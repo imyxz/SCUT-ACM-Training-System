@@ -120,8 +120,31 @@ class vJudgeAPI extends SlimvcController
         try {
             $job_id = intval($_GET['id']);
             $tmp = $this->model("vj_job_model")->getJobInfo($job_id);
-            if (!$tmp || $tmp['user_id'] != $this->helper("user_helper")->getUserID()) throw new Exception("您无权查看此代码");
+            if (!$tmp || ($tmp['user_id'] != $this->helper("user_helper")->getUserID() && $tmp['is_shared']==false)) throw new Exception("您无权查看此代码");
             $return['source_code'] = $tmp['source_code'];
+            $return['status'] = 0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
+    function setJobShare()
+    {
+        try {
+            $json=$this->getRequestJson();
+            $job_id = intval($json['job_id']);
+            if($json['is_shared']==true)
+                $is_shared=true;
+            else
+                $is_shared=false;
+
+            $tmp = $this->model("vj_job_model")->getJobInfo($job_id);
+            if (!$tmp || ($tmp['user_id'] != $this->helper("user_helper")->getUserID())) throw new Exception("您无权操作");
+            $this->model("vj_job_model")->setJobShare($job_id,$is_shared);
             $return['status'] = 0;
             $this->outputJson($return);
 

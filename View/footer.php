@@ -25,7 +25,21 @@
         });
         $('.tabs-transparent').each(function(){
             $(this).unbind("click");
-        })
+        });
+        axios.get('<?php echo _Http;?>userAPI/getBgPic/')
+            .then(function(response)
+            {
+                if(response.data.status==0)
+                {
+                    $('body').css("background-image","url("+ response.data.pic_url + ")");
+                    $('body').css("background-repeat","no-repeat");
+                    $('body').css("background-attachment","fixed");
+
+
+                    $('body').css("opacity",0.8);
+                }
+
+            })
     })
 </script>
 </body>

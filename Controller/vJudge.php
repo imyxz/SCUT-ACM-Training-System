@@ -85,6 +85,10 @@ class vJudge extends SlimvcController
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
         $this->sub_active=6;
+        if(isset($_GET['jobCode']))
+            $this->job_code_id=intval($_GET['jobCode']);
+        else
+            $this->job_code_id=0;
         $this->view("vj_online_ide");
     }
     function viewTag()

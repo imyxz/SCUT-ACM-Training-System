@@ -1,5 +1,7 @@
 <?php include('header.php');?>
     <div class="container" id="add_contest">
+    <div class="card">
+    <div class="card-content  ">
         <p class="big-text">添加比赛</p>
         <div class="row">
             <div class="col l4">
@@ -63,7 +65,8 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    </div>
     </div>
     <script>
         var add_contest=new Vue(

@@ -10,7 +10,7 @@
     </style>
     <div class="container" id="status_list_table">
 
-        <div class="card-panel hoverable" >
+        <div class="card-panel hoverable over-flow-auto" >
             <table class="highlight bordered">
                 <thead>
                 <tr>
@@ -36,8 +36,10 @@
                         <td class="center-align">{{ status.time_usage | time_filter }}</td>
                         <td class="center-align">{{ status.ram_usage | ram_filter }}</td>
                         <td class="center-align">{{ status.submit_time }}</td>
-                        <td class="center-align" ><a class="btn-floating"  @click="displaySourceCode(status.job_id)"><i class="material-icons">search</i></a></td>
-
+                        <td class="center-align" >
+                            <a class="btn-floating"  @click="displaySourceCode(status.job_id)"><i class="material-icons">search</i></a>
+                            <a class="btn-floating" :class="{'red':status.is_shared,'blue':!status.is_shared }" @click="setJobShare(status.job_id,!status.is_shared)"  ><i class="material-icons">share</i></a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -57,14 +59,24 @@
                 </div>
             </div>
         </div>
-        <div id="code-modal" class="modal" style="width:90%;overflow: visible;height:100%">
+        <div id="code-modal" class="modal"  style="width:90%;overflow: visible;height:100%">
             <div class="modal-content">
                 <div id="editor" ></div>
+            </div>
+        </div>
+        <div id="share-modal" class="modal">
+            <div class="modal-content">
+                <h4>代码链接</h4>
+                <h5><a :href="cur_share_id | share_url">{{cur_share_id | share_url}}</a></h5>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">ok</a>
             </div>
         </div>
     </div>
     <script>
         var editor;
+        var basic_url='<?php echo _Http;?>';
         var status_list_table=new Vue(
             {
                 el: "#status_list_table",
@@ -73,7 +85,8 @@
                     loading: true,
                     ac_status:["In queue","Accept","PARTIAL","COMPILATION ERROR","RUNTIME ERROR","WRONG ANSWER","PRESENTATION ERROR","TIME LIMIT EXCEEDED","MEMORY LIMIT EXCEEDED","IDLENESS LIMIT EXCEEDED","SECURITY VIOLATED","CRASHED","INPUT PREPARATION CRASHED","CHALLENGED","SKIPPED","Testing","REJECTED"],
                     waiting:0,
-                    basic_url:'<?php echo _Http;?>'
+                    basic_url:'<?php echo _Http;?>',
+                    cur_share_id:0
                 },
                 filters:{
                     ram_filter:function(val)
@@ -121,7 +134,11 @@
                     },
                     generate_url:function(val)
                     {
-                        return status_list_table.basic_url+"vJudge/viewProblem/id/"+val;
+                        return basic_url+"vJudge/viewProblem/id/"+val;
+                    },
+                    share_url:function(val)
+                    {
+                        return basic_url+"vJudge/onlineIDE/jobCode/"+val;
                     }
                 },
                 created: function(){
@@ -158,7 +175,7 @@
                             {
                                 if(response.data.status==0)
                                 {
-                                    editor.setValue(response.data.source_code,1);
+                                    editor.setValue(response.data.source_code,-1);
                                     $('#code-modal').modal('open');
                                 }
                                 else
@@ -166,6 +183,33 @@
                                     Materialize.toast('<span class="">查看失败：'+response.data.err_msg+'</span>' , 2000);
                                 }
                             });
+                    },
+                    setJobShare:function(job_id,is_shared)
+                    {
+                        var obj=new Object;
+                        obj.job_id=job_id;
+                        obj.is_shared=is_shared;
+                        axios.post('<?php echo _Http;?>vJudgeAPI/setJobShare/',JSON.stringify(obj))
+                            .then(function(response)
+                            {
+                                if(response.data.status==0)
+                                {
+                                    if(is_shared)
+                                    {
+                                        status_list_table.cur_share_id=job_id;
+                                        $('#share-modal').modal('open');
+                                        Materialize.toast('<span class="">代码已设置为分享</span>' , 3000);
+                                    }
+                                    else
+                                        Materialize.toast('<span class="">代码已取消分享</span>' , 3000);
+                                    status_list_table.updateStatus();
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">设置失败：'+response.data.err_msg+'</span>' , 2000);
+                                }
+                            });
+
                     }
                 }
 

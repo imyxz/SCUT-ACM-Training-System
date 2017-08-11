@@ -107,3 +107,6 @@
     color:red;
     font-size: 16px;
 }
+.over-flow-auto{
+    overflow-x: auto;
+}

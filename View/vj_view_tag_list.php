@@ -1,7 +1,7 @@
 <?php include('header.php');?>
     <div class="container" id="problem_list_table">
 
-        <div class="card-panel hoverable" >
+        <div class="card-panel hoverable over-flow-auto" >
             <div class="">
                 <a class="chip" v-for="tag in tag_list" href="#" @click="changeTag(tag.tag_name)" :class="{'green lighten-2':tag.tag_name==tag_name}">{{ tag.tag_name }} <i class="green-text">{{tag.tag_count}}</i></a>
             </div>

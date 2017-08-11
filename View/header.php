@@ -28,83 +28,86 @@
     <script src="<?php echo _Http;?>lib/pdfobject/pdfobject.min.js"></script>
     <script src="<?php echo _Http;?>lib/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="<?php echo _Http;?>js/common.js"></script>
-    <link rel="stylesheet" href="<?php echo _Http;?>css/style.css?20170731">
+    <link rel="stylesheet" href="<?php echo _Http;?>css/style.css?20170811">
     <title><?php echo $title;?> - SCUT Training System</title>
 
 </head>
 <body>
-<nav class="nav-extended">
-    <div class="nav-wrapper light-blue">
-        <a href="<?php echo _Http?>" class="brand-logo">SCUT-ACM</a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down ">
-            <?php $index=1;?>
-            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>" class="">首页</a>
-            </li>
-            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>contest/addContest" class="waves-effect waves-teal">添加比赛</a>
-            </li>
-            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>user/addTeam" class="waves-effect waves-teal">添加队伍</a>
-            </li>
-            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>user/bindPlayer" class="waves-effect waves-teal">绑定小队</a>
-            </li>
-            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>vJudge/allProblem" class="waves-effect waves-teal">SCUTVJ</a>
-            </li>
-            <li>
-                <?php if($isLogin)
-                {
-                    ?>
-                    <a class="btn-floating green"><i class="material-icons">perm_identity</i></a>
-                    <?php
-                }
-                else {
-                    ?>
-                    <a class="btn-floating red" onclick='(function(){window.location="http://encuss.yxz.me/userAPI/loginFromQQ/site_id/3/viewing/" + encodeURIComponent("<?php echo _Http;?>user/loginFromEncuss/viewing/<?php echo urlencode(_Http . $_SERVER["REQUEST_URI"]);?>/")})()'><i class="material-icons">perm_identity</i></a>
-                    <?php
-                }?>
-            </li>
-        </ul>
-        <ul class="side-nav" id="mobile-demo">
-            <?php $index=1;?>
-            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>" class="">首页</a>
-            </li>
-            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>contest/addContest" class="waves-effect waves-teal">添加比赛</a>
-            </li>
-            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>user/addTeam" class="waves-effect waves-teal">添加队伍</a>
-            </li>
-            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>user/bindPlayer" class="waves-effect waves-teal">绑定队员</a>
-            </li>
-            <li <?php echo $active == $index ? "class=\"active\"" : ' ';
-            $index++; ?>><a href="<?php echo _Http;?>vJudge/allProblem" class="waves-effect waves-teal">SCUTVJ</a>
-            </li>
-            <li>
-                <?php if($isLogin)
-{
-    ?>
-                <a class="waves-effect waves-teal btn" onclick=''>已登录</a>
-<?php
-                }
-else {
-    ?>
-                <a class="waves-effect waves-teal btn" onclick='(function(){window.location="http://encuss.yxz.me/userAPI/loginFromQQ/site_id/3/viewing/" + encodeURIComponent("<?php echo _Http;?>user/loginFromEncuss/viewing/<?php echo urlencode(_Http . $_SERVER["REQUEST_URI"]);?>/")})()'>立即登录</a>
-<?php
-                }?>
-            </li>
-        </ul>
+<div class="">
+    <nav class="nav-extended">
+        <div class="nav-wrapper light-blue">
+            <a href="<?php echo _Http?>" class="brand-logo">SCUT-ACM</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down ">
+                <?php $index=1;?>
+                <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+                $index++; ?>><a href="<?php echo _Http;?>" class="">首页</a>
+                </li>
+                <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+                $index++; ?>><a href="<?php echo _Http;?>contest/addContest" class="waves-effect waves-teal">添加比赛</a>
+                </li>
+                <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+                $index++; ?>><a href="<?php echo _Http;?>user/addTeam" class="waves-effect waves-teal">添加队伍</a>
+                </li>
+                <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+                $index++; ?>><a href="<?php echo _Http;?>user/bindPlayer" class="waves-effect waves-teal">绑定小队</a>
+                </li>
+                <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+                $index++; ?>><a href="<?php echo _Http;?>vJudge/allProblem" class="waves-effect waves-teal">SCUTVJ</a>
+                </li>
+                <li>
+                    <?php if($isLogin)
+                    {
+                        ?>
+                        <a class="btn-floating green"><i class="material-icons">perm_identity</i></a>
+                        <?php
+                    }
+                    else {
+                        ?>
+                        <a class="btn-floating red" onclick='(function(){window.location="http://encuss.yxz.me/userAPI/loginFromQQ/site_id/3/viewing/" + encodeURIComponent("<?php echo _Http;?>user/loginFromEncuss/viewing/<?php echo urlencode(_Http . $_SERVER["REQUEST_URI"]);?>/")})()'><i class="material-icons">perm_identity</i></a>
+                        <?php
+                    }?>
+                </li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <?php $index=1;?>
+                <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+                $index++; ?>><a href="<?php echo _Http;?>" class="">首页</a>
+                </li>
+                <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+                $index++; ?>><a href="<?php echo _Http;?>contest/addContest" class="waves-effect waves-teal">添加比赛</a>
+                </li>
+                <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+                $index++; ?>><a href="<?php echo _Http;?>user/addTeam" class="waves-effect waves-teal">添加队伍</a>
+                </li>
+                <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+                $index++; ?>><a href="<?php echo _Http;?>user/bindPlayer" class="waves-effect waves-teal">绑定队员</a>
+                </li>
+                <li <?php echo $active == $index ? "class=\"active\"" : ' ';
+                $index++; ?>><a href="<?php echo _Http;?>vJudge/allProblem" class="waves-effect waves-teal">SCUTVJ</a>
+                </li>
+                <li>
+                    <?php if($isLogin)
+                    {
+                        ?>
+                        <a class="waves-effect waves-teal btn" onclick=''>已登录</a>
+                        <?php
+                    }
+                    else {
+                        ?>
+                        <a class="waves-effect waves-teal btn" onclick='(function(){window.location="http://encuss.yxz.me/userAPI/loginFromQQ/site_id/3/viewing/" + encodeURIComponent("<?php echo _Http;?>user/loginFromEncuss/viewing/<?php echo urlencode(_Http . $_SERVER["REQUEST_URI"]);?>/")})()'>立即登录</a>
+                        <?php
+                    }?>
+                </li>
+            </ul>
 
-    </div>
-    <?php
+        </div>
+        <?php
         if(isset($addon_header))
             include($addon_header);
-    ?>
+        ?>
 
 
-</nav>
+    </nav>
+</div>
+

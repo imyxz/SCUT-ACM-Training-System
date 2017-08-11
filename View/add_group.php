@@ -1,5 +1,7 @@
 <?php include('header.php');?>
     <div class="container" id="add_team">
+    <div class="card">
+    <div class="card-content  ">
         <p class="big-test">添加小队</p>
         <div class="row">
             <div class="col l4">
@@ -26,7 +28,8 @@
             <div class="col l8">
             </div>
         </div>
-
+        </div>
+    </div>
     </div>
     <script>
         var add_team=new Vue(
