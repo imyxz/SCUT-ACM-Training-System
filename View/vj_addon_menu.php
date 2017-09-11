@@ -7,6 +7,8 @@
         <li class="tab"><a href="<?php echo _Http;?>vJudge/allProblemList/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
             $index++; ?>">题目列表</a>
         </li>
+        <li class="tab"><a href="<?php echo _Http;?>vJudge/allContest/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
+            $index++; ?>">比赛列表</a>
         <li class="tab"><a href="<?php echo _Http;?>vJudge/viewTag/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
             $index++; ?>">标签列表</a>
         </li>
@@ -15,6 +17,9 @@
         </li>
         <li class="tab"><a href="<?php echo _Http;?>vJudge/newList/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
             $index++; ?>">新建题目列表</a>
+        </li>
+        <li class="tab"><a href="<?php echo _Http;?>vJudge/newContest/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
+            $index++; ?>">新建比赛</a>
         </li>
         <li class="tab"><a href="<?php echo _Http;?>vJudge/onlineIDE/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
             $index++; ?>">Online IDE</a>

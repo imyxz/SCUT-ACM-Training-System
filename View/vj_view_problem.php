@@ -14,7 +14,7 @@
             <div class="col l3 s12">
                 <div class="card-panel " >
 
-                    <div class="center-align row"><button class="btn blue btn-float" style="width: 90%" onclick="$('#code-modal').modal('open');">提交</button></div>
+                    <div class="center-align row"><button class="btn blue btn-float" style="width: 90%" onclick="vj_view_problem.openCode();">提交</button></div>
                     <div class="center-align row">
                             <a class="btn green btn-float" style="width: 90%" href="<?php echo _Http;?>vJudge/myStatus/">status</a>
                     </div>
@@ -170,7 +170,6 @@
                                 vj_view_problem.problem_tags=response.data.problem_tags;
                                 setTimeout(function(){vj_view_problem.loading=false;},1000);
                                 Vue.nextTick(function () {
-                                    $('select').material_select();
                                     $('.modal').modal();
                                     ace.require("ace/ext/language_tools");
                                     editor = ace.edit("editor");
@@ -231,7 +230,6 @@
                         obj.source_code=editor.getValue();
                         obj.problem_id=this.problem_id;
                         obj.compiler_id=this.compiler;
-                        console.log(obj);
                         axios.post(this.basic_url+'vJudgeAPI/submitCode/',JSON.stringify(obj))
                             .then(function(response)
                             {
@@ -263,15 +261,24 @@
                                     if(response.data.status_info.wrong_info=="")
                                         response.data.status_info.wrong_info="waiting";
                                     vj_view_problem.job_status=response.data.status_info;
-
+                                    if(response.data.status_info.running_status!=3)
+                                        setTimeout(vj_view_problem.getJobStatus,3000);
                                 }
-                                setTimeout(vj_view_problem.getJobStatus,3000);
+
 
 
                             }).catch(function(msg){
                                 setTimeout(vj_view_problem.getJobStatus,3000);
 
                             });
+                    },
+                    openCode:function()
+                    {
+                        this.submited=false;
+                        Vue.nextTick(function () {
+                            $('select').material_select();
+                            $('#code-modal').modal('open');
+                        });
                     }
                 }
 

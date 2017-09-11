@@ -24,7 +24,7 @@ class vJudge extends SlimvcController
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
-        $this->sub_active=4;
+        $this->sub_active=5;
 
         $this->view("vj_view_my_status");
     }
@@ -44,7 +44,7 @@ class vJudge extends SlimvcController
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
-        $this->sub_active=0;
+        $this->sub_active=2;
         $this->list_id=intval($_GET['id']);
         $this->view("vj_list_problems");
 
@@ -55,7 +55,7 @@ class vJudge extends SlimvcController
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
-        $this->sub_active=5;
+        $this->sub_active=0;
         $this->list_id=intval($_GET['id']);
         $this->view("vj_edit_problem_list");
     }
@@ -65,9 +65,19 @@ class vJudge extends SlimvcController
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
-        $this->sub_active=5;
+        $this->sub_active=6;
         $this->list_id=0;
         $this->view("vj_edit_problem_list");
+    }
+    function newContest()
+    {
+        $this->title="新建比赛";
+        $this->active=5;
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=7;
+        $this->contest_id=0;
+        $this->view("vj_edit_contest");
     }
     function allProblemList()
     {
@@ -84,7 +94,7 @@ class vJudge extends SlimvcController
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
-        $this->sub_active=6;
+        $this->sub_active=8;
         if(isset($_GET['jobCode']))
             $this->job_code_id=intval($_GET['jobCode']);
         else
@@ -97,8 +107,29 @@ class vJudge extends SlimvcController
         $this->active=5;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
-        $this->sub_active=3;
+        $this->sub_active=4;
         $this->tag_name=urldecode(@$_GET['name']);
         $this->view("vj_view_tag_list");
+    }
+    function contest()
+    {
+        $contest_id=intval($_GET["id"]);
+        $this->title="比赛";
+        $this->active=3;
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=3;
+        $this->contest_id=$contest_id;
+        $this->view("vj_view_contest");
+    }
+    function allContest()
+    {
+        $this->title="比赛列表";
+        $this->active=5;
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=3;
+        $this->view("vj_view_all_contest");
+
     }
 }

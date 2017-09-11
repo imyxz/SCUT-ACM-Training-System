@@ -399,4 +399,364 @@ class vJudgeAPI extends SlimvcController
 
         }
     }
+
+    function getContestInfo()
+    {
+        try {
+            $contest_id=intval($_GET['id']);
+            /** @var contestType $contestType */
+            $contestType=$this->newClass("contestType");
+
+            /** @var vj_contest_model $contest_model */
+            $contest_model=$this->model("vj_contest_model");
+            $user_id=0;
+            $contest_info=$contest_model->getContestInfo($contest_id);
+            $return["contest_problem"]=array();
+            if(!$contest_info) throw new Exception("无此比赛");
+            $return["need_participant"]=false;
+            $return["contest_info"]=$contest_info;
+            if($contest_info['contest_start_time_ts']>time())   throw new Exception("比赛还未开始，开始时间：" . $contest_info['contest_start_time']);
+
+            if($contest_info['contest_type']==$contestType->NormalContest)
+            {
+                $return["contest_problem"]=array();
+                $problems=$contest_model->getContestProblems($contest_id);
+                foreach($problems as $one)
+                {
+                    $return["contest_problem"][]=array(
+                        "problem_index"=>$one["problem_index"],
+                        "problem_title"=>$one["problem_title"]);
+                }
+                $return["running_time"]=time()-$contest_info['contest_start_time_ts'];
+            }
+            else if($contest_info['contest_type']==$contestType->FlexibleContest)
+            {
+                if ($this->helper("user_helper")->isLogin() == false) throw new Exception("请先登录");
+                $user_id=$this->helper("user_helper")->getUserID();
+                $part_info=$contest_model->getUserParticipantInfo($contest_id,$user_id);
+                if(!$part_info) $return["need_participant"]=true;
+                else
+                {
+                    $problems=$contest_model->getContestProblems($contest_id);
+                    foreach($problems as $one)
+                    {
+                        $return["contest_problem"][]=array(
+                            "problem_index"=>$one["problem_index"],
+                            "problem_title"=>$one["problem_title"]);
+                    }
+                    $return["running_time"]=time()-$part_info['participant_time_ts'];
+                    $return["contest_info"]["contest_start_time_ts"]=$part_info['participant_time_ts'];
+                }
+
+            }
+            $return["user_id"]=$user_id;
+            $return["status"]=0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+
+    }
+    function joinContest()
+    {
+        try {
+            $contest_id=intval($_GET['id']);
+            /** @var contestType $contestType */
+            $contestType=$this->newClass("contestType");
+
+            /** @var vj_contest_model $contest_model */
+            $contest_model=$this->model("vj_contest_model");
+
+            $contest_info=$contest_model->getContestInfo($contest_id);
+            if(!$contest_info) throw new Exception("无此比赛");
+            if ($this->helper("user_helper")->isLogin() == false) throw new Exception("请先登录");
+            $user_id=$this->helper("user_helper")->getUserID();
+            if($contest_info['contest_start_time_ts']>time())   throw new Exception("比赛还未开始，开始时间：" . $contest_info['contest_start_time']);
+            $part_info=$contest_model->getUserParticipantInfo($contest_id,$user_id);
+            if(!$part_info)
+            {
+                $contest_model->addParticipant($contest_id,$user_id);
+            }
+            $return["status"]=0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return=array();
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+
+    }
+    function getContestProblem()
+    {
+        try {
+            $contest_id=intval($_GET['cid']);
+            $problem_id=intval($_GET['pid']);
+
+            /** @var contestType $contestType */
+            $contestType=$this->newClass("contestType");
+
+            /** @var vj_contest_model $contest_model */
+            $contest_model=$this->model("vj_contest_model");
+
+            $contest_info=$contest_model->getContestInfo($contest_id);
+            if(!$contest_info) throw new Exception("无此比赛");
+            if ($this->helper("user_helper")->isLogin() == false) throw new Exception("请先登录");
+            $user_id=$this->helper("user_helper")->getUserID();
+            if($contest_info['contest_start_time_ts']>time())   throw new Exception("比赛还未开始，开始时间：" . $contest_info['contest_start_time']);
+
+            if($contest_info['contest_type']==$contestType->FlexibleContest)
+            {
+                $part_info=$contest_model->getUserParticipantInfo($contest_id,$user_id);
+                if(!$part_info)throw new Exception("需先参加比赛");
+            }
+
+            $return["problem_info"]=$contest_model->getProblemInfo($contest_id,$problem_id);
+            if(!$return["problem_info"])throw new Exception("无此题目");
+            unset($return["problem_info"]["problem_id"]);
+            unset($return["problem_info"]["oj_id"]);
+
+            $return["status"]=0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return=array();
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+
+    }
+    function submitContestJob()
+    {
+        try {
+            $contest_id=intval($_GET['cid']);
+            $problem_index=intval($_GET['pid']);
+            /** @var contestType $contestType */
+            $contestType=$this->newClass("contestType");
+
+            /** @var vj_contest_model $contest_model */
+            $contest_model=$this->model("vj_contest_model");
+
+            if ($this->helper("user_helper")->isLogin() == false) throw new Exception("请先登录");
+            $user_id=$this->helper("user_helper")->getUserID();
+            $contest_info=$contest_model->getContestInfo($contest_id);
+            if($contest_info['contest_start_time_ts']>time())   throw new Exception("比赛还未开始，开始时间：" . $contest_info['contest_start_time']);
+
+            $json = $this->getRequestJson();
+            $problem_info=$contest_model->getProblemInfo($contest_id,$problem_index);
+            if(!$problem_info)throw new Exception("无此题目");
+
+            $part_info=$contest_model->getUserParticipantInfo($contest_id,$user_id);
+            if(!$part_info)
+            {
+                $contest_model->addParticipant($contest_id,$user_id);
+                $part_info=$contest_model->getUserParticipantInfo($contest_id,$user_id);
+            }
+
+
+
+            $problem_id = intval($problem_info['problem_id']);
+            $source_code = $json['source_code'];
+            $compiler_id = intval($json['compiler_id']);
+
+            $oj_id = $problem_info['oj_id'];
+            $job_id = $this->model("vj_job_model")->newJob($problem_id, $oj_id, $user_id, $source_code, $compiler_id);
+            if (!$job_id) throw new Exception("新建任务失败");
+            $seconds=0;
+            if($contest_info['contest_type']==$contestType->NormalContest)
+            {
+                $seconds=time()-$contest_info["contest_start_time_ts"];
+            }
+            else if($contest_info['contest_type']==$contestType->FlexibleContest)
+            {
+                $seconds=time()-$part_info["participant_time_ts"];
+            }
+            $seconds=min($seconds,intval($contest_info["contest_last_seconds"]));
+            $contest_model->addSubmission($contest_id,$user_id,$job_id,$problem_index,$seconds);
+            $return['status'] = 0;
+            $return['job_id'] = $job_id;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
+    function getContestSubmission(){
+        try {
+            $contest_id=intval($_GET['id']);
+            $start_time=intval($_GET['beginTime']);
+            /** @var contestType $contestType */
+            $contestType=$this->newClass("contestType");
+
+            /** @var vj_contest_model $contest_model */
+            $contest_model=$this->model("vj_contest_model");
+
+            $contest_info=$contest_model->getContestInfo($contest_id);
+            if(!$contest_info) throw new Exception("无此比赛");
+            if($contest_info['contest_start_time_ts']>time())   throw new Exception("比赛还未开始，开始时间：" . $contest_info['contest_start_time']);
+            $return["submissions"]=array();
+
+            if($contest_info['contest_type']==$contestType->NormalContest)
+            {
+                $submissions=$contest_model->getContestSubmission($contest_id,$start_time,$contest_info["contest_last_seconds"]);
+                foreach($submissions as $one)
+                {
+                    $return["submissions"][]=array($one['user_id'],$one['problem_index'],$one['submit_time'],$one['ac_status'],$one["run_job_id"]);
+                }
+                $return["running_time"]=time()-$contest_info['contest_start_time_ts'];
+            }
+
+            else if($contest_info['contest_type']==$contestType->FlexibleContest)
+            {
+                if ($this->helper("user_helper")->isLogin() == false) throw new Exception("请先登录");
+                $user_id=$this->helper("user_helper")->getUserID();
+                $part_info=$contest_model->getUserParticipantInfo($contest_id,$user_id);
+                if(!$part_info) throw new Exception("请先参与比赛");
+                $submissions=$contest_model->getContestSubmission($contest_id,$start_time,min(time()-$part_info['participant_time_ts'],intval($contest_info["contest_last_seconds"])));
+                foreach($submissions as $one)
+                {
+                    $return["submissions"][]=array($one['user_id'],$one['problem_index'],$one['submit_time'],$one['ac_status'],$one["run_job_id"]);
+                }
+                $return["running_time"]=time()-$part_info['participant_time_ts'];
+            }
+            $return["participants"]=$contest_model->getContestParticipants($contest_id);
+            $return["status"]=0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return=array();
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
+    function newContest()
+    {
+        try {
+            if ($this->helper("user_helper")->isLogin() == false) throw new Exception("请先登录");
+            $json=$this->getRequestJson();
+            $contest_title=trim($json['contest_title']);
+            $contest_desc=trim($json['contest_desc']);
+            $problem_list=$json['problem_list'];
+            $contest_start_time=intval($json['contest_start_time']);
+            $contest_last_time=intval($json['contest_last_time']);
+            if($contest_start_time<=0 || $contest_last_time<=0)throw new Exception("时间不正确");
+            $contest_type=$json['contest_type'];
+            if($contest_type=='NormalContest')
+                $contest_type=0;
+            else if($contest_type=='FlexibleContest')
+                $contest_type=1;
+            else
+                throw new Exception("contest_type不匹配");
+            if(empty($contest_title))  throw new Exception("请填写标题");
+            if(empty($contest_desc))  throw new Exception("请填写描述");
+            $to_be_add=array();
+            $index=1;
+            foreach ($problem_list as &$one) {
+                $problem_id=intval($one['problem_id']);
+                $problem_title=trim($one['problem_title']);
+                if(isset($to_be_add[$problem_id])) continue;
+                $info=$this->model("vj_problem_model")->getProblemInfo($problem_id);
+                if(!$info)  throw new Exception("problem id: $problem_id 不存在！");
+                $to_be_add[$problem_id]=array("problem_id"=>$problem_id,
+                    "problem_title"=>$problem_title,
+                    "problem_index"=>$index++);
+            }
+            /** @var contestType $contestType */
+            $contestType=$this->newClass("contestType");
+
+            /** @var vj_contest_model $contest_model */
+            $contest_model=$this->model("vj_contest_model");
+            $contest_id=$contest_model->newContest($contest_title,$contest_desc,$this->helper("user_helper")->getUserID(),$contest_start_time,$contest_last_time,$contest_type);
+            if(!$contest_id)    throw new Exception("系统内部错误！");
+            foreach($to_be_add as &$one)
+            {
+                $contest_model->addContestProblem($contest_id,$one['problem_id'],$one['problem_title'],$one['problem_index']);
+            }
+            $return=array();
+            $return['status']=0;
+            $return['contest_id']=$contest_id;
+
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+
+        }
+    }
+    function getContestStatus()
+    {
+        try {
+            $contest_id=intval($_GET['id']);
+            /** @var contestType $contestType */
+            $contestType=$this->newClass("contestType");
+
+            /** @var vj_contest_model $contest_model */
+            $contest_model=$this->model("vj_contest_model");
+
+            $contest_info=$contest_model->getContestInfo($contest_id);
+            if(!$contest_info) throw new Exception("无此比赛");
+            if ($this->helper("user_helper")->isLogin() == false) throw new Exception("请先登录");
+            $user_id=$this->helper("user_helper")->getUserID();
+            if($contest_info['contest_start_time_ts']>time())   throw new Exception("比赛还未开始，开始时间：" . $contest_info['contest_start_time']);
+
+            if($contest_info['contest_type']==$contestType->FlexibleContest)
+            {
+                $part_info=$contest_model->getUserParticipantInfo($contest_id,$user_id);
+                if(!$part_info)throw new Exception("需先参加比赛");
+                $return["submit_status"]=$contest_model->getContestSubmitStatus($contest_id,min(time()-$part_info['participant_time_ts'],intval($contest_info["contest_last_seconds"])),0,30);
+            }
+            else if($contest_info['contest_type']==$contestType->NormalContest)
+            {
+                $return["submit_status"]=$contest_model->getContestSubmitStatus($contest_id,$contest_info["contest_last_seconds"],0,30);
+            }
+
+
+            $return["status"]=0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return=array();
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
+    function getAllContest(){
+        try {
+            $page = intval(@$_GET['page']);
+            if ($page < 1)
+                $page = 1;
+            $tmp = $this->model("vj_contest_model")->getAllContest($page, 30);
+            $return['contests'] = $tmp;
+            if (count($tmp) < 30)
+                $return['is_end'] = true;
+            else
+                $return['is_end'] = false;
+            $return['status'] = 0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
 }

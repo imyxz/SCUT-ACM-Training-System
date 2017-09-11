@@ -26,7 +26,8 @@
         $('.tabs-transparent').each(function(){
             $(this).unbind("click");
         });
-        axios.get('<?php echo _Http;?>userAPI/getBgPic/')
+        var target="<?php echo $isLogin?'getUserBgPic':'getBgPic';?>";
+        axios.get('<?php echo _Http;?>userAPI/' + target +'/')
             .then(function(response)
             {
                 if(response.data.status==0)
@@ -34,11 +35,10 @@
                     $('body').css("background-image","url("+ response.data.pic_url + ")");
                     $('body').css("background-repeat","no-repeat");
                     $('body').css("background-attachment","fixed");
+                    $('body').css("background-size","cover");
 
-
-                    $('body').css("opacity",0.8);
+                    $('body').css("opacity",0.9);
                 }
-
             })
     })
 </script>

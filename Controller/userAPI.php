@@ -119,4 +119,26 @@ class userAPI extends SlimvcController
         header("Cache-control: max-age=" . (60*60));
         $this->outputJson($return);
     }
+    function getUserBgPic()
+    {
+        if($this->helper("user_helper")->isLogin()==false || empty($pic_url=$this->helper("user_helper")->getUserInfo()['user_bgpic']))
+        {
+            $pic=$this->model("bg_pic_model")->getLastPic();
+            $return['pic_url']=$pic['pic_url'];
+            $return['status']=0;
+            header("Cache-control: max-age=" . (60*60));
+            $this->outputJson($return);
+        }
+        else
+        {
+            $return['pic_url']=$pic_url;
+            $return['status']=0;
+            $this->outputJson($return);
+        }
+
+
+
+
+
+    }
 }
