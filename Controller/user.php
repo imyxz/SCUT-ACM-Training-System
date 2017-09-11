@@ -42,7 +42,7 @@ class user extends SlimvcController
             if($user_info['encuss_userid']>0)
                 Slimvc::ErrorNotice("请勿重复登录！");
             else
-                $this->model('user_model')->updateEncussToken($userid,intval($encuss_info['user_id']),intval($token_id),$token_key,$encuss_info['nickname'],$_SERVER["REMOTE_ADDR"]);
+                $this->model('user_model')->updateEncussToken($userid,intval($encuss_info['user_id']),intval($token_id),$token_key,$user_info['user_nickname'],$_SERVER["REMOTE_ADDR"]);
         }
         else
         {
@@ -76,6 +76,22 @@ class user extends SlimvcController
         $this->isLogin=$this->helper("user_helper")->isLogin();
 
         $this->view("bind_player");
+    }
+    function logOut()
+    {
+        $this->helper("session_helper")->destroySession();
+        $this->info="您已登出";
+        $this->location=_Http;
+        $this->view("jump");
+    }
+    function editInfo()
+    {
+        $this->active=0;
+        $this->title='更改信息';
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->view("user_edit_info");
+
+
     }
     protected function http_post($url, $post = NULL,$timeout=5)
     {

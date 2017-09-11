@@ -67,6 +67,13 @@ class user_model extends SlimvcModel
             $nickname,
             $user_id);
     }
+    function updateUserBGPic($user_id,$pic_url)
+    {
+        return $this->queryStmt("update user_info set user_bgpic=? where user_id=? limit 1",
+            "si",
+            $pic_url,
+            $user_id);
+    }
 
 
     function loginFromEncuss($encuss_userid,$encuss_token_id,$encuss_token_key,$user_name,$login_ip)
@@ -77,11 +84,10 @@ class user_model extends SlimvcModel
             $encuss_userid)->row();
         if($row)
         {
-            $this->queryStmt("update user_info set login_ip=?,login_time=?,user_nickname=? where user_id=?",
+            $this->queryStmt("update user_info set login_ip=?,login_time=? where user_id=?",
                 "sisi",
                 $login_ip,
                 $now,
-                $user_name,
                 $row['user_id']);
             return $row['user_id'];
         }

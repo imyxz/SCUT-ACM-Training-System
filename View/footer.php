@@ -26,6 +26,16 @@
         $('.tabs-transparent').each(function(){
             $(this).unbind("click");
         });
+        $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrain_width: false,
+                hover: true,
+                gutter: 0,
+                belowOrigin: true,
+                alignment: 'right'
+            }
+        );
         var target="<?php echo $isLogin?'getUserBgPic':'getBgPic';?>";
         axios.get('<?php echo _Http;?>userAPI/' + target +'/')
             .then(function(response)

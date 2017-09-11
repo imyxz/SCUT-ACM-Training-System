@@ -110,6 +110,49 @@ class userAPI extends SlimvcController
 
         }
     }
+    function getUserInfo()
+    {
+        try{
+            if($this->helper("user_helper")->isLogin()==false)
+                throw new Exception("请先登录");
+            $user_info=$this->model("user_model")->getUserInfo($this->helper("user_helper")->getUserID());
+            $return["user_info"]=array(
+                "user_nickname"=>$user_info["user_nickname"],
+                "user_avatar"=>$user_info["user_avatar"],
+                "user_bgpic"=>$user_info["user_bgpic"]);
+            $return['status']=0;
+            $this->outputJson($return);
+
+        }catch(Exception $e)
+        {
+            $return['status']=1;
+            $return['err_msg']=$e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
+    function updateUserInfo()
+    {
+        try{
+            if($this->helper("user_helper")->isLogin()==false)
+                throw new Exception("请先登录");
+            $json=$this->getRequestJson();
+            if(!isset($json['nick_name']) || !isset($json['bg_url']))
+                throw new Exception("信息填写不完整");
+            $user_id=$this->helper("user_helper")->getUserID();
+            $this->model("user_model")->updateUserNickname($user_id,$json['nick_name']);
+            $this->model("user_model")->updateUserBGPic($user_id,$json['bg_url']);
+            $return['status']=0;
+            $this->outputJson($return);
+
+        }catch(Exception $e)
+        {
+            $return['status']=1;
+            $return['err_msg']=$e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
     function getBgPic()
     {
         $pic=$this->model("bg_pic_model")->getLastPic();

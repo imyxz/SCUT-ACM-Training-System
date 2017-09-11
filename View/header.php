@@ -28,7 +28,7 @@
     <script src="<?php echo _Http;?>lib/pdfobject/pdfobject.min.js"></script>
     <script src="<?php echo _Http;?>lib/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="<?php echo _Http;?>js/common.js"></script>
-    <link rel="stylesheet" href="<?php echo _Http;?>css/style.css?20170811">
+    <link rel="stylesheet" href="<?php echo _Http;?>css/style.css?201708611">
     <title><?php echo $title;?> - SCUT Training System</title>
 
 </head>
@@ -55,19 +55,22 @@
                 <li <?php echo $active == $index ? "class=\"active\"" : ' ';
                 $index++; ?>><a href="<?php echo _Http;?>vJudge/allProblem" class="waves-effect waves-teal">SCUTVJ</a>
                 </li>
-                <li>
-                    <?php if($isLogin)
+                <?php if($isLogin)
                     {
-                        ?>
-                        <a class="btn-floating green"><i class="material-icons">perm_identity</i></a>
+                        ?><li><a class="btn-floating green dropdown-button" data-activates='user_dropdown'><i class="material-icons">perm_identity</i></a></li>
+                        <ul id='user_dropdown' class='dropdown-content'>
+                            <li><a href="<?php echo _Http;?>user/editInfo">更改信息</a></li>
+                            <li class="divider"></li>
+                            <li><a href="<?php echo _Http;?>user/logOut">退出登录</a></li>
+                        </ul>
                         <?php
                     }
                     else {
                         ?>
-                        <a class="btn-floating red" onclick='(function(){window.location="http://encuss.yxz.me/userAPI/loginFromQQ/site_id/3/viewing/" + encodeURIComponent("<?php echo _Http;?>user/loginFromEncuss/viewing/<?php echo urlencode(_Http . $_SERVER["REQUEST_URI"]);?>/")})()'><i class="material-icons">perm_identity</i></a>
+                <li><a class="btn-floating red" onclick='(function(){window.location="http://encuss.yxz.me/userAPI/loginFromQQ/site_id/3/viewing/" + encodeURIComponent("<?php echo _Http;?>user/loginFromEncuss/viewing/<?php echo urlencode(_Http . $_SERVER["REQUEST_URI"]);?>/")})()'><i class="material-icons">perm_identity</i></a></li>
                         <?php
                     }?>
-                </li>
+
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <?php $index=1;?>
@@ -86,19 +89,21 @@
                 <li <?php echo $active == $index ? "class=\"active\"" : ' ';
                 $index++; ?>><a href="<?php echo _Http;?>vJudge/allProblem" class="waves-effect waves-teal">SCUTVJ</a>
                 </li>
-                <li>
+
                     <?php if($isLogin)
                     {
                         ?>
-                        <a class="waves-effect waves-teal btn" onclick=''>已登录</a>
+                <li><a href="#" onclick=''>已登录</a></li>
+                <li><a href="<?php echo _Http;?>user/editInfo">更改信息</a></li>
+                <li><a href="<?php echo _Http;?>user/logOut">退出登录</a></li>
                         <?php
                     }
                     else {
                         ?>
-                        <a class="waves-effect waves-teal btn" onclick='(function(){window.location="http://encuss.yxz.me/userAPI/loginFromQQ/site_id/3/viewing/" + encodeURIComponent("<?php echo _Http;?>user/loginFromEncuss/viewing/<?php echo urlencode(_Http . $_SERVER["REQUEST_URI"]);?>/")})()'>立即登录</a>
+                <li><a class="waves-effect waves-teal btn" onclick='(function(){window.location="http://encuss.yxz.me/userAPI/loginFromQQ/site_id/3/viewing/" + encodeURIComponent("<?php echo _Http;?>user/loginFromEncuss/viewing/<?php echo urlencode(_Http . $_SERVER["REQUEST_URI"]);?>/")})()'>立即登录</a></li>
                         <?php
                     }?>
-                </li>
+
             </ul>
 
         </div>

@@ -9,3 +9,5 @@ vendor/*
 .idea/*
 files/*
 
+.idea/dataSources.xml
+*.xml
