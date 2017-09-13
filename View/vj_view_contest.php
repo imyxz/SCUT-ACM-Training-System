@@ -89,8 +89,13 @@
                                     </thead>
                                     <tbody>
                                     <tr v-for="problem in problem_list">
-                                        <td class="center-align"><span v-show="problem_status[problem.problem_index].is_ac" class="green-text"><i class="material-icons">done</i></span></td>
-                                        <td class="center-align">{{problem_status[problem.problem_index].ac}}/{{problem_status[problem.problem_index].trys}}</td>
+                                        <td class="center-align"><span v-show="problem_status[problem.problem_index].is_try"
+                                                                                 :class="{'yellow-text text-darken-3':!problem_status[problem.problem_index].is_ac,'green-text text-darken-2':problem_status[problem.problem_index].is_ac}"
+                                                                                 style="font-size: 20px;"
+                                                                                 data-badge-caption="">
+                                                {{problem_status[problem.problem_index].is_ac?'Accept':'Try'}}
+                                            </span></td>
+                                        <td class="center-align">{{ getProbmelStatus(problem.problem_index) }}</td>
                                         <td class="center-align">{{String.fromCharCode(problem.problem_index+64)}}</td>
                                         <td class="center-align blue-text"><a href="#" @click="goProblem(problem.problem_index)">{{ problem.problem_title }}</a></td>
                                     </tr>
@@ -232,11 +237,11 @@
                             </thead>
 
                             <tbody>
-                            <tr v-for="user in rank_board" v-if="user!=null">
+                            <tr v-for="user in rank_board" v-if="user!=null" :class="{'blue lighten-5':user.user_id==user_id}">
                                 <td class="center-align">{{ user.rank_index }}</td>
                                 <td class="left-align">{{ user.user_name }}</td>
                                 <td class="center-align">{{ user.problem_solved }}</td>
-                                <td class="center-align">{{ user.penalty }}</td>
+                                <td class="center-align">{{ user.penalty |fromSeconds }}</td>
                                 <td v-for="problem in user.problems" v-if=" problem!=null"
                                     :class="{
                             'green':problem.is_ac,
@@ -269,6 +274,6 @@
         var contest_id=<?php echo $contest_id;?>;
         var vm;
     </script>
-    <script src="<?php echo _Http;?>js/view_contest.js?201709111"></script>
+    <script src="<?php echo _Http;?>js/view_contest.js?201709131"></script>
 
 <?php include('footer.php');?>

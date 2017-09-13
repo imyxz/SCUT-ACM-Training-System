@@ -579,7 +579,6 @@ class vJudgeAPI extends SlimvcController
             {
                 $seconds=time()-$part_info["participant_time_ts"];
             }
-            $seconds=min($seconds,intval($contest_info["contest_last_seconds"]));
             $contest_model->addSubmission($contest_id,$user_id,$job_id,$problem_index,$seconds);
             $return['status'] = 0;
             $return['job_id'] = $job_id;
@@ -719,11 +718,11 @@ class vJudgeAPI extends SlimvcController
             {
                 $part_info=$contest_model->getUserParticipantInfo($contest_id,$user_id);
                 if(!$part_info)throw new Exception("需先参加比赛");
-                $return["submit_status"]=$contest_model->getContestSubmitStatus($contest_id,min(time()-$part_info['participant_time_ts'],intval($contest_info["contest_last_seconds"])),0,30);
+                $return["submit_status"]=$contest_model->getContestSubmitStatus($contest_id,time()-$part_info['participant_time_ts'],0,30);
             }
             else if($contest_info['contest_type']==$contestType->NormalContest)
             {
-                $return["submit_status"]=$contest_model->getContestSubmitStatus($contest_id,$contest_info["contest_last_seconds"],0,30);
+                $return["submit_status"]=$contest_model->getContestSubmitStatus($contest_id,time()-$contest_info["contest_start_time_ts"],0,30);
             }
 
 

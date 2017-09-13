@@ -103,9 +103,11 @@ vm=new Vue(
             {
                 if(val==null)   return 0;
                 var tmp=parseInt(val);
+                var sec=tmp%60;
                 tmp=tmp/60;
-                tmp=tmp.toFixed(0);
-                return vm.addZero((tmp/60).toFixed(0))+":"+vm.addZero((tmp%60))
+                var min=Math.floor(tmp)%60;
+                var hour=Math.floor(tmp/60);
+                return vm.addZero(hour)+":"+vm.addZero(min)+":"+vm.addZero(sec)
 
             }
         },
@@ -147,7 +149,8 @@ vm=new Vue(
                         p_status[i]={
                             'ac':0,
                             'trys':0,
-                            'is_ac':false
+                            'is_ac':false,
+                            'is_try':false
                         };
                     }
                     vm.problem_status=p_status;
@@ -172,6 +175,7 @@ vm=new Vue(
                         {
                             vm.getSubmitStatus();
                         }
+                        history.pushState(null,null,basic_url+"vJudge/contest/id/"+contest_id+"#"+vm.cur_tab_id);
 
                     } });
                     Vue.nextTick(function () {
@@ -219,20 +223,23 @@ vm=new Vue(
                                 if(already_in_submissioins[run_id]==null)//新记录
                                 {
                                     already_in_submissioins[run_id]=true;
-                                    prev.splice(-1,0,data.submissions[i]);
+                                    prev.push(data.submissions[i]);
                                     var submit=data.submissions[i];
-                                    p_status[submit[1]].trys++;
+                                    Vue.set(p_status[submit[1]],"trys",p_status[submit[1]].trys+1);
                                     if(submit[3]==1)
                                     {
-                                        p_status[submit[1]].ac++;
+                                        Vue.set(p_status[submit[1]],"ac",p_status[submit[1]].ac+1);
                                         if(submit[0]==vm.user_id)
                                         {
-                                            p_status[submit[1]].is_ac=true;
+                                            Vue.set(p_status[submit[1]],"is_ac",true);
                                         }
+                                    }
+                                    if(submit[0]==vm.user_id)
+                                    {
+                                        Vue.set(p_status[submit[1]],"is_try",true);
                                     }
                                 }
                             }
-                            vm.problem_status.splice(0,0);
 
 
                             /*
@@ -315,9 +322,17 @@ vm=new Vue(
                         else
                         {
                             user.problems[submit[1]].trys++;
-                            user.penalty+=20*60;
+
                         }
                         user.problems[submit[1]].is_try=true;
+                    }
+                }
+                for(var i in user.problems)
+                {
+                    var problem=user.problems[i];
+                    if(problem.is_ac==true)
+                    {
+                        user.penalty+=20*60*problem.trys;
                     }
                 }
                 u_status.sort(function(a,b){
@@ -527,6 +542,13 @@ vm=new Vue(
                 if(val<10)
                     return '0'+val;
                 return val;
+            },
+            getProbmelStatus:function(problem_index)
+            {
+                var ac=vm.problem_status[problem_index].ac;
+                var trys=vm.problem_status[problem_index].trys;
+                if(trys==0)    return "";
+                return (ac+"/"+trys) +" ("+ (ac/trys*100).toFixed(2)*100/100 +"%)"
             }
         },
         computed:{

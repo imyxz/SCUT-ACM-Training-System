@@ -36,7 +36,7 @@
 <div class="">
     <nav class="nav-extended">
         <div class="nav-wrapper light-blue">
-            <a href="<?php echo _Http?>" class="brand-logo">SCUT-ACM</a>
+            <a href="<?php echo _Http?>" class="brand-logo" style="margin-left: 20px;">SCUT-ACM</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down ">
                 <?php $index=1;?>
