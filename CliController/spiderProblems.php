@@ -594,7 +594,106 @@ class spiderProblems extends SlimvcControllerCli
 
         }
     }
+    function poj()
+    {
+        /** @var curlRequest $curl */
+        $curl=$this->newClass("curlRequest");
+        $curl->setHeader("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
+        $curl->setHeader("Referer: http://poj.org/");
+        $curl->setHeader("Origin: http://poj.org/");
+        $curl->setHeader("Upgrade-Insecure-Requests: 1");
+        $curl->setHeader("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+        $problem_start_id=intval(self::$cliArg['start']);
+        $problem_end_id=intval(self::$cliArg['end']);
+        for($problem_id=$problem_start_id;$problem_id<=$problem_end_id;$problem_id++)
+        {
+            $problem_list=array();
+            while(!($html=$curl->get("http://poj.org/problem?id=$problem_id",10)))
+            {
+                echo "Retry $problem_id\n";
+                sleep(1);
+            }
+            if(strpos($html,"Can not find problem")!==false)
+                continue;
+            /** @var problemInfo $problem_info */
+            $problem_info=$this->newClass("problemInfo");
+            $problem_info->examples=array();
+            $problem_info->examples[0]=new problemExample();
+            $divs=explode('<p class="pst">',$html);
+            for($i=1;$i<count($divs)-1;$i++)
+            {
+                $innerHtml=$this->getSubStr($divs[$i] . '<end>','</p>','<end>',0) ;
+                $str="";
+                while(true){
+                    $str=$this->getSubStr($innerHtml,"src=",">",0);
+                    if(empty($str)) break;
+                    $innerHtml=str_replace('src='. $str . '>','src = "'. $str . '">',$innerHtml);
+                }
+                $innerHtml=str_replace("\n","<br />",$innerHtml);
 
+                $innerHtml=$this->filter($innerHtml,"http://poj.org/",array());
+                $innerHtml=str_replace(array("<div>","</div>","<pre>","</pre>"),array("","","",""),$innerHtml);
+                switch($this->getSubStr("<p>" . $divs[$i],"<p>","</p>",0))
+                {
+                    case "Description":
+                        $innerHtml=str_replace("<br>","</p><p>",$innerHtml);
+                        $innerHtml=str_replace("<p></p>","",$innerHtml);
+                        $innerHtml= "<p>" . $innerHtml . "</p>";
+                        $problem_info->description=$innerHtml;
+                        break;
+                    case "Input":
+                        $innerHtml= "<p>" . $innerHtml . "</p>";
+                        $problem_info->input=$innerHtml;
+                        break;
+                    case "Output":
+                        $innerHtml= "<p>" . $innerHtml . "</p>";
+                        $problem_info->output=$innerHtml;
+                        break;
+                    case "Sample Input":
+                        //$innerHtml=str_replace("\n","<br />",$innerHtml);
+                        //$innerHtml=str_replace("<br />","<br>",$innerHtml);
+                        //$innerHtml=str_replace(" ","&nbsp;",$innerHtml);
+
+                        $problem_info->examples[0]->example_input=$innerHtml;
+                        break;
+                    case "Sample Output":
+                        //$innerHtml=str_replace("\n","<br />",$innerHtml);
+                        //$innerHtml=str_replace("<br />","<br>",$innerHtml);
+                        //$innerHtml=str_replace(" ","&nbsp;",$innerHtml);
+
+                        $problem_info->examples[0]->example_output=$innerHtml;
+                        break;
+                    case "Hint":
+                        $innerHtml=str_replace("<br>","</p><p>",$innerHtml);
+                        $innerHtml=str_replace("<p></p>","",$innerHtml);
+                        $innerHtml= "<p>" . $innerHtml . "</p>";
+                        $problem_info->hint=$innerHtml;
+                        break;
+                    case "Source":
+                        break;
+                    default:
+                        echo "$problem_id unrecognized ". substr($divs[$i],0,strpos($divs[$i],"</div>")) . "\n";
+                }
+            }
+
+            $problem_desc=$problem_info->generate();
+            $compiler='["G++","GCC","Java","Pascal","C++","C","Fortran"]';
+
+            $tmp=$this->getSubStr($html,"Time Limit:</b>","MS",0);
+            list($time_limit)=sscanf($tmp,"%d");
+
+            $tmp=$this->getSubStr($html,"Memory Limit:</b>","K",0);
+            list($memory_limit)=sscanf($tmp,"%d");
+
+            $memory_limit=$memory_limit*1024;
+
+            $problem_title=$this->getSubStr($html,'<div class="ptt" lang="en-US">',"</div>",0);
+            $problem_url="http://poj.org/problem?id=$problem_id";
+            $this->model("vj_problem_model")->insertProblem(6,"$problem_id",$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
+            echo "Done $problem_id\n";
+
+        }
+    }
     function importCodeForcesTags()
     {
 

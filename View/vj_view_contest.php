@@ -274,6 +274,6 @@
         var contest_id=<?php echo $contest_id;?>;
         var vm;
     </script>
-    <script src="<?php echo _Http;?>js/view_contest.js?201709131"></script>
+    <script src="<?php echo _Http;?>js/view_contest.js?201709132"></script>
 
 <?php include('footer.php');?>

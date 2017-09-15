@@ -34,9 +34,9 @@
                             <td class="center-align"><a :href="problem.problem_id | generate_url" target="_blank">{{ problem.problem_id }}</a></td>
                             <td class="center-align green-text">{{ problem.problem_title }}</td>
                             <td class="center-align" >
-                                <a href="#" @click="swapPosition(index,'up')"><i class="material-icons">arrow_upward</i></a>
-                                <a href="#" @click="swapPosition(index,'down')"><i class="material-icons">arrow_downward</i></a>
-                                <a href="#" @click="deletePosition(index)"><i class="material-icons red-text">delete</i></a>
+                                <a href="javascript:void(0);" @click="swapPosition(index,'up')"><i class="material-icons">arrow_upward</i></a>
+                                <a href="javascript:void(0);" @click="swapPosition(index,'down')"><i class="material-icons">arrow_downward</i></a>
+                                <a href="javascript:void(0);" @click="deletePosition(index)"><i class="material-icons red-text">delete</i></a>
                             </td>
                         </tr>
                         <tr>
@@ -53,7 +53,7 @@
                                 </div>
                             </td>
                             <td class="center-align">
-                                <a href="#" @click="addProblem()"><i class="material-icons" style="font-size: 40px">add_circle</i></a>
+                                <a href="javascript:void(0);" @click="addProblem()"><i class="material-icons" style="font-size: 40px">add_circle</i></a>
                             </td>
 
                         </tr>

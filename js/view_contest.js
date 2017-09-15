@@ -201,6 +201,9 @@ vm=new Vue(
                             enableLiveAutocompletion: true
                         });
                     });
+                    if(location.hash!="")
+                        setTimeout(function(){$('ul.tabs').tabs('select_tab',  location.hash.replace("#",""));},500);
+
 
                 });
         },
