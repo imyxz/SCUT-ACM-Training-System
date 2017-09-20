@@ -125,11 +125,20 @@ class vJudge extends SlimvcController
     function allContest()
     {
         $this->title="比赛列表";
-        $this->active=5;
+        $this->active=3;
         $this->isLogin=$this->helper("user_helper")->isLogin();
         $this->addon_header="vj_addon_menu.php";
         $this->sub_active=3;
         $this->view("vj_view_all_contest");
 
+    }
+    function spiderStatus()
+    {
+        $this->title="爬虫状态";
+        $this->active=3;
+        $this->isLogin=$this->helper("user_helper")->isLogin();
+        $this->addon_header="vj_addon_menu.php";
+        $this->sub_active=9;
+        $this->view("spider_info");
     }
 }

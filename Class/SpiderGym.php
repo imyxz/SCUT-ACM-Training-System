@@ -19,6 +19,9 @@ class SpiderGym extends SpiderBasic
         $curl->setHeader("Origin: http://codeforces.com");
         $curl->setHeader("Upgrade-Insecure-Requests: 1");
         $curl->setHeader("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+        /*$html=$curl->get("http://codeforces.com/gym/$contest_id/",20);
+        $cookie=$curl->cookieStr2Arr($this->additionInfo['cookie']);*/
+
         $html=$curl->get("http://codeforces.com/gym/$contest_id/submit",20);
         $cookie=$curl->cookieStr2Arr($this->additionInfo['cookie']);
         $dom=new PHPHtmlParser\Dom();
@@ -55,7 +58,7 @@ class SpiderGym extends SpiderBasic
         );
         $return=$curl->post("http://codeforces.com/gym/$contest_id/submit" . $submit_addon,$request,10);
 
-        if($curl->getResponseCode()=="302" && empty($return))//Õý³£Çé¿öÎÞ·µ»Ø£¨Ìø×ª£©
+        if($curl->getResponseCode()=="302" && empty($return))//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ï¿½Ø£ï¿½ï¿½ï¿½×ªï¿½ï¿½
         {
             $html=$curl->get("http://codeforces.com/api/user.status?handle=$username&from=1&count=1",10);
             $json=json_decode($html,true);
@@ -68,6 +71,7 @@ class SpiderGym extends SpiderBasic
     }
     function queryJob()
     {
+        $this->query_job_info=array();
         $curl=new curlRequest();
         $username=$this->spider_info['oj_username'];
         $html=$curl->get("http://codeforces.com/api/user.status?handle=$username&from=1&count=20",10);
@@ -187,7 +191,23 @@ class SpiderGym extends SpiderBasic
 
         $token1=$this->getSubStr($html,"phpuri: '/","',",0);
         $token2=$this->getSubStr($html,'ec.get("','",',0);
-        $curl->post("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_etag",array("bfaa"=>$bfaa,
+
+        $ftaa= $curl->get("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_etag",10);
+        $cookie['evercookie_cache']=$ftaa;
+        $cookie['evercookie_etag']=$ftaa;
+        $cookie['evercookie_png']=$ftaa;
+        $curl->setCookie($cookie);
+
+        /*$tmp1= $curl->post("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_etag",array("bfaa"=>$bfaa,
+            "ftaa"=>$ftaa,
+            "csrf_token"=>$csrf_token),10);*/
+        $tmp1= $curl->get("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_cache",10);
+
+        $tmp1= $curl->post("http://codeforces.com/data/empty",array("bfaa"=>$bfaa,
+            "ftaa"=>"",
+            "csrf_token"=>$csrf_token),10);
+        $tmp1= $curl->get("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_png",10);
+        $tmp1= $curl->post("http://codeforces.com/data/empty",array("bfaa"=>$bfaa,
             "ftaa"=>$ftaa,
             "csrf_token"=>$csrf_token),10);
         /*$curl->get("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_etag",10);
@@ -200,7 +220,7 @@ class SpiderGym extends SpiderBasic
             "handle"=>$this->spider_info['oj_username'],
             "password"=>$this->spider_info['oj_password'],
             "remember"=>"on",
-            "_tta"=>905,
+            "_tta"=>40,
             "ftaa"=>$ftaa,
             "bfaa"=>$bfaa);
         $return=$curl->post("http://codeforces.com/enter?back=%2F",$request,10);
@@ -209,6 +229,7 @@ class SpiderGym extends SpiderBasic
         if(empty($return) && $curl->getResponseCode()==302)
         {
             $this->additionInfoUpdated=true;
+            $cookie=array_merge($cookie,$curl->cookieStr2Arr($curl->getResponseCookie()));
             $this->additionInfo['cookie']=$curl->cookieArr2Str($cookie);
             return true;
         }

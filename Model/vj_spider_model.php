@@ -64,6 +64,23 @@ class vj_spider_model extends SlimvcModel
             $oj_id,
             $minutes*-1)->all();
     }
+    function updateSpiderLoginTime($spider_id)
+    {
+        return $this->queryStmt("update spider_info set oj_logintime=now() where spider_id=?","i",
+            $spider_id);
+    }
+    function getAllSpiders($page,$limit)
+    {
+        $page--;
+        if($page>0)
+            $start=$page*$limit;
+        else
+            $start=0;
+        return $this->queryStmt("select spider_info.spider_id,spider_info.oj_id,spider_info.last_alive_time,spider_info.oj_logintime,spider_info.spider_enable,spider_info.spider_status,spider_info.spider_looking_job,oj_site_info.oj_name from spider_info,oj_site_info where oj_site_info.oj_id=spider_info.oj_id order by spider_info.spider_id desc limit ?,?",
+            "ii",
+            $start,
+            $limit)->all();
+    }
 
 
 

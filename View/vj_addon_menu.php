@@ -24,5 +24,8 @@
         <li class="tab"><a href="<?php echo _Http;?>vJudge/onlineIDE/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
             $index++; ?>">Online IDE</a>
         </li>
+        <li class="tab"><a href="<?php echo _Http;?>vJudge/spiderStatus/" onclick="" class=" <?php echo $sub_active == $index ? "active " : ' ';
+            $index++; ?>">爬虫状态</a>
+        </li>
     </ul>
 </div>

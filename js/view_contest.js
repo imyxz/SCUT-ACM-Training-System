@@ -35,7 +35,10 @@ vm=new Vue(
             need_participant:false,
             err_info:'',
             contest_start_time_ts:0,
-            cur_share_id:0
+            cur_share_id:0,
+            page_pagination:[],
+            status_page:1,
+            status_is_end:false
         },
         filters:{
             generate_url:function(val)
@@ -330,12 +333,16 @@ vm=new Vue(
                         user.problems[submit[1]].is_try=true;
                     }
                 }
-                for(var i in user.problems)
+                for(var x in u_status)
                 {
-                    var problem=user.problems[i];
-                    if(problem.is_ac==true)
+                    var user=u_status[x];
+                    for(var t in user.problems)
                     {
-                        user.penalty+=20*60*problem.trys;
+                        var problem=user.problems[t];
+                        if(problem.is_ac==true)
+                        {
+                            user.penalty+=20*60*problem.trys;
+                        }
                     }
                 }
                 u_status.sort(function(a,b){
@@ -357,12 +364,27 @@ vm=new Vue(
             },
             getSubmitStatus:function()
             {
-                axios.get(this.basic_url+'vJudgeAPI/getContestStatus/id/'+this.contest_id +"/page/"+1)
+                axios.get(this.basic_url+'vJudgeAPI/getContestStatus/id/'+this.contest_id +"/page/"+this.status_page)
                     .then(function(response)
                     {
                         if(response.data.status==0){
                             var data=response.data;
                             vm.status_info=data.submit_status;
+                            vm.status_is_end=data.is_end;
+                            var start;
+                            var page=vm.status_page;
+                            start=page-5;
+                            if(start<1)
+                                start=1;
+                            var tmp=[];
+                            var end=start+10;
+                            if(vm.status_is_end)
+                                end=page;
+                            for(var i=start;i<=end;i++)
+                            {
+                                tmp.push(i);
+                            }
+                            vm.page_pagination=tmp;
                         }
                         else
                         {
@@ -370,6 +392,11 @@ vm=new Vue(
                         }
 
                     });
+            },
+            goPage:function(newpage)
+            {
+                if(newpage>=1 && !(newpage>this.status_page && this.status_is_end))
+                    this.status_page=newpage;
             },
             displaySourceCode:function(job_id)
             {
@@ -571,6 +598,13 @@ vm=new Vue(
                 var time=new Date(this.contest_start_time_ts);
                 var val=new Date(time.getTime()+this.contest_long*1000);
                 return val.getFullYear()+"/"+(val.getMonth()+1)+"/"+(val.getDate()+1)+" "+this.addZero(val.getHours())+":"+this.addZero(val.getMinutes());
+            }
+        },
+        watch:{
+            status_page:function(newpage)
+            {
+                this.status_page=newpage;
+                this.getSubmitStatus();
             }
         }
 

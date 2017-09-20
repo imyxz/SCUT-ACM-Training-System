@@ -508,9 +508,10 @@ class spiderProblems extends SlimvcControllerCli
                 sleep(1);
             }
             $html=$this->getSubStr($html,"problems:",".FormatView()",0);
-
             $html=iconv("gb2312","UTF-8//IGNORE",$html);
+
             $html=$this->jsonFormatHex($html);
+
             $json=json_decode($html);
             unset($json[0]);
             foreach($json as &$one)
@@ -690,6 +691,118 @@ class spiderProblems extends SlimvcControllerCli
             $problem_title=$this->getSubStr($html,'<div class="ptt" lang="en-US">',"</div>",0);
             $problem_url="http://poj.org/problem?id=$problem_id";
             $this->model("vj_problem_model")->insertProblem(6,"$problem_id",$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
+            echo "Done $problem_id\n";
+
+        }
+    }
+    function bzoj()
+    {
+        /** @var curlRequest $curl */
+        $url="http://www.lydsy.com/JudgeOnline";
+        $curl=$this->newClass("curlRequest");
+        $curl->setHeader("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
+        $curl->setHeader("Referer: $url/submit.php");
+        $curl->setHeader("Origin: $url/");
+        $curl->setHeader("Upgrade-Insecure-Requests: 1");
+        $curl->setHeader("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+        $problem_start_id=intval(self::$cliArg['start']);
+        $problem_end_id=intval(self::$cliArg['end']);
+        for($problem_id=$problem_start_id;$problem_id<=$problem_end_id;$problem_id++)
+        {
+            $problem_list=array();
+            while(!($html=$curl->get("$url/problem.php?id=$problem_id",10)))
+            {
+                echo "Retry $problem_id\n";
+                sleep(1);
+            }
+
+
+            if(strpos($html,"This problem is in Contest(s) below:")!==false)
+            {
+                $tmp=$url . "/" . $this->getSubStr($html,"<br><a href=",">",0);
+                while(!($html=$curl->get($tmp,10)))
+                {
+                    echo "Retry $problem_id\n";
+                    sleep(1);
+                }
+            }
+
+            if(strpos($html,"Please contact ")!==false)
+                continue;
+            /** @var problemInfo $problem_info */
+            $problem_info=$this->newClass("problemInfo");
+            $problem_info->examples=array();
+            $problem_info->examples[0]=new problemExample();
+            $divs=explode("<h2>",$html);
+            for($i=1;$i<count($divs)-1;$i++)
+            {
+                $divs[$i]=$divs[$i] . "<h2>";
+                $divs[$i]=str_replace("pre class=",'div class=',$divs[$i]);
+                $divs[$i]=str_replace("</pre>",'</div>',$divs[$i]);
+
+                $innerHtml='<div>' . $this->getSubStr($divs[$i],'<div class=content>','</div><h2>',0) . '</div>';
+                $innerHtml=str_replace("content",'"content"',$innerHtml);
+                $innerHtml=str_replace("example",'"example"',$innerHtml);
+                $innerHtml=str_replace("sampledata",'"sampledata"',$innerHtml);
+                $innerHtml=str_replace("center",'"center"',$innerHtml);
+
+                $innerHtml=str_replace("\n","<br />",$innerHtml);
+
+                $innerHtml=$this->filter($innerHtml,"$url/",array());
+                $innerHtml=str_replace(array("<div>","</div>","<pre>","</pre>"),array("","","",""),$innerHtml);
+                switch(trim(substr($divs[$i],0,strpos($divs[$i],"</h2>"))))
+                {
+                    case "Description":
+                        $innerHtml=str_replace("<br /><br />","</p><p>",$innerHtml);
+                        $innerHtml= "<p>" . $innerHtml . "</p>";
+                        $problem_info->description=$innerHtml;
+                        break;
+                    case "Input":
+                        $innerHtml= "<p>" . $innerHtml . "</p>";
+                        $problem_info->input=$innerHtml;
+                        break;
+                    case "Output":
+                        $innerHtml= "<p>" . $innerHtml . "</p>";
+                        $problem_info->output=$innerHtml;
+                        break;
+                    case "Sample Input":
+                        $innerHtml=str_replace(array("<span>","</span>"),array("",""),$innerHtml);
+                        $problem_info->examples[0]->example_input=$innerHtml;
+                        break;
+                    case "Sample Output":
+                        $innerHtml=str_replace(array("<span>","</span>"),array("",""),$innerHtml);
+                        $problem_info->examples[0]->example_output=$innerHtml;
+                        break;
+                    case "HINT":
+                        $innerHtml=str_replace("<br>","</p><p>",$innerHtml);
+                        $innerHtml=str_replace("<p></p>","",$innerHtml);
+                        $innerHtml= "<p>" . $innerHtml . "</p>";
+                        $problem_info->hint=$innerHtml;
+                        break;
+                    case "Author":
+                        break;
+                    default:
+                        //echo "$problem_id unrecognized ". substr($divs[$i],0,strpos($divs[$i],"</div>")) . "\n";
+                }
+            }
+
+            $problem_desc=$problem_info->generate();
+            $compiler='{"0":"C","1":"C++","2":"Pascal","3":"Java","6":"Python"}';
+
+            $time_limit=doubleval($this->getSubStr($html,"Time Limit: </span>","Sec",0));
+            $time_limit=$time_limit*1000;
+
+            $memory_limit=$this->getSubStr($html,"Memory Limit: </span>","MB",0);
+
+
+            $memory_limit=$memory_limit*1024*1024;
+
+            $problem_title=$this->getSubStr($html,"<center><h2>","</h2>",0).'</h2>';
+            if(strpos($problem_title,":")!==false)
+                $problem_title=trim($this->getSubStr($problem_title,":","</h2>",0));
+
+            $problem_url="$url/problem.php?id=$problem_id";
+            $this->model("vj_problem_model")->insertProblem(7,$problem_id,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
             echo "Done $problem_id\n";
 
         }

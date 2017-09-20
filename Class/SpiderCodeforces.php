@@ -109,6 +109,7 @@ class SpiderCodeforces extends SpiderBasic
     function queryJob()
     {
         $curl=new curlRequest();
+        $this->query_job_info=array();
         $username=$this->spider_info['oj_username'];
         $html=$curl->get("http://codeforces.com/api/user.status?handle=$username&from=1&count=20",10);
         $json=json_decode($html,true);
@@ -228,7 +229,23 @@ class SpiderCodeforces extends SpiderBasic
 
         $token1=$this->getSubStr($html,"phpuri: '/","',",0);
         $token2=$this->getSubStr($html,'ec.get("','",',0);
-        $curl->post("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_etag",array("bfaa"=>$bfaa,
+
+        $ftaa= $curl->get("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_etag",10);
+        $cookie['evercookie_cache']=$ftaa;
+        $cookie['evercookie_etag']=$ftaa;
+        $cookie['evercookie_png']=$ftaa;
+        $curl->setCookie($cookie);
+
+        /*$tmp1= $curl->post("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_etag",array("bfaa"=>$bfaa,
+            "ftaa"=>$ftaa,
+            "csrf_token"=>$csrf_token),10);*/
+        $tmp1= $curl->get("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_cache",10);
+
+        $tmp1= $curl->post("http://codeforces.com/data/empty",array("bfaa"=>$bfaa,
+            "ftaa"=>"",
+            "csrf_token"=>$csrf_token),10);
+        $tmp1= $curl->get("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_png",10);
+        $tmp1= $curl->post("http://codeforces.com/data/empty",array("bfaa"=>$bfaa,
             "ftaa"=>$ftaa,
             "csrf_token"=>$csrf_token),10);
         /*$curl->get("http://codeforces.com/$token1/ees?name=$token2&cookie=evercookie_etag",10);
@@ -241,7 +258,7 @@ class SpiderCodeforces extends SpiderBasic
             "handle"=>$this->spider_info['oj_username'],
             "password"=>$this->spider_info['oj_password'],
             "remember"=>"on",
-            "_tta"=>905,
+            "_tta"=>40,
             "ftaa"=>$ftaa,
             "bfaa"=>$bfaa);
         $return=$curl->post("http://codeforces.com/enter?back=%2F",$request,10);
@@ -250,6 +267,7 @@ class SpiderCodeforces extends SpiderBasic
         if(empty($return) && $curl->getResponseCode()==302)
         {
             $this->additionInfoUpdated=true;
+            $cookie=array_merge($cookie,$curl->cookieStr2Arr($curl->getResponseCookie()));
             $this->additionInfo['cookie']=$curl->cookieArr2Str($cookie);
             return true;
         }
@@ -257,6 +275,7 @@ class SpiderCodeforces extends SpiderBasic
             return false;
 
     }
+
     function getRandomStr($cnt)
     {
         $ret='';

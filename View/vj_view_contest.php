@@ -175,6 +175,11 @@
                 </div>
                 <div id="status_info" class="col s12">
                     <div class="card-panel hoverable over-flow-auto" >
+                        <ul class="pagination">
+                            <li :class="{'disabled':status_page<=1,'waves-effect':status_page>1}"><a @click="goPage(status_page-1)" ><i class="material-icons">chevron_left</i></a></li>
+                            <li v-for="pg in page_pagination" :class="{'active':pg==status_page,'waves-effect':pg!=status_page}"><a @click="goPage(pg)">{{pg}}</a></li>
+                            <li :class="{'disabled':status_is_end,'waves-effect':!status_is_end}"><a @click="goPage(status_page+1)"><i class="material-icons">chevron_right</i></a></li>
+                        </ul>
                         <table class="highlight bordered">
                             <thead>
                             <tr>
@@ -274,6 +279,6 @@
         var contest_id=<?php echo $contest_id;?>;
         var vm;
     </script>
-    <script src="<?php echo _Http;?>js/view_contest.js?201709132"></script>
+    <script src="<?php echo _Http;?>js/view_contest.js?201709134"></script>
 
 <?php include('footer.php');?>

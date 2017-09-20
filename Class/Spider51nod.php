@@ -69,6 +69,7 @@ class Spider51nod extends SpiderBasic
     function queryJob()
     {
         $curl=new curlRequest();
+        $query_job_info=array();
         $curl->setCookieRaw($this->additionInfo['cookie']);
         $curl->setHeader("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
         $curl->setHeader("Referer: http://www.51nod.com/onlineJudge/submitDetail.html");

@@ -85,7 +85,7 @@ class user_model extends SlimvcModel
         if($row)
         {
             $this->queryStmt("update user_info set login_ip=?,login_time=? where user_id=?",
-                "sisi",
+                "sii",
                 $login_ip,
                 $now,
                 $row['user_id']);

@@ -701,7 +701,11 @@ class vJudgeAPI extends SlimvcController
     function getContestStatus()
     {
         try {
+            $return=array();
             $contest_id=intval($_GET['id']);
+            $page=@intval($_GET['page']);
+            if($page<=0)
+                $page=1;
             /** @var contestType $contestType */
             $contestType=$this->newClass("contestType");
 
@@ -718,13 +722,16 @@ class vJudgeAPI extends SlimvcController
             {
                 $part_info=$contest_model->getUserParticipantInfo($contest_id,$user_id);
                 if(!$part_info)throw new Exception("需先参加比赛");
-                $return["submit_status"]=$contest_model->getContestSubmitStatus($contest_id,time()-$part_info['participant_time_ts'],0,30);
+                $return["submit_status"]=$contest_model->getContestSubmitStatus($contest_id,time()-$part_info['participant_time_ts'],$page,30);
             }
             else if($contest_info['contest_type']==$contestType->NormalContest)
             {
-                $return["submit_status"]=$contest_model->getContestSubmitStatus($contest_id,time()-$contest_info["contest_start_time_ts"],0,30);
+                $return["submit_status"]=$contest_model->getContestSubmitStatus($contest_id,time()-$contest_info["contest_start_time_ts"],$page,30);
             }
-
+            if (count($return["submit_status"]) < 30)
+                $return['is_end'] = true;
+            else
+                $return['is_end'] = false;
 
             $return["status"]=0;
             $this->outputJson($return);
@@ -758,4 +765,26 @@ class vJudgeAPI extends SlimvcController
 
         }
     }
+    function getSpiderStatus(){
+        try {
+            $page = intval(@$_GET['page']);
+            if ($page < 1)
+                $page = 1;
+            $tmp = $this->model("vj_spider_model")->getAllSpiders($page, 30);
+            $return['spiders'] = $tmp;
+            if (count($tmp) < 30)
+                $return['is_end'] = true;
+            else
+                $return['is_end'] = false;
+            $return['status'] = 0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
+
 }

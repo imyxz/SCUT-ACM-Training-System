@@ -178,7 +178,11 @@ class spiderPool extends SlimvcControllerCli
                 if ($spider->checkLogin() == false) {
                     $this->log("Spider offline. ReLogining...");
                     if($spider->login())
+                    {
+                        $this->model("vj_spider_model")->updateSpiderLoginTime($spider_id);
                         $this->log("ReLogin Succeed!");
+
+                    }
                     else
                         $this->log("ReLogin Faild!");
 

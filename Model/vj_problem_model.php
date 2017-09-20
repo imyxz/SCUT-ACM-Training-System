@@ -15,6 +15,9 @@ class vj_problem_model extends SlimvcModel
     }
     function insertProblem($oj_id,$problem_identity,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler_info)
     {
+        $info=$this->getProblemByOjIDAndProblemIdentity($oj_id,$problem_identity);
+        if($info)
+            return $info["problem_id"];
         $this->queryStmt("insert into problem_info set oj_id=?,problem_identity=?,problem_title=?,problem_desc=?,problem_url=?,compiler_info=?,time_limit=?,memory_limit=?,add_time=now()",
             "isssssii",
             $oj_id,
