@@ -7,20 +7,15 @@
             bottom: 0;
             left: 0;
         }
-        .button-save{
+        .button-tools{
             position: absolute;
             right: 50px;
             bottom: 80px;
         }
-        .button-run{
+        .button-run {
             position: absolute;
             right: 50px;
             bottom: 150px;
-        }
-        .button-format{
-            position: absolute;
-            right: 50px;
-            bottom: 220px;
         }
         #result-modal .tabs .tab a{
             color:white;
@@ -36,27 +31,37 @@
             background-color:white;
         }
     </style>
-<div class="row" id="problem_list_table">
+<div class="row" id="vm">
     <div class="l12">
-        <div id="editor" >#include &lt;iostream&gt;
-using namespace std;
-int main()
-{
-    cout&lt;&lt;"Hello World!"&lt;&lt;endl;
-}</div>
-        <div class="button-save">
-            <a class="btn-floating btn-large waves-effect waves-light blue " onclick="$('#modal_draft').modal('open');"><i class="material-icons">save</i></a>
-        </div>
+        <div id="editor" ></div>
+
         <div class="button-run">
             <a class="btn-floating btn-large waves-effect waves-light green " onclick="$('#result-modal').modal('open');"><i class="material-icons">play_arrow</i></a>
+
         </div>
-        <div class="button-format">
-            <a class="btn-floating btn-large waves-effect waves-light yellow darken-4 " @click="formatCode"><i class="material-icons">spellcheck</i></a>
+        <div class="fixed-action-btn horizontal button-tools">
+            <a class="btn-floating btn-large blue">
+                <i class="large material-icons">toc</i>
+            </a>
+            <ul>
+                <li>
+                    <a class="btn-floating waves-effect waves-light green lighten-1 " onclick="$('#modal_setting').modal('open');"><i class="material-icons">settings</i></a>
+                </li>
+                <li>
+                    <a class="btn-floating  waves-effect waves-light blue " onclick="$('#modal_draft').modal('open');"><i class="material-icons">save</i></a>
+                </li>
+                <li>
+                    <a class="btn-floating waves-effect waves-light yellow darken-4 " @click="formatCode"><i class="material-icons">spellcheck</i></a>
+                </li>
+                <li>
+                    <a class="btn-floating  waves-effect waves-light red " @click="shareCode"><i class="material-icons">share</i></a>
+                </li>
+
+            </ul>
         </div>
 
         <div id="result-modal" class="modal modal-fixed-footer black white-text" style="overflow: visible;">
             <div class="modal-content " style="padding:0;overflow: visible;">
-
                         <ul class="tabs black white-text tabs-fixed-width">
                             <li class="tab col s4"><a class="active" href="#input_div">输入数据</a></li>
                             <li class="tab col s4"><a href="#output_div">输出结果</a></li>
@@ -76,15 +81,14 @@ int main()
                     <label for="error_code"></label>
                 </div>
 
+
             </div>
             <div class="modal-footer black white-text" id="modal_footer">
                 <div class="row" key="div_2" style="font-size: 20px; ">
-                    <div class="col l4 left-align" style="padding:8px;">
+                    <div class="col l8 left-align" style="padding:8px;">
                         <span>状态：{{ running_status }}</span>
                     </div>
-                    <div class="col l4" >
 
-                    </div>
                     <div class="col l4 right-align" >
                         <a href="#" class="btn waves-effect waves-blue" @click="submitJob">提交运行</a>
                     </div>
@@ -111,14 +115,43 @@ int main()
                 </div>
             </div>
         </div>
+        <div id="modal_setting" class="modal bottom-sheet">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col l11">
+                        <p>选择编程语言：</p>
+                        <input type="radio" value="0" id="code-type-c" v-model="code_type"/><label for="code-type-c" class="green-text text-lighten-2 medium-text">C</label>
+                        <input type="radio" value="1" id="code-type-cpp" v-model="code_type"/><label for="code-type-cpp" class="green-text text-lighten-2 medium-text">C++</label>
+                        <input type="radio" value="2" id="code-type-java" v-model="code_type"/><label for="code-type-java" class="green-text text-lighten-2 medium-text">JAVA</label>
+                        <input type="radio" value="3" id="code-type-php7" v-model="code_type"/><label for="code-type-php7" class="green-text text-lighten-2 medium-text">PHP7</label>
+                        <input type="radio" value="4" id="code-type-pascal" v-model="code_type"/><label for="code-type-pascal" class="green-text text-lighten-2 medium-text">PASCAL</label>
+                        <input type="radio" value="5" id="code-type-python" v-model="code_type"/><label for="code-type-python" class="green-text text-lighten-2 medium-text">PYTHON3</label>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="share-modal" class="modal">
+            <div class="modal-content">
+                <h4>代码链接</h4>
+                <h5><a :href="cur_share_id | share_url">{{cur_share_id | share_url}}</a></h5>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">ok</a>
+            </div>
+        </div>
     </div>
 </div>
 
     <script>
         var editor;
-        var problem_list_table=new Vue(
+        var basic_url='<?php echo _Http;?>';
+
+        var vm=new Vue(
             {
-                el: "#problem_list_table",
+                el: "#vm",
                 data: {
                     loading: true,
                     basic_url:'<?php echo _Http;?>',
@@ -132,9 +165,11 @@ int main()
                     auto_saves:[],
                     new_draft_title:'',
                     old_code:'',
-                    job_code_id:<?php echo $job_code_id;?>
-                },
-                filters:{
+                    init_code:'',
+                    job_code_id:<?php echo $job_code_id;?>,
+                    share_code_id:<?php echo $share_code_id;?>,
+                    code_type:-1,
+                    cur_share_id:0
                 },
                 created: function(){
                     setTimeout(this.updateStatus,1000);
@@ -143,12 +178,41 @@ int main()
 
 
                 },
+                watch:{
+                  code_type:function(new_type)
+                  {
+                      switch( parseInt(new_type)) {
+                          case 0:
+                              editor.getSession().setMode("ace/mode/c_cpp");
+                              break;
+                          case 1:
+                              editor.getSession().setMode("ace/mode/c_cpp");
+                              break;
+                          case 2:
+                              editor.getSession().setMode("ace/mode/java");
+                              break;
+                          case 3:
+                              editor.getSession().setMode("ace/mode/php");
+                              break;
+                          case 4:
+                              editor.getSession().setMode("ace/mode/pascal");
+                              break;
+                          case 5:
+                              editor.getSession().setMode("ace/mode/python");
+                              break;
+                      }
+                      localStorage.code_type=new_type;
+
+
+                  }
+                },
                 methods:{
                     submitJob:function()
                     {
                         var obj=new Object;
                         obj.source_code=editor.getValue();
                         obj.input_code=this.input_code;
+                        obj.code_type=this.code_type;
                         Materialize.toast('任务提交中', 2000);
                         axios.post(this.basic_url+'onlineIDE/submitJob/',JSON.stringify(obj))
                             .then(function(response)
@@ -156,10 +220,10 @@ int main()
                                 if(response.data.status==0)
                                 {
                                     Materialize.toast('任务提交成功！', 2000);
-                                    problem_list_table.job_id=response.data.job_id;
-                                    problem_list_table.is_updating=true;
-                                    problem_list_table.output_code='';
-                                    problem_list_table.error_code='';
+                                    vm.job_id=response.data.job_id;
+                                    vm.is_updating=true;
+                                    vm.output_code='';
+                                    vm.error_code='';
                                     $('ul.tabs').tabs('select_tab', 'output_div');
 
 
@@ -176,7 +240,7 @@ int main()
                     },
                     updateStatus:function()
                     {
-                        if(problem_list_table.is_updating==true)
+                        if(vm.is_updating==true)
                         {
                             axios.get(this.basic_url+'onlineIDE/getJobResult/job_id/' + this.job_id)
                                 .then(function(response)
@@ -184,24 +248,32 @@ int main()
                                     if(response.data.status==0)
                                     {
                                         var result=response.data.result;
-                                        if(result.is_finished==1)
+                                        var tips="";
+                                        switch(parseInt(result.job_status))
                                         {
-                                            problem_list_table.running_status="运行完成";
-                                            problem_list_table.output_code=result.output_code;
-                                            problem_list_table.error_code=result.error_code;
-                                            if(result.error_code!='')
-                                                $('ul.tabs').tabs('select_tab', 'error_div');
+                                            case 0:
+                                            case 1:
+                                                vm.running_status='正在排队中';
+                                                tips='正在排队中';
+                                                break;
+                                            case 2:
+                                                vm.running_status='正在执行';
+                                                tips='正在执行';
 
-                                            problem_list_table.is_updating=false;
+                                                break;
+                                            case 3:
+                                                vm.running_status="运行完成   时间: " + vm.time_filter(result.job_info.time_usage) +"  内存: "+vm.ram_filter(result.job_info.mem_usage);
+                                                vm.output_code=result.job_info.program_stdout;
+                                                vm.error_code=result.job_info.compile_error;
+                                                tips='运行完成';
+
+                                                if(result.job_info.compile_state!=0)
+                                                    $('ul.tabs').tabs('select_tab', 'error_div');
+
+                                                vm.is_updating=false;
+                                                break;
                                         }
-                                        else
-                                        {
-                                            if(result.is_running==0)
-                                                problem_list_table.running_status='正在排队中';
-                                            else
-                                                problem_list_table.running_status='正在执行';
-                                        }
-                                        Materialize.toast(problem_list_table.running_status, 2000);
+                                        Materialize.toast(tips, 2000);
 
 
                                     }
@@ -209,12 +281,12 @@ int main()
                                     {
                                         Materialize.toast('<span class="">更新失败：'+response.data.err_msg+'</span>' , 2000);
                                     }
-                                    setTimeout(problem_list_table.updateStatus,1000);
+                                    setTimeout(vm.updateStatus,1000);
 
                                 });
                         }
                         else
-                            setTimeout(problem_list_table.updateStatus,1000);
+                            setTimeout(vm.updateStatus,1000);
                     },
                     getUserDraft:function()
                     {
@@ -223,8 +295,8 @@ int main()
                             {
                                 if(response.data.status==0)
                                 {
-                                    problem_list_table.drafts=response.data.drafts;
-                                    problem_list_table.auto_saves=response.data.autosave;
+                                    vm.drafts=response.data.drafts;
+                                    vm.auto_saves=response.data.autosave;
                                 }
                                 else
                                 {
@@ -250,7 +322,7 @@ int main()
                                 if(response.data.status==0)
                                 {
                                     editor.setValue(response.data.code,-1);
-                                    problem_list_table.old_code=response.data.code;
+                                    vm.old_code=response.data.code;
                                     Materialize.toast('<span class="">读取成功！</span>' , 2000);
                                     $('#modal_draft').modal('close');
                                 }
@@ -269,7 +341,26 @@ int main()
                                 if(response.data.status==0)
                                 {
                                     editor.setValue(response.data.source_code,-1);
-                                    problem_list_table.old_code=response.data.source_code;
+                                    vm.old_code=response.data.source_code;
+                                    Materialize.toast('<span class="">读取成功！</span>' , 2000);
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">读取失败：'+response.data.err_msg+'</span>' , 2000);
+                                }
+
+                            });
+                    },
+                    readShareCode:function(id)
+                    {
+                        axios.get(this.basic_url+'onlineIDE/getShareCode/id/'+id)
+                            .then(function(response)
+                            {
+                                if(response.data.status==0)
+                                {
+                                    editor.setValue(response.data.source_code,-1);
+                                    vm.old_code=response.data.source_code;
+                                    vm.code_type=response.data.code_type;
                                     Materialize.toast('<span class="">读取成功！</span>' , 2000);
                                 }
                                 else
@@ -309,7 +400,7 @@ int main()
                                         $('#modal_draft').modal('close');
 
                                     }
-                                    problem_list_table.getUserDraft();
+                                    vm.getUserDraft();
 
                                 }
                                 else
@@ -322,6 +413,7 @@ int main()
                     {
                         var obj=new Object;
                         obj.source_code=editor.getValue();
+                        obj.code_type=this.code_type;
                         axios.post(this.basic_url+'onlineIDE/formatCode/',JSON.stringify(obj))
                             .then(function(response)
                             {
@@ -336,8 +428,82 @@ int main()
                                     Materialize.toast('<span class="">格式化代码失败：'+response.data.err_msg+'</span>' , 2000);
                                 }
                             });
+                    },
+                    loadDefaultCode:function(code_type)
+                    {
+                        axios.get(this.basic_url+'onlineIDE/getCodeTypeDefaultCode/codeType/'+code_type)
+                            .then(function(response)
+                            {
+                                if(response.data.status==0)
+                                {
+                                    editor.setValue(response.data.code,-1);
+                                    //Materialize.toast('<span class="">读取默认代码成功</span>' , 2000);
+
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">读取默认代码失败：'+response.data.err_msg+'</span>' , 2000);
+                                }
+                            });
+                    },
+                    shareCode:function()
+                    {
+                        var obj=new Object;
+                        obj.source_code=editor.getValue();
+                        obj.code_type=this.code_type;
+                        axios.post('<?php echo _Http;?>onlineIDE/shareCode/',JSON.stringify(obj))
+                            .then(function(response)
+                            {
+                                if(response.data.status==0)
+                                {
+                                    vm.cur_share_id=response.data.share_id;
+                                    $('#share-modal').modal('open');
+                                    Materialize.toast('<span class="">代码已分享</span>' , 3000);
+
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">设置失败：'+response.data.err_msg+'</span>' , 2000);
+                                }
+                            });
+
+                    },
+                    ram_filter: function (val) {
+                        var unit = 'B';
+                        if (val >= 1000) {
+                            val /= 1024;
+                            unit = 'KB';
+                            if (val >= 1000) {
+                                val /= 1024;
+                                unit = 'MB';
+                                if (val >= 1000) {
+                                    val /= 1024;
+                                    unit = 'GB';
+                                    if (val >= 1000) {
+                                        val /= 1024;
+                                        unit = 'TB';
+                                    }
+                                }
+                            }
+                        }
+                        return "" + parseFloat(val).toFixed(2) + " " + unit;
+                    },
+                    time_filter: function (val) {
+                        var unit = 'ms';
+                        if (val >= 1000) {
+                            val /= 1000;
+                            unit = 's';
+                        }
+                        return "" + parseFloat(val).toFixed(2) + " " + unit;
+                    }
+                },
+                filters:{
+                    share_url:function(val)
+                    {
+                        return basic_url+"vJudge/onlineIDE/shareCode/"+val;
                     }
                 }
+
 
 
             }
@@ -363,9 +529,16 @@ int main()
                     }
                 }
             );
-            problem_list_table.old_code=editor.getValue();
-            if(problem_list_table.job_code_id>0)
-                problem_list_table.readJobCode(problem_list_table.job_code_id);
+            vm.old_code=editor.getValue();
+            if(localStorage.code_type==null)
+                localStorage.code_type=1;
+            vm.code_type=localStorage.code_type;
+            if(vm.job_code_id>0)
+                vm.readJobCode(vm.job_code_id);
+            else if(vm.share_code_id>0)
+                vm.readShareCode(vm.share_code_id);
+            else
+                vm.loadDefaultCode(localStorage.code_type);
 
 
         });

@@ -807,6 +807,118 @@ class spiderProblems extends SlimvcControllerCli
 
         }
     }
+    function tyvj()
+    {
+        /** @var curlRequest $curl */
+        $url="http://www.tyvj.cn";
+        $curl=$this->newClass("curlRequest");
+        $curl->setHeader("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
+        $curl->setHeader("Referer: $url/");
+        $curl->setHeader("Origin: $url/");
+        $curl->setHeader("Upgrade-Insecure-Requests: 1");
+        $curl->setHeader("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+        $problem_start_id=intval(self::$cliArg['start']);
+        $problem_end_id=intval(self::$cliArg['end']);
+        for($problem_id=$problem_start_id;$problem_id<=$problem_end_id;$problem_id++)
+        {
+            $problem_list=array();
+            while(!($html=$curl->get("$url/p/$problem_id",10)))
+            {
+                echo "Retry $problem_id\n";
+                sleep(1);
+            }
+
+
+
+
+            if(strpos($html,"NullReferenceException")!==false)
+                continue;
+            if(strpos($html,"没有找到题目")!==false)
+                continue;
+            /** @var problemInfo $problem_info */
+            $problem_info=$this->newClass("problemInfo");
+            $problem_info->examples=array();
+            $example_count=0;
+            $problem_info->examples[0]=new problemExample();
+            $divs=explode("<h2>",$html);
+            for($i=1;$i<count($divs);$i++)
+            {
+
+
+                $innerHtml= $this->getSubStr($divs[$i],'</h2>','<div class="tyvj-boder-top',0) ;
+                if(!$innerHtml)
+                    $innerHtml= $this->getSubStr($divs[$i],'</h2>','</div>',0) . '</div>' ;
+                //$innerHtml=str_replace("\n","<br />",$innerHtml);
+                $innerHtml=str_replace("<br>","<br />",$innerHtml);
+
+                $innerHtml=$this->filter($innerHtml,"$url/",array());
+                $innerHtml=str_replace("<div>","<p>",$innerHtml);
+                $innerHtml=str_replace("</div>","</p>",$innerHtml);
+                $innerHtml=str_replace("<p><p>","<p>",$innerHtml);
+                $innerHtml=str_replace("<p> <p>","<p>",$innerHtml);
+
+                $innerHtml=str_replace("</p></p>","</p>",$innerHtml);
+                $innerHtml=str_replace("</p> </p>","</p>",$innerHtml);
+
+                switch(trim(substr($divs[$i],0,strpos($divs[$i],"</h2>"))))
+                {
+                    case "描述":
+                        $innerHtml=str_replace("<br /><br />","</p><p>",$innerHtml);
+                        $problem_info->description=$innerHtml;
+                        break;
+                    case "输入格式":
+                        $problem_info->input=$innerHtml;
+                        break;
+                    case "输出格式":
+                        $problem_info->output=$innerHtml;
+                        break;
+                    case "备注":
+                        $innerHtml=str_replace("<br>","</p><p>",$innerHtml);
+                        $innerHtml=str_replace("<p></p>","",$innerHtml);
+                        $problem_info->hint=$innerHtml;
+                        break;
+                    case "背景":
+                        break;
+                    default:
+                        if(strpos(trim(substr($divs[$i],0,strpos($divs[$i],"</h2>"))),"测试样例")!==false)
+                        {
+                            $pos1=strpos($innerHtml,"<h3>输入</h3>");
+                            $pos2=strpos($innerHtml,"<h3>输出</h3>");
+                            if($pos1!==false && $pos2!==false)
+                            {
+                                $example=new problemExample();
+                                $example->example_input=$this->getSubStr($innerHtml,"<blockquote>","</blockquote>",$pos1);
+                                $example->example_output=$this->getSubStr($innerHtml,"<blockquote>","</blockquote>",$pos2);
+                                $problem_info->examples[$example_count++]=$example;
+                            }
+                        }
+                        else
+                        {
+                            //echo "Unknown " .trim(substr($divs[$i],0,strpos($divs[$i],"</h2>")));
+                        }
+                }
+            }
+
+            $problem_desc=$problem_info->generate();
+            //$("option").each(function(index,ele){tmp[ele.value]=ele.innerText})
+            $compiler='{"0":"C","1":"C++","2":"C++11","3":"Java","4":"Pascal","5":"Python 2.7","6":"Python 3.3","7":"Ruby","8":"C#","9":"VB.Net","10":"F#","11":"C++14"}';
+
+            $time_limit=doubleval($this->getSubStr($html,"时间: ","ms",0));
+
+            $memory_limit=$this->getSubStr($html,"空间: ","K",0);
+
+
+            $memory_limit=$memory_limit*1024;
+
+            $problem_title=trim($this->getSubStr($html,"</strong>","</div>",0));
+            if(strpos($problem_title,"<span")!==false)
+                $problem_title=$this->getSubStr("xxx" . $problem_title,"xxx","<span",0);
+            $problem_url="$url/p/$problem_id";
+            $this->model("vj_problem_model")->insertProblem(8,$problem_id,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
+            echo "Done $problem_id\n";
+
+        }
+    }
     function importCodeForcesTags()
     {
 
@@ -874,9 +986,13 @@ class spiderProblems extends SlimvcControllerCli
                 $value->getTag()->setAttribute('class',implode(" ",$filter_class));
             if(!empty($origin_src))
             {
-                if(substr($origin_src,0,4)!='http')
-                    $origin_src=$oj_url . $origin_src;
-                $origin_src=str_replace('../','',$origin_src);
+                if(substr($origin_src,0,4)!='data')
+                {
+                    if(substr($origin_src,0,4)!='http')
+                        $origin_src=$oj_url . $origin_src;
+                    $origin_src=str_replace('../','',$origin_src);
+                }
+
                 $value->getTag()->setAttribute('src',$origin_src);
             }
 

@@ -99,6 +99,10 @@ class vJudge extends SlimvcController
             $this->job_code_id=intval($_GET['jobCode']);
         else
             $this->job_code_id=0;
+        if(isset($_GET['shareCode']))
+            $this->share_code_id=intval($_GET['shareCode']);
+        else
+            $this->share_code_id=0;
         $this->view("vj_online_ide");
     }
     function viewTag()
