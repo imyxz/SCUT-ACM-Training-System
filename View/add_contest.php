@@ -1,143 +1,138 @@
 <?php include('header.php');?>
-    <div class="container">
-        <h4>添加比赛</h4>
-        <hr />
+    <div class="container" id="add_contest">
+    <div class="card">
+    <div class="card-content  ">
+        <p class="big-text">添加比赛</p>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col l4">
 
-                <div class="input-group">
-                    <span class="input-group-addon active">比赛名称</span>
-                    <input type="text" class="form-control" value="" placeholder="contest name" size="8" id="addcontest-name" required/>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon">比赛题数</span>
-                    <input type="text" class="form-control" value="" placeholder="" id="addcontest-count" required/>
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <input id="contest_name" type="text" class="validate" v-model="contest_name">
+                                <label for="contest_name">比赛名称</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <input id="problem_count" type="text" class="validate" v-model.number="problem_count">
+                                <label for="problem_count">比赛题数<span v-if="problem_count>0"> A-{{ String.fromCharCode(problem_count+64) }}</span></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <input id="contest_start_date" type="date" class="datepicker" onchange="add_contest.contest_start_date=$(this).val()">
+                                <label for="contest_start_date">开始日期</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <input id="contest_start_time" type="text" class="timepicker"  onchange="add_contest.contest_start_time=$(this).val()" >
+                                <label for="contest_start_time">开始时间</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <input id="contest_end_date" type="date" class="datepicker"  onchange="add_contest.contest_end_date=$(this).val()">
+                                <label for="contest_end_date">结束日期</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <input id="contest_end_time" type="text" class="timepicker"  onchange="add_contest.contest_end_time=$(this).val()" >
+                                <label for="contest_end_time">结束时间</label>
+                            </div>
+                        </div>
+                <div class="row right-align">
+                    <a class="waves-effect waves-light btn " @click="submitContest()">保存</a>
+
                 </div>
 
-                    <div class="input-group date form_datetime" data-date="" data-date-format="hh:ii - yyyy MM dd" data-link-field="dtp_input1" id="addcontest-starttime">
-                        <span class="input-group-addon">开始时间</span>
-                        <input class="form-control" type="text" value="">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                        <input type="hidden" id="dtp_input1" value="" />
-                    </div>
-                <div class="input-group date form_datetime" data-date="" data-date-format="hh:ii - yyyy MM dd" data-link-field="dtp_input2" id="addcontest-endtime">
-                    <span class="input-group-addon">结束时间</span>
-                    <input class="form-control" type="text" value="">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                    <input type="hidden" id="dtp_input2" value="" />
-                </div>
-                <div class="input-group">
-                    <label class="form-label label label-info">Board数据</label>
-                    <form class="form-inline ">
-                        <label class="ac_label">数据来源：</label>
-                        <label class="ac_label">
-                            <input class="board_source_radio" type="radio" name="board_source" value="vj" checked>VJudge
-                        </label>
-                        <label class="ac_label">
-                            <input class="board_source_radio" type="radio" name="board_source" value="zoj">ZOJ
-                        </label>
-                        <label class="ac_label">
-                            <input class="board_source_radio" type="radio" name="board_source" value="seoj">软院oj
-                        </label>
-                        <label class="ac_label">
-                            <input class="board_source_radio" type="radio" name="board_source" value="csoj">计院oj
-                        </label>
 
-                    </form>
-                    <textarea class="form-control" cols="100" rows="8" placeholder="此处粘贴来自vjudge的比赛数据，格式为JSON" id="addcontest-board"></textarea>
+            </div>
+            <div class="col l8">
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <textarea id="contest_desc" class="materialize-textarea" rows="6" v-model="contest_desc"></textarea>
+                                <label for="contest_desc">比赛简述</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <textarea id="csv_data" class="materialize-textarea" rows="12" v-model="csv_data"></textarea>
+                                <label for="csv_data">比赛board</label>
+                            </div>
                 </div>
-                <label class="form-label label label-danger" id="source_board_tip">获取方式：https://vjudge.net/contest/rank/single/ + contest-id</label>
-                <div class="input-group">
-                    <label class="form-label label label-info">比赛备注</label>
-                    <textarea class="form-control" cols="100" rows="8" placeholder="如比赛网址，题目来源" id="addcontest-description"></textarea>
-                </div>
-                <div class="alert alert-info" role="alert" style="display: none;" id="addcontest-alert">
-                </div>
-                <button class="btn btn-info btn-default pull-left" id="addcontest-btn" onclick="submitAddContest()">提交</button>
             </div>
         </div>
-
+    </div>
+    </div>
     </div>
     <script>
-        function submitAddContest()
-        {
-            var start_time=new Date($("#addcontest-starttime").datetimepicker("getDate"));
-            start_time=start_time.getTime()/1000;
-            var end_time=new Date($("#addcontest-endtime").datetimepicker("getDate"));
-            end_time=end_time.getTime()/1000;
-            var contest_name=$("#addcontest-name").val();
-            var problem_count=$("#addcontest-count").val();
-            var contest_board=$("#addcontest-board").val();
-            var contest_description=$("#addcontest-description").val();
-            var source=$("input[name='board_source']:checked").val();
-            $('#addcontest-btn').attr("disabled","disabled");
-            $('#addcontest-btn').html("正在添加...数据量较大，请耐心等待");
-            $.post("<?php echo _Http;?>contest/goAddContest","addcontest-name=" + encodeURI(contest_name) +
-                "&addcontest-problem_count="  + encodeURI(problem_count)+
-                "&addcontest-start_time="  + encodeURI(start_time)+
-                "&addcontest-end_time="  + encodeURI(end_time)+
-                "&addcontest-contest_board="  + encodeURI(contest_board) +
-                "&addcontest-contest_description="  + encodeURI(contest_description) +
-                "&addcontest-source="+encodeURI(source)
-                ,function(response){
-
-                    if(response.status==1)
-                    {
-                        $("#addcontest-alert").html("比赛已成功添加！正在跳转....." ).show();
-                        delayJump("<?php echo _Http;?>contest/summary/id/"+response.contest_id,1000);
-                    }
-                    else
-                    {
-                        $('#addcontest-btn').removeAttr("disabled");
-                        $("#addcontest-alert").html(decodeURI(response.message)).show();
-                    }
-                    $('#addcontest-btn').html("提交");
-
-                });
-        }
-        $.fn.datetimepicker.dates['zh-CN'] = {
-            days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
-            daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-            daysMin:  ["日", "一", "二", "三", "四", "五", "六", "日"],
-            months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-            monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-            today: "今天",
-            suffix: [],
-            meridiem: ["上午", "下午"]
-        };
-        $('.form_datetime').datetimepicker({
-            language:  'zh-CN',
-            weekStart: 1,
-            todayBtn:  1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            forceParse: 0,
-            showMeridian: 1
-        });
-        $('.board_source_radio').on("change",function(e){
-            switch($("input[name='board_source']:checked").val())
+        var add_contest=new Vue(
             {
-                case 'vj':
-                    $('#addcontest-board')[0].placeholder="此处粘贴来自vjudge的比赛数据，格式为JSON";
-                    $('#source_board_tip').text("获取方式：https://vjudge.net/contest/rank/single/ + contest-id");
-                    break;
-                case 'zoj':
-                    $('#addcontest-board')[0].placeholder="此处粘贴来自zoj的比赛数据，格式为文本，在榜单页点Export to txt";
-                    $('#source_board_tip').text("获取方式：http://acm.zju.edu.cn/onlinejudge/showContestRankList.do?export=txt&contestId= + contest-id");
-                    break;
-                case 'seoj':
-                    $('#addcontest-board')[0].placeholder="此处粘贴来自软院oj的比赛数据，格式为文本，复制榜单区域并经过填0处理";
-                    $('#source_board_tip').text("获取方式：复制榜单区域并经过填0处理");
-                    break;
-                case 'csoj':
-                    $('#addcontest-board')[0].placeholder="此处粘贴来自计院oj的比赛数据，格式为JSON";
-                    $('#source_board_tip').text("获取方式：http://222.201.145.232/ajax/Contest/GetRank?id= + contest-id");
-                    break;
+                el: "#add_contest",
+                data: {
+                    contest_name:'',
+                    problem_count:'',
+                    contest_start_date:'',
+                    contest_start_time:'',
+                    contest_end_date:'',
+                    contest_end_time:'',
+                    csv_data:'',
+                    contest_desc:'',
+                    basic_url:'<?php echo _Http;?>'
+                },
+                created: function(){
+
+                },
+                methods:
+                {
+                    submitContest: function()
+                    {
+                        var start_date=new Date();
+                        var tmp=this.contest_start_date.split("/");
+                        start_date.setFullYear(tmp[0],tmp[1],tmp[2]);
+                        tmp=this.contest_start_time.split(":");
+                        start_date.setHours(tmp[0],tmp[1],0);
+                        var end_date=new Date();
+                        tmp=this.contest_end_date.split("/");
+                        end_date.setFullYear(tmp[0],tmp[1],tmp[2]);
+                        tmp=this.contest_end_time.split(":");
+                        end_date.setHours(tmp[0],tmp[1],0);
+
+                        var post=new Object();
+                        post.contest_starttime=(start_date.getTime()/1000).toFixed(0);
+                        post.contest_endtime=(end_date.getTime()/1000).toFixed(0);
+                        post.contest_name=this.contest_name;
+                        post.problem_count=this.problem_count;
+                        post.contest_desc=this.contest_desc;
+                        post.csv_data=this.csv_data;
+                        Materialize.toast('正在提交数据', 5000);
+                        axios.post(this.basic_url+'contestAPI/addContestFromCSV/',JSON.stringify(post))
+                            .then(function(response)
+                            {
+                                if(response.data.status==0)
+                                {
+                                    Materialize.toast('提交成功！', 5000);
+                                    delayJump(add_contest.basic_url+'contest/summary/id/'+response.data.contest_id,1000);
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">提交失败：'+response.data.err_msg+'</span>' , 5000);
+                                }
+                            })
+                            .catch(function(error)
+                            {
+                                Materialize.toast('<span class="">提交失败：'+'网络通信错误'+'</span>' , 5000);
+                            })
+
+
+                    }
+                }
+
             }
-        });
+        );
     </script>
 
 <?php include('footer.php');?>

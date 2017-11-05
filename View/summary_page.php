@@ -1,244 +1,238 @@
 <?php include('header.php');?>
-<div class="container-fluid">
-    <div class="row">
-    <div class="col-sm-2">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                比赛详情
-            </div>
-            <div class="panel-body contest-info">
-                <div class="">
-                    <p class="text-primary big-text"><?php echo $contest_name;?></p>
-                    <p class="text-info long-text medium-text"><?php echo $contest_description;?></p>
-                    <?php
-                    foreach($team_info as &$one)
-                    {
-                        echo '<p class="text-warning small-text member-group">' . $one['name'] . ': </p>' . '<p class="small-text member-name ">&nbsp;&nbsp;' . implode(" ",$one['player']) .'</span>';
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
-        <div class="col-sm-10">
-            <div class="panel panel-success">
-                <div class="panel-heading">做题情况 <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#update_ac">更新我的做题状况</button></div>
-                <div class="panel-body">
-                    <table class="table table-hover table-bordered " id="summary_table">
-                        <thead>
-                        <tr>
-                            <th class="text-left">Team</th>
-                            <?php
-                                for($i=0;$i<$problem_count;$i++)
-                                {
-                                    echo '<th class="text-center">' . chr($i+65) .'</th>';
-                                }
-                            ?>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            function getSpan($row)
-                            {
-                                switch (intval($row['ac_status'])){
-                                    case 1:
-                                        return '<span class="text-success">'. $row['player_name'] . ' </span><br />';
-                                    case 2:
-                                        return '<span class="text-warning">'. $row['player_name'] . ' </span><br />';
-                                    case 3:
-                                        return '<span class="text-info">'. $row['player_name'] . ' </span><br />';
-                                }
-                            }
-                                foreach($summary_info as $key => &$one)
-                                {
-                                    echo '<tr>'.
-                                        '<td class="text-danger">'.
-                                        $key.
-                                        '</td>';
-                                    for($i=1;$i<=$problem_count;$i++)
-                                    {
-                                        echo '<td class="text-center summary-td" data-problem_id="'. $i .'">';
-                                        if(isset($one[$i]))
-                                        {
-                                            foreach($one[$i] as &$people)
-                                            {
-                                                echo getSpan($people);
-                                            }
-                                        }
-                                        echo '</td>';
-                                    }
-                                        echo '</tr>';
-                                }
-                            ?>
-
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="col-sm-4 ">
-
-                        </div>
-                        <div class="col-sm-4">
-                            <span class="label label-success ">AC</span>
-                            <span class="label label-warning">TRY</span>
-                            <span class="label label-info">补题</span>
-                        </div>
-                        <div class="col-sm-4">
-
+    <div class="" id="summary_container">
+        <div style="position: fixed;top:80px;width:100%;left:0;z-index:10">
+            <div v-show="loading" class="center-align" id="loading" style="position: relative">
+                <div class="preloader-wrapper small active">
+                    <div class="spinner-layer spinner-green-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                            <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                            <div class="circle"></div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
-    <div class="panel panel-danger">
-        <div class="panel-heading">Board</div>
-        <div class="panel-body">
-            <table class="table table-hover table-bordered ">
-                <thead>
-                <tr>
-                    <th class="text-center">Rank</th>
-                    <th class="text-left">Team</th>
-                    <th class="text-center">Solve</th>
-                    <th class="text-center">Penalty</th>
-                    <?php
-                    for($i=0;$i<$problem_count;$i++)
-                    {
-                        echo '<th class="text-center">' . chr($i+65) .'</th>';
-                    }
-                    ?>
+        <div class="row">
+            <div class="col l3  s12">
+                <div class="card">
+                    <div class="card-content red lighten-3 white-text">
+                        <span class="card-title">{{ contest_name }}</span>
+                        <p>{{ contest_desc }}</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content blue-grey white-text">
+                        <span class="card-title">参赛人员</span>
+                        <div v-for="team in team_info">
+                            <span class="red-text text-lighten-4 medium-text">{{ team.name }}</span>:<p class="yellow-text text-lighten-5 right-align medium-text">{{ team.player | array2Person }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col l9  s12">
+                <div class="card">
+                    <div class="card-content" style="overflow-x:auto">
+                        <table class="highlight bordered medium-text ">
+                            <thead>
+                            <tr>
+                                <th class="left-align">Team</th>
+                                <th class="center-align" v-for="x in problem_count">{{ String.fromCharCode(x+64) }}</th>
+                            </tr>
+                            </thead>
 
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                function secToTime($sec)
-                {
-                    $c=floor($sec/3600);
-                    $sec=$sec-$c*3600;
-                    $b=floor($sec/60);
-                    $sec=$sec-$b*60;
-                    $a=$sec;
-                    if($a<10)
-                        $a='0' . $a;
-                    if($b<10)
-                        $b='0' . $b;
-                    if($c<10)
-                        $c='0' . $c;
-                    return "$c:$b:$a";
-                }
-                foreach($contest_board as &$one)
-                {
-                    echo '<tr>'.
-                        '<td class="text-center">'.
-                        $one['rank_index'].
-                        '</td>'.
-                        '<td class="text-left">'.
-                        $one['group_name'].
-                        '</td>'.
-                        '<td class="text-center">'.
-                        $one['problem_solved'].
-                        '</td>'.
-                        '<td class="text-center">'.
-                        $one['penalty'].
-                        '</td>';
-                    for($i=1;$i<=$problem_count;$i++)
-                    {
+                            <tbody>
+                            <tr v-for="(problems,name) in contest_summary">
+                                <td class="red-text">{{ name }}</td>
+                                <td v-for="players in problems">
+                                    <span v-for="person in players" v-if="person.ac_status!=4"
+                                        :class="{
+                                            'green-text': person.ac_status==1,
+                                            'yellow-text text-darken-3': person.ac_status==2,
+                                            'blue-text': person.ac_status==3,
+                                            }"
+                                          class="center-align"
+                                        style="display: block">
+                                        {{ person.player_name }}
+                                    </span>
+                                </td>
 
-                        if(isset($one['ac_info']['submission'][$i]))
-                        {
-                            if($one['ac_info']['submission'][$i]['ac'])
-                            {
-                                echo '<td class="text-center bg-success">';
-                                echo '<span>' . secToTime($one['ac_info']['submission'][$i]['ac_time']) .'</span>';
-                                if($one['ac_info']['submission'][$i]['try'])
-                                    echo '<br /><span>(-' . $one['ac_info']['submission'][$i]['try'] .')</span>';
-                                echo '</td>';
-                            }
-                            else
-                            {
-                                if($one['ac_info']['submission'][$i]['try'])
-                                {
-                                    echo '<td class="text-center bg-danger">';
-                                    echo '<span>(-' . $one['ac_info']['submission'][$i]['try'] .')</span>';
-                                    echo '</td>';
-                                }
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a class="btn-floating btn waves-effect waves-light red" style="position:absolute;left:80px;top:30px" @click="$('#modal_ac').modal('open');"><i class="material-icons">mode_edit</i></a>
 
-                            }
-                        }
-                        else
-                        {
-                            echo '<td class="text-center">';
-                            echo '</td>';
-                        }
+                        <p class="center-align">
+                            <span class=" badge yellow darken-3 white-text">TRY</span>
+                            <span class=" badge blue lighten-2 white-text">补题</span>
+                            <span class=" badge green lighten-2 white-text">AC</span>
 
-                    }
-                    echo '</tr>';
-                }
-                ?>
-                </tbody>
-            </table>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
+        <div class="card">
+            <div class="card-content" style="overflow-x:auto">
+                <div style="position: absolute;top:10px;left:40px">
+                    <input type="checkbox" id="only_show_in_system" v-model="only_show_in_system" />
+                    <label for="only_show_in_system">仅显示院队</label>
+                </div>
+                <table class="highlight bordered medium-text">
+                    <thead>
+                    <tr>
+                        <th class="center-align">Rank</th>
+                        <th class="left-align">Team</th>
+                        <th class="center-align">Solve</th>
+                        <th class="center-align">Penalty</th>
+                        <th class="center-align" v-for="x in problem_count">{{ String.fromCharCode(x+64) }}</th>
+                    </tr>
+                    </thead>
 
-    <!-- Modal -->
-    <div class="modal fade" id="update_ac" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+                    <tbody>
+                    <tr v-for="team in contest_board" :class="{'blue lighten-5':team.ac_info.in_system}" v-show="!only_show_in_system || team.ac_info.in_system">
+                        <td class="center-align">{{ team.rank_index }}</td>
+                        <td class="left-align">{{ team.group_name }}</td>
+                        <td class="center-align">{{ team.problem_solved }}</td>
+                        <td class="center-align">{{ team.penalty }}</td>
+                        <td v-for="status in team.ac_info.submission"
+                            :class="{
+                            'green':status.ac,
+                            'red':!status.ac && status.is_try}"
+                            class="center-align lighten-4">
+                            <span v-if="status.ac" style="display: block">
+                                {{ getAcTime(status.ac_time)}}
+                            </span>
+                            <span v-if="status.try!=0" style="display: block">
+                                (-{{ status.try }})
+                            </span>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="modal_ac" class="modal bottom-sheet">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h6 class="modal-title" id="myModalLabel">更新做题状况</h6>
-                </div>
-                <div class="modal-body" id="update_ac_body">
-                    <div class="alert alert-info" role="alert" style="display: none;" id="acstatus-alert">
-                    </div>
-                    <?php
-                    for($i=1;$i<=$problem_count;$i++)
-                    {
-                        echo '<form class="form-inline">';
-                        echo '<label class="ac_label">' .  chr($i+64) .':</label>';
-                        echo '<label class="ac_label text-success"><input type="radio" name="problem_'. $i .'" value="1" '. ($player_ac[$i]==1?'checked':'').'> 赛内参与做题并AC</label>';
-                        echo '<label class="ac_label text-warning"><input type="radio" name="problem_'. $i .'" value="2" '. ($player_ac[$i]==2?'checked':'').'> 赛内参与做题但WA</label>';
-                        echo '<label class="ac_label text-info"><input type="radio" name="problem_'. $i .'" value="3" '. ($player_ac[$i]==3?'checked':'').'> 赛后补题</label>';
-                        echo '<label class="ac_label text-danger"><input type="radio" name="problem_'. $i .'" value="4" '. ($player_ac[$i]==4?'checked':'').'> 未动</label>';
-                        echo '</form>';
-                    }
-                    ?>
+                <div class="container">
+                    <h4>更新做题状况 </h4>
+                    <div v-for="x in problem_count" class="row">
+                        <div class="col l1 right-align">
+                        <span class="medium-text " >{{ String.fromCharCode(x+64) }}:</span>
+                        </div>
+                        <div class="col l11">
+                            <input type="radio" :name="'problem_'+x" value="1" :id="'problem_'+x+'_1'" v-model="player_summary[x]"/><label :for="'problem_'+x+'_1'" class="green-text text-lighten-2 medium-text">赛内参与做题并AC</label>
+                            <input type="radio" :name="'problem_'+x" value="2" :id="'problem_'+x+'_2'" v-model="player_summary[x]"/><label :for="'problem_'+x+'_2'" class="yellow-text text-darken-3 medium-text">赛内参与做题但WA</label>
+                            <input type="radio" :name="'problem_'+x" value="3" :id="'problem_'+x+'_3'" v-model="player_summary[x]"/><label :for="'problem_'+x+'_3'" class="blue-text text-lighten-2 medium-text">赛后补题</label>
+                            <input type="radio" :name="'problem_'+x" value="4" :id="'problem_'+x+'_4'" v-model="player_summary[x]"/><label :for="'problem_'+x+'_4'" class="red-text text-lighten-2 medium-text">未动</label>
+                        </div>
 
+                    </div>
+                    <a class="waves-effect waves-light btn" @click="updateAcStatus()">保存</a>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" onclick="window.location=window.location;">取消</button>
-                    <button type="button" class="btn btn-primary" onclick="submitAcStatus();">保存</button>
-                </div>
+
+            </div>
+            <div class="modal-footer">
+
             </div>
         </div>
     </div>
 
-</div>
 
-<script>
-    function submitAcStatus()
-    {
+    <script>
+        var summary_container=new Vue(
+            {
+                el: "#summary_container",
+                data: {
+                    team_info:[],
+                    problem_count:0,
+                    contest_summary:[],
+                    contest_name:"",
+                    contest_desc:"",
+                    contest_board:[],
+                    player_summary:[],
+                    contest_id:<?php echo $contest_id?>,
+                    basic_url:'<?php echo _Http;?>',
+                    loading:true,
+                    only_show_in_system:false
+                },
+                filters: {
+                    array2Person:function(arr)
+                    {
+                        var ret="";
+                        for(var x in arr)
+                        {
+                            ret=ret+arr[x]+" ";
+                        }
+                        return ret;
+                    }
+                },
+                created: function(){
+                    axios.get(this.basic_url + 'contestAPI/getContestSummary/id/'+this.contest_id)
+                        .then(function(response)
+                        {
+                            summary_container.team_info=response.data.team_info;
+                            summary_container.problem_count=response.data.problem_count;
+                            summary_container.player_summary=response.data.player_summary;
+                            summary_container.contest_summary=response.data.contest_summary;
+                            summary_container.contest_name=response.data.contest_name;
+                            summary_container.contest_desc=response.data.contest_desc;
+                            summary_container.contest_board=response.data.contest_board;
+                            $('.modal').modal();
+                            setTimeout(function(){summary_container.loading=false;},500);
 
-        var problem_count=<?php echo $problem_count?>;
-        var upload="contest_id=" + <?php echo $contest_id;?>;
-        for(var i=0;i<problem_count;i++)
-        {
-            upload+="&problem_"+(i+1)+"="+$("input[name='problem_"+ (i+1) +"']:checked").val();
-        }
-        $.post("<?php echo _Http;?>user/updateAcStatus",upload,function(response)
-        {
-            if(response.status==1)
-            {
-                $("#acstatus-alert").html("保存成功！").show();
-                delayRefresh(1000);
+                        });
+                },
+                methods: {
+                    getAcTime:function(sec)
+                    {
+                        var second,minute,hour;
+                        second=sec%60;
+                        sec/=60;
+                        sec=Math.floor(sec);
+                        minute=sec%60;
+                        sec/=60;
+                        sec=Math.floor(sec);
+                        hour=sec;
+                        return this.addZero(hour) + ":" + this.addZero(minute) + ":" + this.addZero(second);
+
+                    },
+                    addZero:function(val)
+                    {
+                        if(val==0)
+                            return "00";
+                        else if(val<10)
+                            return "0" + val.toString();
+                        else return val.toString();
+                    },
+                    updateAcStatus:function()
+                    {
+                        Materialize.toast('正在提交中.....', 2000);
+                        axios.post(this.basic_url+'userAPI/updateAcStatus/id/'+this.contest_id,JSON.stringify(this.player_summary))
+                            .then(function(response)
+                            {
+                                if(response.data.status==0)
+                                {
+                                    Materialize.toast('做题状态更新成功！', 2000);
+                                    delayRefresh(500);
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">更新失败：'+response.data.err_msg+'</span>' , 2000);
+                                }
+                            })
+                            .catch(function(error)
+                            {
+                                Materialize.toast('<span class="">更新失败：'+'网络通信错误'+'</span>' , 2000);
+                            })
+                    }
+                }
             }
-            else
-            {
-                $("#acstatus-alert").html(decodeURI(response.message)).show();
-            }
-        })
-    }
-</script>
+        );
+
+    </script>
 <?php include('footer.php');?>

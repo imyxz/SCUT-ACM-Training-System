@@ -1,52 +1,41 @@
 <?php
 
 
-class group_model extends AmysqlModel
+class group_model extends SlimvcModel
 {
     function getGroupMember($group_id)
     {
-        return $this->_all("select * from acm_player where player_group_id=$group_id");
+        return $this->queryStmt("select * from acm_player where player_group_id=?",
+            "i",
+            $group_id)->all();
     }
     function getGroupInfo($group_id)
     {
-        return $this->_row("select * from acm_group where group_id=$group_id");
-    }
-    function getGroupIDByVJUsername($vj_username)
-    {
-        $row=$this->_row("select group_id from acm_group where group_vj_name='$vj_username'");
-        if(!$row)
-            return false;
-        return $row['group_id'];
-    }
-    function getGroupIDByZOJUsername($zoj_username)
-    {
-        $row=$this->_row("select group_id from acm_group where group_zoj_name='$zoj_username'");
-        if(!$row)
-            return false;
-        return $row['group_id'];
-    }
-    function getGroupIDBySEOJUsername($seoj_username)
-    {
-        $row=$this->_row("select group_id from acm_group where group_seoj_name='$seoj_username'");
-        if(!$row)
-            return false;
-        return $row['group_id'];
-    }
-    function getGroupIDByCSOJUsername($csoj_username)
-    {
-        $row=$this->_row("select group_id from acm_group where group_csoj_name='$csoj_username'");
-        if(!$row)
-            return false;
-        return $row['group_id'];
+        return $this->queryStmt("select * from acm_group where group_id=?",
+            "i",
+            $group_id)->row();
     }
     function getAllGroup()
     {
-        return $this->_all("select * from acm_group");
+        return $this->query("select * from acm_group where group_id>0")->all();
     }
     function addGroup($group_name,$vj_username,$leader_id=0)
     {
-        $this->_query("insert into acm_group set group_name='$group_name',group_vj_name='$vj_username',group_leader_id=$leader_id");
+        $this->queryStmt("insert into acm_group set group_name=?,group_vj_name=?,group_leader_id=?",
+            "ssi",
+            $group_name,
+            $vj_username,
+            $leader_id);
         return $this->InsertId;
+    }
+    function getGroupIDByVJUsername($vj_username)
+    {
+        $row=$this->queryStmt("select group_id from acm_group where group_vj_name=?",
+            "s",
+            $vj_username)->row();
+        if(!$row)
+            return false;
+        return $row['group_id'];
     }
 }
 

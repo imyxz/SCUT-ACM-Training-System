@@ -1,48 +1,75 @@
 <?php include('header.php');?>
-    <div class="container">
-        <h4>添加小队</h4>
-        <hr />
+    <div class="container" id="add_team">
+    <div class="card">
+    <div class="card-content  ">
+        <p class="big-test">添加小队</p>
         <div class="row">
-            <div class="col-md-4">
-                <div class="alert alert-info" role="alert" style="display: none;" id="addgroup-alert">
-                </div>
+            <div class="col l4">
 
-                <div class="input-group">
-                    <span class="input-group-addon active">小队名称</span>
-                    <input type="text" class="form-control" value="" placeholder="Team name" id="addgroup-groupname" required/>
-                </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">VJ账号</span>
-                        <input type="text" class="form-control" value="" placeholder="Vjudge username" id="addgroup-vjusername" required/>
+                <div class="row">
+                    <div class="input-field col l12">
+                        <input id="contest_name" type="text" class="validate" v-model="team_name">
+                        <label for="contest_name">小队名称</label>
                     </div>
-                    <label class="form-label label label-danger">请准确填写小队在VJudge上的账号名，区分大小写</label>
+                </div>
+                <div class="row">
+                    <div class="input-field col l12">
+                        <input id="problem_count" type="text" class="validate" v-model="team_vj_account">
+                        <label for="problem_count">VJ账号</label>
+                    </div>
+                </div>
+                <div class="row right-align">
+                    <a class="waves-effect waves-light btn " @click="submit()">添加</a>
 
-                <button class="btn btn-info btn-default pull-left" href="#" id="addgroup-btn" onclick="submitAddgroup()">添加小队</button>
+                </div>
+
+
+            </div>
+            <div class="col l8">
             </div>
         </div>
-
+        </div>
     </div>
-<script>
-    function submitAddgroup()
-    {
-        var group_name=$('#addgroup-groupname').val();
-        var vjusername=$('#addgroup-vjusername').val();
-        $('#addgroup-btn').attr("disabled","disabled");
-        $.post("<?php echo _Http;?>user/goAddTeam","addgroup-groupname=" + encodeURI(group_name) +
-            "&addgroup-vjusername="  + encodeURI(vjusername)
-            ,function(response){
+    </div>
+    <script>
+        var add_team=new Vue(
+            {
+                el: "#add_team",
+                data: {
+                    team_name:'',
+                    team_vj_account:'',
+                    basic_url:'<?php echo _Http;?>'
+                },
+                created: function(){
 
-                if(response.status==1)
+                },
+                methods:
                 {
-                    $("#addgroup-alert").html("添加成功！").show();
-                }
-                else
-                {
-                    $('#addgroup-btn').removeAttr("disabled");
-                    $("#addgroup-alert").html(decodeURI(response.message)).show();
+                    submit: function()
+                    {
+                        var post=new Object();
+                        post.team_name=this.team_name;
+                        post.team_vj_account=this.team_vj_account;
+
+                        axios.post(this.basic_url+'userAPI/addTeam/',JSON.stringify(post))
+                            .then(function(response){
+                                if(response.data.status==0)
+                                {
+                                    Materialize.toast('添加小队成功！', 2000);
+                                    delayRefresh(500);
+                                }
+                                else
+                                {
+                                    Materialize.toast('<span class="">添加失败：'+response.data.err_msg+'</span>' , 2000);
+                                }
+                            })
+
+
+                    }
                 }
 
-            });
-    }
-</script>
+            }
+        );
+    </script>
+
 <?php include('footer.php');?>

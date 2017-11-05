@@ -20,12 +20,14 @@
     word-break: break-all;
     word-wrap: break-word;
 }
+/**
 .medium-text{
     font-size:18px;
     border-top:8px;
     border-bottom: 0;
     margin: 0;
 }
+
 .big-text{
     font-size:20px;
     border-top:8px;
@@ -37,10 +39,74 @@
     border-top:8px;
     border-bottom: 0;
     margin: 0;
-}
+}**/
 .member-group{
     font-size:16px;
 }
 #summary_table{
     font-size:18px;
+}
+.problem-header{
+    display: none;
+}
+.title{
+    text-align: center;
+    font-weight: bold;
+
+    font-size: 48px;
+}
+.title p{
+    margin:6px;
+}
+.content span{
+    font-weight: bold;
+}
+
+.content p{
+    font-size:18px;
+    text-indent: 2em;
+}
+.problem-input-div > :first-child,.problem-output-div > :first-child,.problem-examples > :first-child,.problem-hint > :first-child{
+     font-weight: bold;
+     font-size:32px;
+ }
+.problem-example{
+    font-size:16px;
+}
+.problem-input,.problem-output{
+    background-color: lightgray;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+
+}
+.problem-output{
+    margin-bottom:16px;
+}
+.problem-input :first-child,.problem-output :first-child{
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+}
+.problem-input :last-child,.problem-output :last-child{
+    line-height: 16px;
+    padding: 4px;
+    margin: 0;
+}
+.problem-soruce
+{
+    margin-left:32px;
+    font-size:20px;
+    text-decoration: underline;
+    position:absolute;
+
+}
+.memory-limit,.time-limit{
+    display:inline-block;
+    margin:0 12px;
+    color:red;
+    font-size: 16px;
+}
+.over-flow-auto{
+    overflow-x: auto;
 }

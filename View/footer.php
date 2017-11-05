@@ -4,112 +4,53 @@
 
     </div>
 </div>
-<div class="modal fade" id="login_form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document"  style="width:500px; margin-top:10%;">
-        <div class="modal-content">
-
-            <div class="modal-body login-form">
-                <div class="alert alert-info" role="alert" style="display: none;" id="login-alert">
-
-                </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control login-field" value="" placeholder="Username" id="login-username" />
-                        <label class="login-field-icon fui-user" for="login-name"></label>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control login-field" value="" placeholder="Password" id="login-password" />
-                        <label class="login-field-icon fui-lock" for="login-pass"></label>
-                    </div>
-                <label class="form-group">
-                    <input type="checkbox" value="remember-me" class="login-field" name="remember" id="login-remember" />Remember me!
-                </label>
-                    <button class="btn btn-primary btn-lg btn-block" href="#" id="login-btn" onclick="submitLogin()">Log in</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="register_form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document"  style="width:500px; margin-top:10%;">
-        <div class="modal-content">
-
-            <div class="modal-body login-form">
-                <div class="alert alert-info" role="alert" style="display: none;" id="register-alert">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control login-field" value="" placeholder="Username" id="register-username" />
-                    <label class="login-field-icon fui-user" for="login-name"></label>
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control login-field" value="" placeholder="Password" id="register-password" />
-                    <label class="login-field-icon fui-lock" for="login-pass"></label>
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control login-field" value="" placeholder="Retype Password" id="register-repassword" />
-                    <label class="login-field-icon fui-lock" for="login-pass"></label>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control login-field" value="" placeholder="E-mali" id="register-email" />
-                    <label class="login-field-icon fui-mail"></label>
-                </div>
-                <button class="btn btn-primary btn-lg btn-block" href="#" id="register-btn" onclick="submitRegister()">Register Now!</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script>
-    $(function () {
-        $('[data-toggle="popover"]').popover();
-    });
-    function submitRegister()
-    {
-        var user_name=$('#register-username').val();
-        var password=$('#register-password').val();
-        var repassword=$('#register-repassword').val();
-        var email=$('#register-email').val();
-        $('#register-btn').attr("disabled","disabled");
-        $.post("<?php echo _Http;?>user/goRegister","register-username=" + encodeURI(user_name) +
-            "&register-password="  + encodeURI(password) +
-            "&register-repassword="+encodeURI(repassword) +
-            "&register-email="+encodeURI(email)
-            ,function(response){
-
-                if(response.status==1)
+    $(document).ready(function(){
+        $(".button-collapse").sideNav();
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: 15,
+            format: 'yyyy/mm/dd'
+        });
+        $('.timepicker').pickatime({
+            default: 'now',
+            fromnow: 0,
+            twelvehour: false,
+            donetext: 'OK',
+            cleartext: '清空',
+            canceltext: '关闭',
+            autoclose: false,
+            ampmclickable: true,
+            aftershow: function(){}
+        });
+        $('.tabs-transparent').each(function(){
+            $(this).unbind("click");
+        });
+        $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrain_width: false,
+                hover: true,
+                gutter: 0,
+                belowOrigin: true,
+                alignment: 'right'
+            }
+        );
+        var target="<?php echo $isLogin?'getUserBgPic':'getBgPic';?>";
+        axios.get('<?php echo _Http;?>userAPI/' + target +'/')
+            .then(function(response)
+            {
+                if(response.data.status==0)
                 {
-                    $("#register-alert").html("注册成功！").show();
-                    delayRefresh(1000);
-                }
-                else
-                {
-                    $('#register-btn').removeAttr("disabled");
-                    $("#register-alert").html(decodeURI(response.message)).show();
-                }
+                    $('body').css("background-image","url("+ response.data.pic_url + ")");
+                    $('body').css("background-repeat","no-repeat");
+                    $('body').css("background-attachment","fixed");
+                    $('body').css("background-size","cover");
 
-            });
-    }
-    function submitLogin()
-    {
-        var user_name=$('#login-username').val();
-        var password=$('#login-password').val();
-        var remember=$('#login-remember')[0].checked;
-        $('#login-btn').attr("disabled","disabled");
-        $.post("<?php echo _Http;?>user/goLogin","login-username=" + encodeURI(user_name) +
-            "&login-password="  + encodeURI(password)+
-            "&login-remember="  + encodeURI(remember)
-            ,function(response){
-
-                if(response.status==1)
-                {
-                    $("#login-alert").html("登录成功！").show();
-                    delayRefresh(1000);
+                    $('body').css("opacity",0.9);
                 }
-                else
-                {
-                    $('#login-btn').removeAttr("disabled");
-                    $("#login-alert").html(decodeURI(response.message)).show();
-                }
-
-            });
-    }
+            })
+    })
 </script>
 </body>
 </html>
