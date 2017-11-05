@@ -42,6 +42,13 @@ abstract class SpiderBasic
         if($pos2===false)   return false;
         return substr($str,$pos1+strlen($needle1),$pos2-$pos1-strlen($needle1));
     }
+    protected function getSubStrByPreg($pattern,$subject)
+    {
+        $out=array();
+        if(preg_match($pattern,$subject,$out)==0)
+            return false;
+        return $out[1];
+    }
     abstract function submitJob();
     abstract function queryJob();
     abstract function getSubmitResult();

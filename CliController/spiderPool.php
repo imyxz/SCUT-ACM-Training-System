@@ -133,20 +133,30 @@ class spiderPool extends SlimvcControllerCli
             foreach ($jobs as &$one) {
                 $problem_info = $this->model("vj_problem_model")->getProblemInfo($one["problem_id"]);
                 $spider->setSubmitJobInfo($one, $problem_info);
-                if ($spider->submitJob()) {
-                    /** @var submitResult $result_info */
-                    $result_info = $spider->getSubmitResult();
-                    $this->model("vj_job_model")->updateRemoteRunID($one['job_id'], $result_info->remote_run_id);
-                    $this->model("vj_job_model")->updateJobRunningStatus($one['job_id'], $jobRunningStatus->SUBMITTED_WAITING_RESULT);
-                    $job_success++;
-                    $this->log("Submit job " . $one['job_id'] . " succeed!");
+                if($one['submit_count']>=10)//交太多次了，结束一下
+                {
+                    $this->model("vj_job_model")->updateJobRunningStatus($one['job_id'], $jobRunningStatus->FINISH);
+                    $this->model("vj_spider_model")->addSpiderLookingJob($spider_id,-1);
+                    $this->model("vj_job_model")->updateJobResultInfo($one['job_id'], $ac_status->FAILED, "Submit faild", 0, 0, "");
                 }
                 else
                 {
-                    $this->log("Submit job " . $one['job_id'] . " faild!");
-                    break;//阿婆跑得快，一定有古怪
-                }
+                    $this->model("vj_job_model")->addJobSubmitCount($one['job_id']);
+                    if ($spider->submitJob()) {
+                        /** @var submitResult $result_info */
+                        $result_info = $spider->getSubmitResult();
+                        $this->model("vj_job_model")->updateRemoteRunID($one['job_id'], $result_info->remote_run_id);
+                        $this->model("vj_job_model")->updateJobRunningStatus($one['job_id'], $jobRunningStatus->SUBMITTED_WAITING_RESULT);
+                        $job_success++;
+                        $this->log("Submit job " . $one['job_id'] . " succeed!");
+                    }
+                    else
+                    {
+                        $this->log("Submit job " . $one['job_id'] . " faild!");
+                        break;//阿婆跑得快，一定有古怪
+                    }
 
+                }
 
             }
 

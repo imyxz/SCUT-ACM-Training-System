@@ -45,6 +45,12 @@ class vj_job_model extends SlimvcModel
             "i",
             $spider_id)->all();
     }
+    function addJobSubmitCount($job_id)
+    {
+        return $this->queryStmt("update run_job set submit_count=submit_count+1 where job_id=?",
+            "i",
+            $job_id);
+    }
     function updateRemoteRunID($job_id,$remote_run_id)
     {
         return $this->queryStmt("update run_job set remote_run_id=? where job_id=?",

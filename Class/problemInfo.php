@@ -39,27 +39,37 @@ class problemInfo
             $examples=$examples. implode('',$tmp);
 
         }
-        $ret=array(
-            '<div class="problem-desc">',
+        $ret=array();
+        if(!empty($this->description))
+            array_push($ret,
+                '<div class="problem-desc">',
                 $this->description,
-            '</div>',
-            '<div class="problem-input-div">',
+                '</div>');
+        if(!empty($this->input))
+            array_push($ret,
+                '<div class="problem-input-div">',
                 '<div>Input</div>',
                 $this->input,
-            '</div>',
-            '<div class="problem-output-div">',
+                '</div>');
+        if(!empty($this->output))
+            array_push($ret,
+                '<div class="problem-output-div">',
                 '<div>Output</div>',
                 $this->output,
-            '</div>',
-            '<div class="problem-examples">',
+                '</div>');
+        if(!empty($examples))
+            array_push($ret,
+                '<div class="problem-examples">',
                 '<div>Examples</div>',
                 $examples,
-            '</div>',
-            '<div class="problem-hint">',
+                '</div>');
+        if(!empty($this->hint))
+            array_push($ret,
+                '<div class="problem-hint">',
                 '<div>Hint</div>',
                 $this->hint,
-            '</div>'
-        );
+                '</div>');
+
         return implode("",$ret);
     }
 }

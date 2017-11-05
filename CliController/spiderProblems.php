@@ -919,6 +919,89 @@ class spiderProblems extends SlimvcControllerCli
 
         }
     }
+    function zoj()
+    {
+        /** @var curlRequest $curl */
+        $curl=$this->newClass("curlRequest");
+        $curl->setHeader("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
+        $curl->setHeader("Referer: http://acm.zju.edu.cn/onlinejudge/");
+        $curl->setHeader("Origin: http://acm.zju.edu.cn/onlinejudge/");
+        $curl->setHeader("Upgrade-Insecure-Requests: 1");
+        $curl->setHeader("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+        $problem_start_id=intval(self::$cliArg['start']);
+        $problem_end_id=intval(self::$cliArg['end']);
+        for($problem_id=$problem_start_id;$problem_id<=$problem_end_id;$problem_id++)
+        {
+            $problem_list=array();
+            while(!($html=$curl->get("http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=$problem_id",10)))
+            {
+                echo "Retry $problem_id\n";
+                sleep(1);
+            }
+            if(strpos($html,"No such problem")!==false)
+                continue;
+            $html=str_replace("<PRE>","<pre>",$html);
+            $html=str_replace("</PRE>","</pre>",$html);
+            $html=str_replace("<CENTER>","<center>",$html);
+            $html=str_replace("</CENTER>","</center>",$html);
+            $html=str_replace("SRC","src",$html);
+            $html=str_replace("IMG","img",$html);
+            $html=str_replace("showImage.do?name=","http://acm.zju.edu.cn/onlinejudge/showImage.do?name=",$html);
+
+            /** @var problemInfo $problem_info */
+            $problem_info=$this->newClass("problemInfo");
+            $problem_info->examples=array();
+
+            if(stripos($html,"<pre>")!==false)
+            {
+                $problem_info->examples[0]=new problemExample();
+                $problem_info->examples[0]->example_input=$this->getSubStr($html,"<pre>","</pre>",0);
+                $pos1=stripos($html,"</pre>",0);
+                $problem_info->examples[0]->example_output=$this->getSubStr($html,"<pre>","</pre>",$pos1);
+                $pos1=stripos($html,"</center>");
+                $pos1=stripos($html,"</center>",$pos1+10);
+                $pos1+=9;
+                $pos2=strripos($html,"Sample Input");
+                if(!$pos2)
+                    $pos2=strripos($html,"Example input");
+                $innerHtml=substr($html,$pos1,$pos2-$pos1);
+            }
+            else
+            {
+                $pos1=stripos($html,"</center>");
+                $pos1=stripos($html,"</center>",$pos1+10);
+                $pos1+=9;
+                $pos2=strripos($html,"<hr>");
+                $innerHtml=substr($html,$pos1,$pos2-$pos1);
+            }
+
+
+            $innerHtml=$this->filter($innerHtml,"http://acm.zju.edu.cn",array());
+            $problem_info->description=$innerHtml;
+
+
+
+
+            $problem_desc=$problem_info->generate();
+
+
+
+            $compiler='{"1":"C (gcc 4.7.2)","2":"C++ (g++ 4.7.2)","3":"FPC (fpc 2.6.0)","4":"Java (java 1.7.0)","5":"Python (Python 2.7.3)","6":"Perl (Perl 5.14.2)","7":"Scheme (Guile 1.8.8)","8":"PHP (PHP 5.4.4)","9":"C++0x (g++ 4.7.2)"}';
+
+            $time_limit=doubleval($this->getSubStr($html,"Time Limit: </font>","Secon",0))*1000;
+
+            $memory_limit=doubleval($this->getSubStr($html,"Memory Limit: </font>","KB",0));
+
+
+            $memory_limit=$memory_limit*1024;
+
+            $problem_title=trim($this->getSubStr($html,'<span class="bigProblemTitle">',"</span>",0));
+            $problem_url="http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=$problem_id";
+            $this->model("vj_problem_model")->insertProblem(9,$problem_id,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
+            echo "Done $problem_id\n";
+
+        }
+    }
     function importCodeForcesTags()
     {
 
@@ -986,6 +1069,7 @@ class spiderProblems extends SlimvcControllerCli
                 $value->getTag()->setAttribute('class',implode(" ",$filter_class));
             if(!empty($origin_src))
             {
+
                 if(substr($origin_src,0,4)!='data')
                 {
                     if(substr($origin_src,0,4)!='http')
