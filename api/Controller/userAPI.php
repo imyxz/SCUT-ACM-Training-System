@@ -114,12 +114,25 @@ class userAPI extends SlimvcController
     {
         try{
             if($this->helper("user_helper")->isLogin()==false)
-                throw new Exception("请先登录");
-            $user_info=$this->model("user_model")->getUserInfo($this->helper("user_helper")->getUserID());
-            $return["user_info"]=array(
-                "user_nickname"=>$user_info["user_nickname"],
-                "user_avatar"=>$user_info["user_avatar"],
-                "user_bgpic"=>$user_info["user_bgpic"]);
+                $return['is_login']=false;
+            else
+            {
+                $return['is_login']=true;
+                $user_info=$this->model("user_model")->getUserInfo($this->helper("user_helper")->getUserID());
+                $return["user_info"]=array(
+                    "user_nickname"=>$user_info["user_nickname"],
+                    "user_avatar"=>$user_info["user_avatar"],
+                    "user_bgpic"=>$user_info["user_bgpic"]);
+            }
+            if($this->helper("user_helper")->isLogin()==false || empty($pic_url=$this->helper("user_helper")->getUserInfo()['user_bgpic']))
+            {
+                $pic=$this->model("bg_pic_model")->getLastPic();
+                $return['pic_url']=$pic['pic_url'];
+            }
+            else
+            {
+                $return['pic_url']=$pic_url;
+            }
             $return['status']=0;
             $this->outputJson($return);
 
@@ -183,5 +196,11 @@ class userAPI extends SlimvcController
 
 
 
+    }
+    function logOut()
+    {
+        $this->helper("session_helper")->destroySession();
+        $return['status']=0;
+        $this->outputJson($return);
     }
 }

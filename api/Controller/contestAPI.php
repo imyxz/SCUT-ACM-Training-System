@@ -23,6 +23,27 @@ class contestAPI extends SlimvcController
         $this->outputJson($return);
 
     }
+    function getContestList()
+    {
+        $page = intval(@$_GET['page']);
+        if ($page < 1)
+            $page = 1;
+        $contest = $this->model("contest_model")->getContestList($page, 30);
+        $return['contest']=array();
+        foreach($contest as $one)
+        {
+            $return['contest'][]=array(
+                "id"=>$one['contest_id'],
+                "name"=>$one['contest_name'],
+                "desc"=>$one['contest_description']);
+        }
+        if (count($contest) < 30)
+            $return['is_end'] = true;
+        else
+            $return['is_end'] = false;
+        $return['status']=0;
+        $this->outputJson($return);
+    }
     function getContestSummary()
     {
         $contest_id=intval($_GET['id']);
@@ -244,6 +265,37 @@ class contestAPI extends SlimvcController
             }
             $return['result']=var_export($groups,true);
             $return['contest_id']=$contest_id;
+            $return['status']=0;
+            $this->outputJson($return);
+
+        }catch(Exception $e)
+        {
+            $return['status']=1;
+            $return['err_msg']=$e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
+    function updatePlayerAcStatus()
+    {
+        try{
+            if($this->helper("user_helper")->isPlayer()==false) throw new Exception("请先登录或填写个人队伍信息");
+            $player_id=$this->helper("user_helper")->getPlayerID();
+            $contest_id=intval($_GET['id']);
+            $contest_info=$this->model("contest_model")->getContestInfo($contest_id);
+            $ac_status=$this->getRequestJson();
+            if(!$contest_info)
+                throw new Exception("contest id 有误");
+            if(!$ac_status)
+                throw new Exception("提交数据有误");
+            for($i=1;$i<=intval($contest_info['contest_problem_count']);$i++)
+            {
+                if(isset($ac_status[$i]))
+                    $status=intval($ac_status[$i]);
+                else
+                    $status=4;
+                $this->model("contest_model")->updatePlayerContestSummary($contest_id,$player_id,$i,$status);
+            }
             $return['status']=0;
             $this->outputJson($return);
 

@@ -3,6 +3,18 @@
 
 class contest_model extends SlimvcModel
 {
+    function getContestList($page,$limit)
+    {
+        $page--;
+        if($page>0)
+            $start=$page*$limit;
+        else
+            $start=0;
+        return $this->queryStmt("select * from acm_contest ORDER by contest_begin_time desc limit ?,?",
+            "ii",
+            $start,
+            $limit)->all();
+    }
     function newContest($contest_name,$problem_count,$begin_time,$end_time)
     {
         $this->queryStmt("insert into acm_contest set contest_name=?,contest_begin_time=FROM_UNIXTIME(?),contest_end_time=FROM_UNIXTIME(?),contest_problem_count=?",

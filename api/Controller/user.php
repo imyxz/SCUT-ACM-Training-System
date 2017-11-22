@@ -61,6 +61,10 @@ class user extends SlimvcController
         $this->view('jump');
 
     }
+    protected function testLogin()
+    {
+        $this->helper("user_helper")->loginUser(1);
+    }
     function addTeam()
     {
         $this->active=3;
