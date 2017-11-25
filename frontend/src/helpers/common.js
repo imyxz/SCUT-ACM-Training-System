@@ -19,3 +19,33 @@ export function setBackgroundPic (picUrl) {
   $('body').css('background-size', 'cover')
   $('body').css('opacity', 0.9)
 }
+export function ramFilter (val) {
+  val = parseFloat(val)
+  let unit = 'B'
+  if (val >= 1000) {
+    val /= 1024
+    unit = 'KB'
+    if (val >= 1000) {
+      val /= 1024
+      unit = 'MB'
+      if (val >= 1000) {
+        val /= 1024
+        unit = 'GB'
+        if (val >= 1000) {
+          val /= 1024
+          unit = 'TB'
+        }
+      }
+    }
+  }
+  return val.toFixed(2) + ' ' + unit
+}
+export function timeFilter (val) {
+  val = parseFloat(val)
+  let unit = 'ms'
+  if (val >= 1000) {
+    val /= 1000
+    unit = 's'
+  }
+  return val.toFixed(2) + ' ' + unit
+}
