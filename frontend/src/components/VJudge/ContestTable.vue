@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     goContest (contestId) {
-      this.$router.push({ name: 'contest.viewSummary', params: { contest_id: contestId } })
+      this.$router.push({ name: 'vjudge.contest.info', params: { contest_id: contestId } })
     }
   },
   filters: {
