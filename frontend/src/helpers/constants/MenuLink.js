@@ -17,6 +17,6 @@ export default [
   },
   {
     title: 'SCUTVJ',
-    routeName: 'VJudge'
+    routeName: 'vjudge.index'
   }
 ]

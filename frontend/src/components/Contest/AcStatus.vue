@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card-content" style="overflow-x:auto">
+    <div class="card-content not-break" style="overflow-x:auto">
       <table class="highlight bordered medium-text ">
         <thead>
           <tr>

@@ -52,7 +52,8 @@ export default {
       getContestSubmission: PREFIX + 'vJudgeAPI/getContestSubmission/',
       newContest: PREFIX + 'vJudgeAPI/newContest/',
       getContestStatus: PREFIX + 'vJudgeAPI/getContestStatus/',
-      getAllContest: PREFIX + 'vJudgeAPI/getAllContest/'
+      getAllContest: PREFIX + 'vJudgeAPI/getAllContest/',
+      getContestJobStatus: PREFIX + 'vJudgeAPI/getContestJobStatus/'
     },
     spider: {
       getSpiderStatus: PREFIX + 'vJudgeAPI/getSpiderStatus/'

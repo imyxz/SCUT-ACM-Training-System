@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col l3  s12">
         <div class="card">
-          <div class="card-content red lighten-3 white-text">
+          <div class="card-content red lighten-3 white-text auto-break">
             <span class="card-title">{{ contest_info.contest_name }}</span>
             <p>{{ contest_info.contest_desc }}</p>
           </div>

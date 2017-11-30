@@ -19,3 +19,6 @@ export function submitCode (problemId, compilerId, sourceCode) {
     source_code: sourceCode
   })
 }
+export function getJobStatus (jobId, cache = true) {
+  return get(API.vjudge.job.getJobStatus, {id: jobId}, cache)
+}

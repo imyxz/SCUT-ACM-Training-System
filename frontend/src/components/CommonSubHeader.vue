@@ -21,13 +21,10 @@ export default {
       this.$router.push({ name: routeName })
     }
   },
-  created: function () {
-    this.$nextTick(() => {
-      $('.tabs-transparent').each(function () {
-        $(this).unbind('click')
-      })
-    }
-    )
+  mounted: function () {
+    $('.tabs-transparent').each(function () {
+      $(this).unbind('click')
+    })
   }
 }
 </script>

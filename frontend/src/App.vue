@@ -1,6 +1,6 @@
 <template>
   <div id='app'>
-    <common-header :cur-title='curTitle' :is-login='isLogin' :user-info='userInfo'></common-header>
+    <common-header :cur-title='curTitle' :is-login='isLogin' :user-info='userInfo' :menus='menus'></common-header>
     <router-view/>
   </div>
 </template>
@@ -9,7 +9,7 @@
 import CommonHeader from '@/components/CommonHeader'
 import { getUserInfo } from '@/helpers/api/common'
 import { setBackgroundPic } from '@/helpers/common'
-
+import MENUS from '@/helpers/constants/MenuLink'
 export default {
   name: 'app',
   components: {
@@ -23,7 +23,8 @@ export default {
         user_nickname: '',
         user_avatar: '',
         user_bgpic: ''
-      }
+      },
+      menus: MENUS
     }
   },
   created: function () {

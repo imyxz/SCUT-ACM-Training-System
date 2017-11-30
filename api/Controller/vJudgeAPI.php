@@ -534,6 +534,35 @@ class vJudgeAPI extends SlimvcController
         }
 
     }
+    function getContestJobStatus()
+    {
+        try {
+            if ($this->helper("user_helper")->isLogin() == false) throw new Exception("请先登录");
+            $job_id = intval($_GET['id']);
+            $tmp = $this->model("vj_job_model")->getOneJobStatus($job_id);
+            unset($tmp['oj_id']);
+            unset($tmp['problem_id']);
+            unset($tmp['problem_identity']);
+            unset($tmp['problem_url']);
+            unset($tmp['oj_name']);
+
+
+            /*$return['status_info']=array();
+            foreach($tmp as $one)
+            {
+                $return['status_info'][$one['job_id']]=$one;
+            }*/
+            $return['status_info'] = $tmp;
+            $return['status'] = 0;
+            $this->outputJson($return);
+
+        } catch (Exception $e) {
+            $return['status'] = 1;
+            $return['err_msg'] = $e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
     function submitContestJob()
     {
         try {

@@ -1,6 +1,6 @@
 <template>
 
-    <table class="highlight bordered">
+    <table class="highlight bordered auto-break">
       <thead>
         <tr>
           <th class="left-align">比赛名称</th>

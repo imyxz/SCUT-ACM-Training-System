@@ -43,21 +43,19 @@
   </nav>
 </template>
 <script>
-import MENUS from '@/helpers/constants/MenuLink'
 import { BASIC_URL } from '@/helpers/constants/env'
 import { logOut } from '@/helpers/api/user'
 import $ from 'jquery'
 export default {
   name: 'CommonHeader',
-  props: ['curTitle', 'isLogin', 'userInfo'],
+  props: ['curTitle', 'isLogin', 'userInfo', 'menus'],
   data () {
     return {
-      menus: MENUS
     }
   },
   methods: {
     goTo: function (routeName) {
-      this.$router.push({name: routeName})
+      this.$router.push({ name: routeName })
     },
     goLogin: function () {
       window.location = 'https://encuss.yxz.me/userAPI/loginFromQQ/site_id/3/viewing/' + encodeURIComponent(BASIC_URL + 'user/loginFromEncuss/viewing/' + encodeURIComponent(window.location) + '/')
@@ -68,19 +66,22 @@ export default {
       })
     }
   },
-  created: function () {
-    this.$nextTick(() => {
-      $('.button-collapse').sideNav()
-      $('.dropdown-button').dropdown({
-        inDuration: 300,
-        outDuration: 225,
-        constrain_width: false,
-        hover: true,
-        gutter: 0,
-        belowOrigin: true,
-        alignment: 'right'
-      }
-      )
+  mounted: function () {
+    $('.button-collapse').sideNav({
+      menuWidth: 240, // Default is 240
+      edge: 'left', // Choose the horizontal origin
+      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+      draggable: true // Choose whether you can drag to open on touch screens
+    }
+    )
+    $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrain_width: false,
+      hover: true,
+      gutter: 0,
+      belowOrigin: true,
+      alignment: 'right'
     }
     )
   }

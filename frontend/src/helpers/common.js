@@ -49,3 +49,9 @@ export function timeFilter (val) {
   }
   return val.toFixed(2) + ' ' + unit
 }
+export function secondToHour (second) {
+  let tmp = parseInt(second)
+  tmp = tmp / 60
+  tmp = tmp.toFixed(0)
+  return (tmp / 60).toFixed(1) + ' 小时'
+}

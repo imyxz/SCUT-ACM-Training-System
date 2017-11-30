@@ -1,0 +1,81 @@
+<template>
+  <div>
+    <contest-header
+    :contest-name="contest_info.contest_title"
+    :running-time="running_time"
+    :contest-long="contest_info.contest_last_seconds"
+    :contest-start-time="contest_info.contest_start_time"
+    ></contest-header>
+    <contest-path-indicator :contest-id="contest_id" ></contest-path-indicator>
+    <router-view v-bind="$data"></router-view>
+  </div>
+</template>
+
+<script>
+import ContestHeader from '@/components/VJudge/Contest/ContestHeader'
+import ContestNoticer from '@/components/VJudge/Contest/ContestNoticer'
+import ContestPathIndicator from '@/components/VJudge/Contest/ContestPathIndicator'
+import {getContestInfo, getContestSubmission} from '@/helpers/api/vjudge/contest'
+export default {
+  name: 'ViewContest',
+  data () {
+    return {
+      contest_info: {
+        contest_title: '',
+        contest_start_time_ts: '',
+        contest_start_time: '',
+        contest_last_seconds: '',
+        contest_id: '',
+        contest_desc: '',
+        contest_type: ''
+      },
+      contest_submissions: [],
+      contest_problem: [],
+      participants: [],
+      running_time: 0,
+      contest_id: 0,
+      need_participant: false,
+      user_id: 0
+    }
+  },
+  components: {
+    'contest-header': ContestHeader,
+    'contest-noticer': ContestNoticer,
+    'contest-path-indicator': ContestPathIndicator
+  },
+  created: function () {
+    this.contest_id = this.$route.params.contest_id
+  },
+  beforeRouteUpdate: function (to, from, next) {
+    this.contest_id = to.params.contest_id
+    next()
+  },
+  methods: {
+    init (contestId) {
+      getContestInfo(contestId)
+      .then(r => {
+        this.contest_info = r.contest_info
+        this.contest_problem = r.contest_problem
+        this.need_participant = r.need_participant
+        this.running_time = r.running_time
+        this.user_id = r.user_id
+      })
+      getContestSubmission(contestId, -1, false)
+      .then(r => {
+        this.contest_submissions = r.submissions
+        this.participants = r.participants
+        this.running_time = r.running_time
+      })
+    }
+  },
+  watch: {
+    contest_id: function (newVal) {
+      this.init(newVal)
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>

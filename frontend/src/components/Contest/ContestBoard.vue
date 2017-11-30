@@ -1,6 +1,6 @@
 <template>
   <div class='card'>
-    <div class='card-content' style='overflow-x:auto'>
+    <div class='card-content not-break' style='overflow-x:auto'>
       <div style='position: absolute;top:10px;left:40px'>
         <input type='checkbox' id='onlyShowInSystem' v-model='onlyShowInSystem' />
         <label for='onlyShowInSystem'>仅显示院队</label>
@@ -30,6 +30,8 @@
               </span>
               <span v-if='status.try!=0' style='display: block'>
                 (-{{ status.try }})
+              </span>
+              <span style='display: block;height: 0;min-width: 60px;'>
               </span>
             </td>
           </tr>

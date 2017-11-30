@@ -2,7 +2,7 @@
   <div>
     <div class="title">
       <p>{{ problem_title }}
-        <a class="problem-soruce" :href="problem_url" target="_blank">{{oj_name}}-{{problem_identity}}</a>
+        <a class="problem-soruce" :href="problem_url" target="_blank" v-if="problem_identity !== undefined">{{oj_name}}-{{problem_identity}}</a>
       </p>
     </div>
     <div class="limits center-align">
