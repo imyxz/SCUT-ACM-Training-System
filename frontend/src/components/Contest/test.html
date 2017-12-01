@@ -1,0 +1,89 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+  <textarea id="description"></textarea>
+  <hr />
+  <textarea id="input"></textarea>
+  <hr />
+  <textarea id="output"></textarea>
+  <hr />
+  <textarea id="example_input"></textarea>
+  <hr />
+  <textarea id="example_output"></textarea>
+  <hr />
+  <textarea id="hint"></textarea>
+  <hr />
+  <textarea id="answer"></textarea>
+  <div id="tmp"></div>
+  <script>
+      function generate() {
+        let description = fill(document.getElementById('description').value)
+        let input = fill(document.getElementById('input').value)
+        let output = fill(document.getElementById('output').value)
+        let example_input = fill2(document.getElementById('example_input').value)
+        let example_output = fill2(document.getElementById('example_output').value)
+        let hint = fill(document.getElementById('hint').value)
+        let ret = ''
+        ret += '<div class="problem-desc">'
+        ret += description
+        ret += '</div>'
+        ret += '<div class="problem-input-div">'
+        ret += '<div>Input</div>'
+        ret += input
+        ret += '</div>'
+        ret += '<div class="problem-output-div">'
+        ret += '<div>Output</div>'
+        ret += output
+        ret += '</div>'
+        ret += "\n"
+        ret += '<div class="problem-examples">'
+        ret += '<div>Examples</div>'
+        ret += "\n"
+        ret += '<div class="problem-example"><div class="problem-input"><div>Input</div>'
+        ret += example_input
+        ret += '</div><div class="problem-output"><div>Output</div>'
+        ret += example_output
+        ret += '</div>'
+        ret += "\n"
+        ret += '</div>'
+        ret += "\n"
+        if(document.getElementById('hint').value!='')
+        {
+          ret += '<div class="problem-hint">'
+        ret += '<div>Hint</div>'
+        ret += hint
+        ret += '</div>'
+        }
+
+        document.getElementById('answer').value=ret
+        console.log(ret)
+        console.log(description)
+      }
+
+      function fill(val) {
+
+        document.getElementById('tmp').innerText = val
+        val = document.getElementById('tmp').innerHTML
+        String.prototype.replaceAll = function (FindText, RepText) {
+          let regExp = new RegExp(FindText, 'g')
+          return this.replace(regExp, RepText)
+        }
+        val=val.replaceAll('<br>','<p></p>')
+        return '<p>' + val + '</p>'
+      }
+      function fill2(val) {
+
+        document.getElementById('tmp').innerText = val
+        val = document.getElementById('tmp').innerHTML
+        return '<pre>' + val + '</pre>'
+      }
+    </script>
+  <button onclick="generate()">生成</button>
+
+</body>
+
+</html>

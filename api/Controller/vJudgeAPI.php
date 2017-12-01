@@ -470,7 +470,7 @@ class vJudgeAPI extends SlimvcController
 
             /** @var vj_contest_model $contest_model */
             $contest_model=$this->model("vj_contest_model");
-
+            if($contest_id == 18)   throw new Exception("可爱的文龙说要你女装才能进来哦");
             $contest_info=$contest_model->getContestInfo($contest_id);
             if(!$contest_info) throw new Exception("无此比赛");
             if ($this->helper("user_helper")->isLogin() == false) throw new Exception("请先登录");

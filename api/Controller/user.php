@@ -56,7 +56,7 @@ class user extends SlimvcController
         $this->helper("user_helper")->loginUser($userid);
         $this->info="登录成功！<br />欢迎您：$user_name<br />正在跳转至登录前访问的页面...";
         $this->location=urldecode($_GET['viewing']);
-        if(empty($this->location))
+        if(empty(urldecode($_GET['viewing'])))
             $this->location=_Http;
         $this->view('jump');
 
