@@ -58,7 +58,7 @@ export default {
       this.$router.push({ name: routeName })
     },
     goLogin: function () {
-      window.location = 'https://encuss.yxz.me/userAPI/loginFromQQ/site_id/3/viewing/' + encodeURIComponent(BASIC_URL + 'user/loginFromEncuss/viewing/' + encodeURIComponent(window.location) + '/')
+      window.location = 'https://encuss.yxz.me/userAPI/loginFromQQ/site_id/3/viewing/' + encodeURIComponent(BASIC_URL + 'api/user/loginFromEncuss/viewing/' + encodeURIComponent(window.location) + '/')
     },
     goLogOut: function () {
       logOut().finally(r => {
