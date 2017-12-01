@@ -55,7 +55,7 @@ class vj_contest_model extends SlimvcModel
     }
     function getProblemInfo($contest_id,$problem_index)
     {
-        return $this->queryStmt("select vj_contest_problem.problem_title,problem_info.compiler_info,problem_info.memory_limit,problem_info.problem_desc,problem_info.time_limit,problem_info.problem_id,problem_info.oj_id from vj_contest_problem,problem_info
+        return $this->queryStmt("select vj_contest_problem.problem_title,vj_contest_problem.problem_desc as problem_new_desc,problem_info.compiler_info,problem_info.memory_limit,problem_info.problem_desc,problem_info.time_limit,problem_info.problem_id,problem_info.oj_id from vj_contest_problem,problem_info
                                   where vj_contest_problem.contest_id=? and vj_contest_problem.problem_index=? and problem_info.problem_id=vj_contest_problem.problem_id",
             "ii",
             $contest_id,$problem_index)->row();

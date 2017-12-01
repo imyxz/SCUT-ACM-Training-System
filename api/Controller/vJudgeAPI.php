@@ -521,7 +521,9 @@ class vJudgeAPI extends SlimvcController
             if(!$return["problem_info"])throw new Exception("无此题目");
             unset($return["problem_info"]["problem_id"]);
             unset($return["problem_info"]["oj_id"]);
-
+            if($return['problem_info']["problem_new_desc"]!='')
+                $return['problem_info']['problem_desc']=$return['problem_info']["problem_new_desc"];
+            unset($return['problem_info']["problem_new_desc"]);
             $return["status"]=0;
             $this->outputJson($return);
 
