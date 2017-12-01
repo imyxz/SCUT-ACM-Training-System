@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin: 10px">
     <contest-header
     :contest-name="contest_info.contest_title"
     :running-time="running_time"

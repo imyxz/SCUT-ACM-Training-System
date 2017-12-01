@@ -17,13 +17,13 @@
         <td class='center-align'>{{ team.problem_solved }}</td>
         <td class='center-align'>{{ team.penalty }}</td>
         <td v-for='(problem,index) in team.problems' :class="{
-                            'green':problem.ac,
-                            'red':!problem.ac && problem.is_try}" class='center-align lighten-4' :key='index'>
-          <span v-if='problem.ac' style='display: block'>
+                            'green':problem.is_ac,
+                            'red':!problem.is_ac && problem.is_try}" class='center-align lighten-4' :key='index'>
+          <span v-if='problem.is_ac' style='display: block'>
             {{ getAcTime(problem.ac_time)}}
           </span>
-          <span v-if='problem.try!=0' style='display: block'>
-            (-{{ problem.try }})
+          <span v-if='problem.trys!=0' style='display: block'>
+            (-{{ problem.trys }})
           </span>
           <span style='display: block;height: 0;min-width: 60px;'>
           </span>

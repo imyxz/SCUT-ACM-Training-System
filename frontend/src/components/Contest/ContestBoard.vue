@@ -42,10 +42,10 @@ export default {
             penalty: item.penalty,
             problems: Object.values(item.ac_info.submission).map(tem => {
               return {
-                ac: tem.ac,
+                is_ac: tem.ac,
                 is_try: tem.is_try,
                 ac_time: tem.ac_time,
-                try: tem.try
+                trys: tem.try
               }
             }),
             highlight: item.ac_info.in_system === true

@@ -55,3 +55,32 @@ export function secondToHour (second) {
   tmp = tmp.toFixed(0)
   return (tmp / 60).toFixed(1) + ' 小时'
 }
+let NoPenaltyState = [
+  0, // failed
+  3, // CE
+  15, // TESTING
+  18 // IN_QUEUE
+]
+export function isAcStatusCalPenalty (state) {
+  return !NoPenaltyState.includes(parseInt(state))
+}
+export function getAcTime (sec) {
+  let second, minute, hour
+  second = sec % 60
+  sec /= 60
+  sec = Math.floor(sec)
+  minute = sec % 60
+  sec /= 60
+  sec = Math.floor(sec)
+  hour = sec
+  return addZero(hour) + ':' + addZero(minute) + ':' + addZero(second)
+}
+export function addZero (val) {
+  if (val === 0) {
+    return '00'
+  } else if (val < 10) {
+    return '0' + val.toString()
+  } else {
+    return val.toString()
+  }
+}

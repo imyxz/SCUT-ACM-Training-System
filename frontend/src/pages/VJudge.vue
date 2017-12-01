@@ -1,6 +1,10 @@
 <template>
   <div>
     <common-sub-header :menus="menus"></common-sub-header>
+    <div class="card-panel teal">
+      <span class="white-text">网站前端正在重构中，部分功能暂不可用，请见谅
+      </span>
+    </div>
     <router-view/>
   </div>
 </template>

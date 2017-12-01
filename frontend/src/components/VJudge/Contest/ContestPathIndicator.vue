@@ -22,7 +22,7 @@ let MENUS = [
   },
   {
     title: '排行榜',
-    routeName: 'user.bindTeam'
+    routeName: 'vjudge.contest.rank'
   }
 ]
 export default {

@@ -2,6 +2,7 @@ import ViewContest from '@/pages/VJudge/ViewContest'
 import ContestInfo from '@/pages/VJudge/Contest/ContestInfo'
 import ContestProblem from '@/pages/VJudge/Contest/ContestProblem'
 import ContestStatus from '@/pages/VJudge/Contest/ContestStatus'
+import ContestBoard from '@/pages/VJudge/Contest/ContestBoard'
 export default {
   path: 'contest/:contest_id',
   name: 'vjudge.contest',
@@ -47,6 +48,14 @@ export default {
     path: 'status/:page',
     name: 'vjudge.contest.status',
     component: ContestStatus,
+    meta: {
+      title: '比赛'
+    }
+  },
+  {
+    path: 'rank',
+    name: 'vjudge.contest.rank',
+    component: ContestBoard,
     meta: {
       title: '比赛'
     }
