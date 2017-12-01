@@ -24,3 +24,6 @@ export function getContestJobStatus (jobId, cache = true) {
 export function getContestStatus (contestId, page, cache = false) {
   return get(API.vjudge.contest.getContestStatus, {id: contestId, page: page}, cache)
 }
+export function joinContest (contestId) {
+  return postJson(API.vjudge.contest.joinContest, {id: contestId}, {})
+}

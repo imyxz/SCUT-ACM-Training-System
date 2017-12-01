@@ -31,7 +31,6 @@ export default {
     'contest-problem-table': ContestProblemTable
   },
   created: function () {
-    console.log(this.$attrs)
   },
   methods: {
   },

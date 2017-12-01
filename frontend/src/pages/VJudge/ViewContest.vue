@@ -6,6 +6,11 @@
     :contest-long="contest_info.contest_last_seconds"
     :contest-start-time="contest_info.contest_start_time"
     ></contest-header>
+    <contest-noticer
+    :err_info="err_info"
+    :need_participant="need_participant"
+    :contest_id="contest_id"
+    ></contest-noticer>
     <contest-path-indicator :contest-id="contest_id" ></contest-path-indicator>
     <router-view v-bind="$data"></router-view>
   </div>
@@ -35,7 +40,8 @@ export default {
       running_time: 0,
       contest_id: 0,
       need_participant: false,
-      user_id: 0
+      user_id: 0,
+      err_info: ''
     }
   },
   components: {
@@ -59,6 +65,22 @@ export default {
         this.need_participant = r.need_participant
         this.running_time = r.running_time
         this.user_id = r.user_id
+        if (r.need_participant) {
+          this.err_info = '请先参与比赛'
+        }
+        this.need_participant = r.need_participant
+      })
+      .catch(r => {
+        this.contest_info = r.contest_info
+        this.contest_problem = r.contest_problem
+        this.need_participant = r.need_participant
+        this.running_time = r.running_time
+        this.user_id = r.user_id
+        this.err_info = r.err_msg
+        if (r.need_participant) {
+          this.err_info = '请先参与比赛'
+        }
+        this.need_participant = r.need_participant
       })
       getContestSubmission(contestId, -1, false)
       .then(r => {

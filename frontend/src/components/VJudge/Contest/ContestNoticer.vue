@@ -1,24 +1,22 @@
 <template>
-  <div class="card">
-    <div class="card-content">
-      <h1 class="center-align">{{ contestName }}</h1>
-      <div class="progress">
-        <div class="determinate" :style="determinatePercentage"></div>
+  <div class="col s12" v-if="err_info!=''">
+    <div class="card">
+      <div class="card-content white lighten-3 red-text">
+        <span class="card-title center-align">{{ err_info }}</span>
+        <div class="center-align">
+          <button class=" btn" v-if="need_participant" @click="startContest()">点此开始比赛</button>
+        </div>
       </div>
-      <div style="position: relative;min-height: 22px;font-size: 18px;">
-        <span style="position: absolute;left: 0">{{contestStartTime}}</span>
-        <span style="position: absolute;right: 0">{{contestEndTime}}</span>
-      </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import { ramFilter, timeFilter } from '@/helpers/common'
+import {joinContest} from '@/helpers/api/vjudge/contest'
+import {toast} from '@/helpers/common'
 export default {
   name: 'ContestHeader',
-  props: ['contestName', 'runningTime', 'contestLong', 'contestStartTime', 'contestEndTime'],
+  props: ['err_info', 'need_participant', 'contest_id'],
   data () {
     return {
     }
@@ -26,15 +24,21 @@ export default {
   created: function () {
   },
   methods: {
+    startContest: function () {
+      joinContest(this.contest_id)
+      .then(r => {
+        toast('加入比赛成功！')
+        setTimeout(() => {
+          window.location.reload()
+        },
+        500)
+      })
+    }
   },
   filters: {
-    ram_filter: (val) => ramFilter(val),
-    time_filter: (val) => timeFilter(val)
+
   },
   computed: {
-    determinatePercentage: function () {
-      return 'width: ' + (this.running_time / this.contest_long) * 100 + '%'
-    }
   }
 }
 </script>
