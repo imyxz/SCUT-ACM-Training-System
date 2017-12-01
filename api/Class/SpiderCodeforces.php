@@ -21,7 +21,7 @@ class SpiderCodeforces extends SpiderBasic
         $curl->setHeader("Origin: http://codeforces.com");
         $curl->setHeader("Upgrade-Insecure-Requests: 1");
         $curl->setHeader("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-        $html=$curl->get("http://codeforces.com/contest/$contest_id/submit",20);
+        $html=$curl->get("http://codeforces.com/problemset/submit",20);
         $cookie=$curl->cookieStr2Arr($this->additionInfo['cookie']);
         $dom=new PHPHtmlParser\Dom();
         $dom->load($html);
@@ -62,7 +62,8 @@ class SpiderCodeforces extends SpiderBasic
             "contestId"=>$contest_id,
             "doNotShowWarningAgain"=>'on'
         );
-        $return=$curl->post("http://codeforces.com/contest/$contest_id/submit" . $submit_addon,$request,10);
+        sleep(3);//等一会?
+        $return=$curl->post("http://codeforces.com/problemset/submit?csrf_token=" . $csrf_token,$request,10);
         /* �ϰ�
         if($curl->getResponseCode()=="200" && empty($return))//��������޷��أ���ת��
         {

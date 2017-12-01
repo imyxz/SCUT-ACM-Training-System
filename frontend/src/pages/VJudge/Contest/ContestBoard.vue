@@ -65,7 +65,6 @@ export default {
           }
         }
       })
-      console.log(userStatus)
       userStatus = Object.values(userStatus)
       userStatus.forEach(user => {
         user.problems.forEach(problem => {

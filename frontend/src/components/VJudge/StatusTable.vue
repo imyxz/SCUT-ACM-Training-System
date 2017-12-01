@@ -26,7 +26,7 @@
         <td class="center-align" :class="{'green-text':status.ac_status==1,'red-text':status.ac_status!=1}">{{ status.wrong_info }}</td>
         <td class="center-align">{{ status.time_usage | time_filter }}</td>
         <td class="center-align">{{ status.ram_usage | ram_filter }}</td>
-        <td class="center-align">{{ status.submit_time }}</td>
+        <td class="center-align">{{ status.submit_time | getAcTime}}</td>
         <td class="center-align">
           <a class="btn-floating" @click="displaySourceCode(status.job_id)">
             <i class="material-icons">search</i>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { ramFilter, timeFilter, toast } from '@/helpers/common'
+import { ramFilter, timeFilter, toast, getAcTime } from '@/helpers/common'
 import SourceCodeModal from '@/components/VJudge/SourceCodeModal'
 import {getJobSourceCode, setJobShare} from '@/helpers/api/vjudge/problem'
 export default {
@@ -82,7 +82,8 @@ export default {
   },
   filters: {
     ram_filter: (val) => ramFilter(val),
-    time_filter: (val) => timeFilter(val)
+    time_filter: (val) => timeFilter(val),
+    getAcTime: (val) => getAcTime(val)
   },
   components: {
     'source-code-modal': SourceCodeModal

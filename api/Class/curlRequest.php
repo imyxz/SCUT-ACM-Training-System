@@ -27,6 +27,8 @@ class curlRequest{
     }
     public function setProxy($address,$port)
     {
+
+        return;
         $this->proxy_enable=true;
         $this->proxy_address=$address;
         $this->proxy_port=$port;
@@ -34,6 +36,7 @@ class curlRequest{
     public function post($url, $post,$timeout=10)
     {
         $request_data='';
+        $timeout=120;
         if(is_array($post))
         {
             $request_array=array();
@@ -96,7 +99,7 @@ class curlRequest{
             CURLOPT_FORBID_REUSE => 1,
             CURLOPT_TIMEOUT => $timeout
         );
-
+        $timeout=120;
         $ch = curl_init();
         curl_setopt_array($ch, ( $defaults));
         if($this->proxy_enable)
