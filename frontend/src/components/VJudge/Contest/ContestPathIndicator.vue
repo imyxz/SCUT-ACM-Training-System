@@ -18,7 +18,7 @@ let MENUS = [
   },
   {
     title: '提交状态',
-    routeName: 'user.addTeam'
+    routeName: 'vjudge.contest.status.index'
   },
   {
     title: '排行榜',

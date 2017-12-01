@@ -19,5 +19,8 @@ export function submitContestJob (contestId, problemIndex, compilerId, sourceCod
   })
 }
 export function getContestJobStatus (jobId, cache = true) {
-  return get(API.vjudge.contest.getContestJobStatus, {id: jobId}, cache)
+  return get(API.vjudge.contest.getJobSourceCode, {id: jobId}, cache)
+}
+export function getContestStatus (contestId, page, cache = false) {
+  return get(API.vjudge.contest.getContestStatus, {id: contestId, page: page}, cache)
 }

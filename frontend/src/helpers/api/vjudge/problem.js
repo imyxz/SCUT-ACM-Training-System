@@ -22,3 +22,9 @@ export function submitCode (problemId, compilerId, sourceCode) {
 export function getJobStatus (jobId, cache = true) {
   return get(API.vjudge.job.getJobStatus, {id: jobId}, cache)
 }
+export function getJobSourceCode (jobId, cache = true) {
+  return get(API.vjudge.job.getJobSourceCode, {id: jobId}, cache)
+}
+export function setJobShare (jobId, isShare) {
+  return postJson(API.vjudge.job.setJobShare, {}, {job_id: jobId, is_share: isShare})
+}
