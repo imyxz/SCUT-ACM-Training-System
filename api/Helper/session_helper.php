@@ -89,15 +89,25 @@ class session_helper extends SlimvcHelper
     }
     private function getCookieSession()
     {
+        $count=0;
+        $ans=false;
         foreach($_COOKIE as $key => &$value)
         {
             if(substr($key,0,12)=='acm_session_')
             {
-                return array("id"=>intval(substr($key,12)),
-                    "key"=>$_COOKIE[$key]);
+                $ans=$key;
+                $count++;
             }
         }
-        return false;
+        if($count>1)
+            return false;
+        if($ans)
+        {
+            return array("id"=>intval(substr($ans,12)),
+                "key"=>$_COOKIE[$ans]);
+        }
+        else
+            return false;
     }
     private function getRandMd5()
     {

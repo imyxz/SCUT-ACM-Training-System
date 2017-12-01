@@ -5,6 +5,9 @@ class curlRequest{
     private $header=array();
     private $response_code;
     private $response;
+    private $proxy_enable=false;
+    private $proxy_address="";
+    private $proxy_port=0;
     public function setCookie($arr)
     {
         $this->cookie='';
@@ -21,6 +24,12 @@ class curlRequest{
     public function setCookieRaw($cookie)
     {
         $this->cookie=$cookie;
+    }
+    public function setProxy($address,$port)
+    {
+        $this->proxy_enable=true;
+        $this->proxy_address=$address;
+        $this->proxy_port=$port;
     }
     public function post($url, $post,$timeout=10)
     {
@@ -51,6 +60,11 @@ class curlRequest{
         $ch = curl_init();
         //curl_setopt ($ch, CURLOPT_PROXY, "127.0.0.1:8888");
         curl_setopt_array($ch, ( $defaults));
+        if($this->proxy_enable)
+        {
+            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxy_address . ':' . $this->proxy_port); //代理服务器地址
+        }
         curl_setopt($ch,CURLOPT_COOKIE,$this->cookie);
         if(!empty($this->header))
             curl_setopt($ch,CURLOPT_HTTPHEADER,$this->header);
@@ -85,6 +99,12 @@ class curlRequest{
 
         $ch = curl_init();
         curl_setopt_array($ch, ( $defaults));
+        if($this->proxy_enable)
+        {
+            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxy_address . ':' . $this->proxy_port); //代理服务器地址
+
+        }
         curl_setopt($ch,CURLOPT_COOKIE,$this->cookie);
         $this->response_code=0;
 
