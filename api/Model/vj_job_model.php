@@ -81,7 +81,13 @@ class vj_job_model extends SlimvcModel
             $compiler_id);
         return $this->InsertId;
     }
-
+    function setJobIsInContest($job_id,$is_in_contest)
+    {
+        return $this->queryStmt("update run_job set is_in_contest=? where job_id=?",
+            "ii",
+            $is_in_contest,
+            $job_id);
+    }
     function getUserJobStatus($user_id,$limits)
     {
         return $this->queryStmt("select run_job.job_id,run_job.problem_id,run_job.oj_id,run_job.user_id,run_job.ac_status,run_job.submit_time,run_job.time_usage,run_job.ram_usage,run_job.wrong_info,problem_info.problem_identity,oj_site_info.oj_name,user_info.user_nickname,problem_info.problem_url,run_job.running_status,run_job.is_shared,run_job.is_in_contest

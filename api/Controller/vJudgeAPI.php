@@ -601,6 +601,7 @@ class vJudgeAPI extends SlimvcController
             $oj_id = $problem_info['oj_id'];
             $job_id = $this->model("vj_job_model")->newJob($problem_id, $oj_id, $user_id, $source_code, $compiler_id);
             if (!$job_id) throw new Exception("新建任务失败");
+            $this->model("vj_job_model")->setJobIsInContest($job_id,1);
             $seconds=0;
             if($contest_info['contest_type']==$contestType->NormalContest)
             {
