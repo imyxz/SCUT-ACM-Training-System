@@ -1,11 +1,13 @@
 export default [
   {
     title: '所有题目',
-    routeName: 'vjudge.index'
+    routeName: 'vjudge.index',
+    finalName: 'vjudge.allProblem'
   },
   {
     title: '比赛列表',
-    routeName: 'vjudge.allContest.index'
+    routeName: 'vjudge.allContest.index',
+    finalName: 'vjudge.allContest'
   },
   {
     title: '标签列表',
