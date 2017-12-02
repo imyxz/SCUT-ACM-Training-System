@@ -52,11 +52,11 @@ export default function () {
           this.$set(ret[problemIndex - 1].status, 'trys', ret[problemIndex - 1].status.trys + 1)
           if (acStatus === 1) {
             this.$set(ret[problemIndex - 1].status, 'ac', ret[problemIndex - 1].status.ac + 1)
-            if (this.userId === userId) {
+            if (this.user_id === userId) {
               this.$set(ret[problemIndex - 1].status, 'is_ac', true)
             }
           }
-          if (this.userId === userId) {
+          if (this.user_id === userId) {
             this.$set(ret[problemIndex - 1].status, 'is_try', true)
           }
         })

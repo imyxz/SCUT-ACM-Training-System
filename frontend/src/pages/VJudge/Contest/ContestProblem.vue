@@ -5,8 +5,8 @@
         <div class="card-panel ">
           <problem-submit ref="submitor" :compiler-info="problem_info.compiler_info" @submit-code="onSubmitCode($event)"></problem-submit>
         </div>
-        <div class="card-panel ">
-          <problem-indicator :contest-id="ContestData.contest_id" :problem-count="ContestData.contest_problem.length"></problem-indicator>
+        <div >
+          <problem-indicator :contest-id="ContestData.contest_id" :problem-count="ContestData.contest_problem.length" :problem-info="ContestData.problemInfo"></problem-indicator>
         </div>
       </div>
       <div class="col l8 s12">
