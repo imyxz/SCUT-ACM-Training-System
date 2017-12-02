@@ -6,8 +6,8 @@
         <div class="determinate" :style="determinatePercentage"></div>
       </div>
       <div style="position: relative;min-height: 22px;font-size: 18px;">
-        <span style="position: absolute;left: 0">{{contestStartTime}}</span>
-        <span style="position: absolute;right: 0">{{contestEndTime}}</span>
+        <span style="position: absolute;left: 0">{{startTime}}</span>
+        <span style="position: absolute;right: 0">{{endTime}}</span>
       </div>
 
     </div>
@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import { ramFilter, timeFilter } from '@/helpers/common'
+import { ramFilter, timeFilter, fromUnixTime } from '@/helpers/common'
 export default {
   name: 'ContestHeader',
-  props: ['contestName', 'runningTime', 'contestLong', 'contestStartTime', 'contestEndTime'],
+  props: ['contestName', 'runningTime', 'contestLong', 'contestStartTime'],
   data () {
     return {
     }
@@ -33,7 +33,18 @@ export default {
   },
   computed: {
     determinatePercentage: function () {
-      return 'width: ' + (this.running_time / this.contest_long) * 100 + '%'
+      let percentage = 0
+      if (this.contestLong > 0) {
+        percentage = (parseInt(this.runningTime) / parseInt(this.contestLong)) * 100
+      }
+
+      return 'width: ' + percentage + '%'
+    },
+    startTime: function () {
+      return fromUnixTime(this.contestStartTime)
+    },
+    endTime: function () {
+      return fromUnixTime(this.contestStartTime + this.contestLong)
     }
   }
 }

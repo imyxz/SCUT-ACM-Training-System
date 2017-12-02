@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 10px">
-    <contest-header :contest-name="contest_info.contest_title" :running-time="running_time" :contest-long="contest_info.contest_last_seconds" :contest-start-time="contest_info.contest_start_time" :contest-end-time="contest_end_time"></contest-header>
+    <contest-header :contest-name="contest_info.contest_title" :running-time="running_time" :contest-long="contest_info.contest_last_seconds" :contest-start-time="contest_info.contest_start_time_ts"></contest-header>
     <contest-noticer :err_info="err_info" :need_participant="need_participant" :contest_id="contest_id"></contest-noticer>
     <contest-path-indicator :contest-id="contest_id"></contest-path-indicator>
     <router-view v-bind="$data"></router-view>
@@ -12,7 +12,6 @@ import ContestHeader from '@/components/VJudge/Contest/ContestHeader'
 import ContestNoticer from '@/components/VJudge/Contest/ContestNoticer'
 import ContestPathIndicator from '@/components/VJudge/Contest/ContestPathIndicator'
 import { getContestInfo, getContestSubmission } from '@/helpers/api/vjudge/contest'
-import {addZero} from '@/helpers/common'
 export default {
   name: 'ViewContest',
   data () {
@@ -88,11 +87,6 @@ export default {
     }
   },
   computed: {
-    contest_end_time: function () {
-      var time = new Date(this.contest_info.contest_start_time_ts * 1000)
-      var val = new Date(time.getTime() + this.contest_info.contest_last_seconds * 1000)
-      return val.getFullYear() + '/' + (val.getMonth() + 1) + '/' + (val.getDate() + 1) + ' ' + addZero(val.getHours()) + ':' + addZero(val.getMinutes())
-    }
   }
 }
 </script>

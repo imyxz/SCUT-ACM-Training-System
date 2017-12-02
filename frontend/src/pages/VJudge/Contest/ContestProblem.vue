@@ -87,7 +87,7 @@ export default {
       })
     },
     updateJobStatus: function () {
-      getContestJobStatus(this.job_id, false)
+      getContestJobStatus(this.job_id, this.problemIndex, false)
       .then(r => {
         this.$refs.submitor.$emit('jobStatusChange', r.status_info)
         toast('状态已更新')
