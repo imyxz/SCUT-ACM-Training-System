@@ -40,7 +40,10 @@ class user extends SlimvcController
             $user_info=$this->helper("user_helper")->getUserInfo();
             $userid=$user_info['user_id'];
             if($user_info['encuss_userid']>0)
-                Slimvc::ErrorNotice("请勿重复登录！");
+            {
+               // Slimvc::ErrorNotice("请勿重复登录！");
+
+            }
             else
                 $this->model('user_model')->updateEncussToken($userid,intval($encuss_info['user_id']),intval($token_id),$token_key,$user_info['user_nickname'],$_SERVER["REMOTE_ADDR"]);
         }
@@ -61,7 +64,12 @@ class user extends SlimvcController
         $this->view('jump');
 
     }
-    protected function testLogin()
+    function clearCookie()
+    {
+        $this->helper("session_helper")->delAllSessionCookie();
+        echo '缓存清空成功';
+    }
+     function testLogin()
     {
         $this->helper("user_helper")->loginUser(1);
     }

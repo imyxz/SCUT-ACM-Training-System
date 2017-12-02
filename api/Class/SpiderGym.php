@@ -56,7 +56,9 @@ class SpiderGym extends SpiderBasic
             "sourceFile"=>'',
             "_tta"=>364,
             "contestId"=>$contest_id,
-            "doNotShowWarningAgain"=>'on'
+            "doNotShowWarningAgain"=>'on',
+            'sourceCodeConfirmed'=>'true',
+            'regexConfirm'=>'.*[^A-Za-z\s]ll[i|u|d][^\w].*'
         );
         $return=$curl->post("http://codeforces.com/gym/$contest_id/submit" . $submit_addon,$request,10);
 

@@ -37,7 +37,6 @@ export default {
       enableLiveAutocompletion: true
     })
     this.$on('openModal', event => {
-      console.log(event)
       this.editor.getSession().setMode('ace/mode/' + event.code_type)
       this.editor.setValue(event.source_code, -1)
       $(this.$refs.code_modal).modal('open')

@@ -62,7 +62,7 @@ class session_helper extends SlimvcHelper
     {
         return $this->session_info;
     }
-    private function delAllSessionCookie()
+     function delAllSessionCookie()
     {
         foreach($_COOKIE as $key => &$value)
         {

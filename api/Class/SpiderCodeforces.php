@@ -14,7 +14,7 @@ class SpiderCodeforces extends SpiderBasic
         $username=$this->spider_info['oj_username'];
         $password=$this->spider_info['oj_password'];
         $curl=new curlRequest();
-        $curl->setProxy("127.0.0.1",60010);
+        //$curl->setProxy("127.0.0.1",60010);
         $curl->setCookieRaw($this->additionInfo['cookie']);
         $curl->setHeader("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
         $curl->setHeader("Referer: http://codeforces.com/contest/$contest_id/submit");
@@ -60,9 +60,10 @@ class SpiderCodeforces extends SpiderBasic
             "sourceFile"=>'',
             "_tta"=>183,
             "contestId"=>$contest_id,
-            "doNotShowWarningAgain"=>'on'
+            "doNotShowWarningAgain"=>'on',
+            'sourceCodeConfirmed'=>'true',
+            'regexConfirm'=>'.*[^A-Za-z\s]ll[i|u|d][^\w].*'
         );
-        sleep(3);//等一会?
         $return=$curl->post("http://codeforces.com/problemset/submit?csrf_token=" . $csrf_token,$request,10);
         /* �ϰ�
         if($curl->getResponseCode()=="200" && empty($return))//��������޷��أ���ת��
