@@ -13,7 +13,7 @@ import PageIndicator from '@/components/PageIndicator'
 import {getContestStatus} from '@/helpers/api/vjudge/contest'
 export default {
   name: 'ContestStatus',
-  props: ['contest_info', 'contest_problem', 'contest_submissions', 'user_id', 'contest_id'],
+  props: ['ContestData'],
   data () {
     return {
       page: 0,
@@ -34,12 +34,12 @@ export default {
   },
   methods: {
     updateContestStatus: function (page, updatePage = true) {
-      getContestStatus(this.contest_id, page, false)
+      getContestStatus(this.ContestData.contest_id, page, false)
         .then(r => {
           this.submit_status = r.submit_status
           if (updatePage) {
             this.page = page
-            this.$router.push({ name: 'vjudge.contest.status', params: { contest_id: this.contest_id, page: page } })
+            this.$router.push({ name: 'vjudge.contest.status', params: { contest_id: this.ContestData.contest_id, page: page } })
           }
         })
     }
@@ -51,7 +51,7 @@ export default {
           job_id: item.run_job_id,
           user_nickname: item.user_nickname,
           problem_identity: String.fromCharCode(item.problem_index + 64),
-          problem_route: { name: 'vjudge.contest.problem', params: { contest_id: this.contest_id, problem_index: String.fromCharCode(item.problem_index + 64) } },
+          problem_route: { name: 'vjudge.contest.problem', params: { contest_id: this.ContestData.contest_id, problem_index: String.fromCharCode(item.problem_index + 64) } },
           ac_status: item.ac_status,
           wrong_info: item.wrong_info,
           time_usage: item.time_usage,

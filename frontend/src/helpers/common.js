@@ -66,6 +66,7 @@ export function isAcStatusCalPenalty (state) {
 }
 export function getAcTime (sec) {
   let second, minute, hour
+  sec = parseInt(sec)
   second = sec % 60
   sec /= 60
   sec = Math.floor(sec)

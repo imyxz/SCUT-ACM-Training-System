@@ -8,7 +8,7 @@
 <script>
 export default {
   name: 'ProblemIndicator',
-  props: ['contestId', 'problemCount', 'problemInfo'],
+  props: ['contestId', 'problemCount'],
   data () {
     return {
       curProblemIndex: 0

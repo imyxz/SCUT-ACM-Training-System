@@ -6,7 +6,7 @@
           <problem-submit ref="submitor" :compiler-info="problem_info.compiler_info" @submit-code="onSubmitCode($event)"></problem-submit>
         </div>
         <div class="card-panel ">
-          <problem-indicator :contest-id="contest_id" :problem-count="contest_problem.length"></problem-indicator>
+          <problem-indicator :contest-id="ContestData.contest_id" :problem-count="ContestData.contest_problem.length"></problem-indicator>
         </div>
       </div>
       <div class="col l8 s12">
@@ -47,7 +47,7 @@ export default {
       updateJobStatusTimerId: 0
     }
   },
-  props: ['contest_id', 'contest_problem'],
+  props: ['ContestData'],
   components: {
     'problem-info': ProblemInfo,
     'problem-submit': ProblemSubmit,
@@ -67,7 +67,7 @@ export default {
   methods: {
     updateProblemInfo: function (problemIndex, update = true, cache = true) {
       this.problem_info.problem_desc = ''
-      getContestProblem(this.contest_id, problemIndex, cache)
+      getContestProblem(this.ContestData.contest_id, problemIndex, cache)
         .then(r => {
           r.problem_info.compiler_info = JSON.parse(r.problem_info.compiler_info)
           this.problem_info = r.problem_info
@@ -78,7 +78,7 @@ export default {
         })
     },
     onSubmitCode: function (data) {
-      submitContestJob(this.contest_id, this.problemIndex, data.compiler_id, data.source_code)
+      submitContestJob(this.ContestData.contest_id, this.problemIndex, data.compiler_id, data.source_code)
       .then(r => {
         this.$refs.submitor.$emit('submited')
         this.job_id = r.job_id
@@ -99,7 +99,7 @@ export default {
       })
     },
     goProblem: function (index) {
-      this.$router.push({ name: 'vjudge.contest.problem', params: { contest_id: this.contest_id, problem_index: String.fromCharCode(index + 64) } })
+      this.$router.push({ name: 'vjudge.contest.problem', params: { contest_id: this.ContestData.contest_id, problem_index: String.fromCharCode(index + 64) } })
     }
   },
   watch: {

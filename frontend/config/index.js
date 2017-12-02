@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: process.env.npm_config_backend || 'https://staging.acm.scut.space/',
+        target: process.env.npm_config_backend || 'https://acm.scut.space/',
         changeOrigin: true,
         pathRewrite: {
         }

@@ -1,9 +1,9 @@
 <template>
   <div style="margin: 10px">
-    <contest-header :contest-name="contest_info.contest_title" :running-time="running_time" :contest-long="contest_info.contest_last_seconds" :contest-start-time="contest_info.contest_start_time_ts"></contest-header>
-    <contest-noticer :err_info="err_info" :need_participant="need_participant" :contest_id="contest_id"></contest-noticer>
-    <contest-path-indicator :contest-id="contest_id"></contest-path-indicator>
-    <router-view v-bind="$data"></router-view>
+    <contest-header :contest-name="ContestData.contest_info.contest_title" :running-time="ContestData.running_time" :contest-long="ContestData.contest_info.contest_last_seconds" :contest-start-time="ContestData.contest_info.contest_start_time_ts"></contest-header>
+    <contest-noticer :err_info="ContestData.err_info" :need_participant="ContestData.need_participant" :contest_id="ContestData.contest_id"></contest-noticer>
+    <contest-path-indicator :contest-id="ContestData.contest_id"></contest-path-indicator>
+    <router-view :contest-data="ContestData"></router-view>
   </div>
 </template>
 
@@ -11,28 +11,14 @@
 import ContestHeader from '@/components/VJudge/Contest/ContestHeader'
 import ContestNoticer from '@/components/VJudge/Contest/ContestNoticer'
 import ContestPathIndicator from '@/components/VJudge/Contest/ContestPathIndicator'
+import ContestDataInstance from '@/components/VJudge/Contest/ContestData'
 import { getContestInfo, getContestSubmission } from '@/helpers/api/vjudge/contest'
 export default {
   name: 'ViewContest',
   data () {
     return {
-      contest_info: {
-        contest_title: '',
-        contest_start_time_ts: '',
-        contest_start_time: '',
-        contest_last_seconds: '',
-        contest_id: '',
-        contest_desc: '',
-        contest_type: ''
-      },
-      contest_submissions: [],
-      contest_problem: [],
-      participants: [],
-      running_time: 0,
-      contest_id: 0,
-      need_participant: false,
-      user_id: 0,
-      err_info: ''
+      ContestData: ContestDataInstance(),
+      contest_id: 0
     }
   },
   components: {
@@ -51,38 +37,41 @@ export default {
     init (contestId) {
       getContestInfo(contestId)
         .then(r => {
-          this.contest_info = r.contest_info
-          this.contest_problem = r.contest_problem
-          this.need_participant = r.need_participant
-          this.running_time = r.running_time
-          this.user_id = r.user_id
+          this.ContestData.contest_info = r.contest_info
+          this.ContestData.contest_problem = r.contest_problem
+          this.ContestData.need_participant = r.need_participant
+          this.ContestData.running_time = r.running_time
+          this.ContestData.user_id = r.user_id
           if (r.need_participant) {
-            this.err_info = '请先参与比赛'
+            this.ContestData.err_info = '请先参与比赛'
           }
-          this.need_participant = r.need_participant
+          this.ContestData.need_participant = r.need_participant
         })
         .catch(r => {
-          this.contest_info = r.contest_info
-          this.contest_problem = r.contest_problem
-          this.need_participant = r.need_participant
-          this.running_time = r.running_time
-          this.user_id = r.user_id
-          this.err_info = r.err_msg
+          this.ContestData.contest_info = r.contest_info
+          this.ContestData.contest_problem = r.contest_problem
+          this.ContestData.need_participant = r.need_participant
+          this.ContestData.running_time = r.running_time
+          this.ContestData.user_id = r.user_id
+          this.ContestData.err_info = r.err_msg
           if (r.need_participant) {
-            this.err_info = '请先参与比赛'
+            this.ContestData.err_info = '请先参与比赛'
           }
-          this.need_participant = r.need_participant
+          this.ContestData.need_participant = r.need_participant
         })
       getContestSubmission(contestId, -1, false)
         .then(r => {
-          this.contest_submissions = r.submissions
-          this.participants = r.participants
-          this.running_time = r.running_time
+          this.ContestData.contest_submissions = r.submissions
+          this.ContestData.participants = r.participants
+          this.ContestData.contest_submissions = r.submissions
+          this.ContestData.participants = r.participants
+          this.ContestData.running_time = r.running_time
         })
     }
   },
   watch: {
     contest_id: function (newVal) {
+      this.ContestData.contest_id = newVal
       this.init(newVal)
     }
   },
