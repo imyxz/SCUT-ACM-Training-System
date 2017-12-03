@@ -1,5 +1,5 @@
 <template>
-  <div ref="result-modal" class="modal modal-fixed-footer black white-text" style="overflow: visible;">
+  <div ref="result_modal" class="modal modal-fixed-footer black white-text" style="overflow: visible;">
     <div class="modal-content " style="padding:0;overflow: visible;">
       <ul class="tabs black white-text tabs-fixed-width">
         <li class="tab col s4">
@@ -13,16 +13,16 @@
         </li>
       </ul>
 
-      <div ref="input_div" class="col s12 input-field" style="height: 90%">
+      <div id="input_div" class="col s12 input-field" style="height: 90%">
         <textarea ref="input_code" rows="100" style="height: 100%" v-model="input_code"></textarea>
         <label for="input_code"></label>
       </div>
-      <div ref="output_div" class="col s12 input-field" style="height: 90%">
-        <textarea ref="output_code" rows="100" style="height: 100%" v-model="output_code"></textarea>
+      <div id="output_div" class="col s12 input-field" style="height: 90%">
+        <textarea ref="output_code" rows="100" style="height: 100%" v-model="output_code" readonly="readonly"></textarea>
         <label for="output_code"></label>
       </div>
-      <div ref="error_div" class="col s12 input-field" style="height: 90%">
-        <textarea ref="error_code" rows="100" style="height: 100%" v-model="error_code"></textarea>
+      <div id="error_div" class="col s12 input-field" style="height: 90%">
+        <textarea ref="error_code" rows="100" style="height: 100%" v-model="error_code" readonly="readonly"></textarea>
         <label for="error_code"></label>
       </div>
 
@@ -45,47 +45,46 @@
 import $ from 'jquery'
 export default {
   name: 'RunModal',
-  props: [],
-  data() {
+  props: ['running_status', 'output_code', 'error_code'],
+  data () {
     return {
-      editor: {}
+      running_status: '',
+      input_code: ''
     }
   },
   created: function () {
   },
   methods: {
+    submitJob: function () {
+      this.$emit('submitJob', this.input_code)
+    }
   },
   filters: {
   },
   mounted: function () {
-    $('.modal').modal()
-    // eslint-disable-next-line
-    ace.require('ace/ext/language_tools')
-    // eslint-disable-next-line
-    this.editor = ace.edit(this.$refs.editor)
-    this.editor.getSession().setMode('ace/mode/c_cpp')
-    this.editor.setTheme('ace/theme/twilight')
-    this.editor.setFontSize(16)
-    this.editor.setOptions({
-      enableBasicAutocompletion: true,
-      enableSnippets: true,
-      enableLiveAutocompletion: true
-    })
+    $(this.$refs.result_modal).modal()
+    $(this.$refs.result_modal).contents('.indicator').css('background-color', 'white')
     this.$on('openModal', event => {
-      this.editor.getSession().setMode('ace/mode/' + event.code_type)
-      this.editor.setValue(event.source_code, -1)
-      $(this.$refs.code_modal).modal('open')
+      $(this.$refs.result_modal).modal('open')
     })
   }
 }
 </script>
 
 <style scoped>
-.editor {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+.tabs .tab a {
+  color: white;
+}
+.tabs .tab a:hover,
+.tabs .tab a.active {
+  background-color: transparent;
+  color: white;
+}
+.tabs .tab.disabled a,
+.tabs .tab.disabled a:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+.tabs .indicator {
+  background-color: white;
 }
 </style>

@@ -2,7 +2,6 @@
   <div ref="source_code_modal" class="modal" style="width:90%;overflow: visible;height:100%">
     <div class="modal-content">
       <div ref="editor" class="source_editor"></div>
-      <div style="height:1000px"></div>
     </div>
   </div>
 </template>

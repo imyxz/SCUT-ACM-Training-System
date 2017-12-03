@@ -79,7 +79,7 @@ class Spider51nod extends SpiderBasic
         foreach($this->query_jobs as $remote_run_id => &$one)
         {
             $html=$curl->get("http://www.51nod.com/ajax?n=/onlineJudge/submitDetail.html&c=fastCSharp.Pub.AjaxCallBack&j=%7B%22judgeId%22%3A%22". $remote_run_id  ."%22%7D",10);
-            $start_pos=stripos($html,'judge:diantou.judge.Get');
+            $start_pos=strpos($html,'judge:diantou.Judge.Get');
             if($start_pos===false)
                 continue;
             $IsFinished=$this->getSubStr($html,"IsFinished:",",",$start_pos);

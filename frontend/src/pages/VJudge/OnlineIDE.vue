@@ -2,9 +2,10 @@
   <div class="row">
     <div class="l12">
       <code-editor ref="editor" :code-type="codeType"></code-editor>
+      <run-modal ref="run_modal" :running_status="running_status" :output_code="output_code" :error_code="error_code"></run-modal>
       <div class="button-run">
         <a class="btn-floating btn-large waves-effect waves-light green ">
-          <i class="material-icons">play_arrow</i>
+          <i class="material-icons" @click="openRunModal">play_arrow</i>
         </a>
       </div>
       <div class="fixed-action-btn horizontal button-tools">
@@ -41,17 +42,22 @@
 
 <script>
 import CodeEditor from '@/components/VJudge/CodeEditor'
+import RunModal from '@/components/VJudge/OnlineIDE/RunModal'
 // import { getProblemInfo, getProblemAcRank, submitCode, getJobStatus } from '@/helpers/api/vjudge/problem'
 // import { toast } from '@/helpers/common'
 export default {
   name: 'OnlineIDE',
   data () {
     return {
-      codeType: 'c_cpp'
+      codeType: 'c_cpp',
+      running_status: 0,
+      output_code: '',
+      error_code: ''
     }
   },
   components: {
-    'code-editor': CodeEditor
+    'code-editor': CodeEditor,
+    'run-modal': RunModal
   },
   created: function () {
     // this.problem_id = this.$route.params.problem_id
@@ -65,7 +71,9 @@ export default {
     next()
   },
   methods: {
-
+    openRunModal: function () {
+      this.$refs.run_modal.$emit('openModal')
+    }
   },
   watch: {
 
