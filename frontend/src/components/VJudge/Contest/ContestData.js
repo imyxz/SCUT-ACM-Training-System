@@ -43,21 +43,28 @@ export default function () {
               'is_ac': false,
               'is_try': false,
               'percentage': ''
-            }
+            },
+            userSubmissions: []
           })
         })
         this.contest_submissions.forEach((submit) => {
           // eslint-disable-next-line
           let [userId, problemIndex, submitTime, acStatus, runJobId] = submit
-          this.$set(ret[problemIndex - 1].status, 'trys', ret[problemIndex - 1].status.trys + 1)
+          let problem = ret[problemIndex - 1]
+          this.$set(problem.status, 'trys', problem.status.trys + 1)
           if (acStatus === 1) {
-            this.$set(ret[problemIndex - 1].status, 'ac', ret[problemIndex - 1].status.ac + 1)
+            this.$set(problem.status, 'ac', problem.status.ac + 1)
             if (this.user_id === userId) {
-              this.$set(ret[problemIndex - 1].status, 'is_ac', true)
+              this.$set(problem.status, 'is_ac', true)
             }
           }
           if (this.user_id === userId) {
-            this.$set(ret[problemIndex - 1].status, 'is_try', true)
+            this.$set(problem.status, 'is_try', true)
+            problem.userSubmissions.push({
+              jobId: runJobId,
+              acStatus: acStatus,
+              submitTime: submitTime
+            })
           }
         })
         ret.forEach(problem => {
@@ -66,6 +73,9 @@ export default function () {
             tmp = (problem.status.ac + '/' + problem.status.trys) + ' (' + (problem.status.ac / problem.status.trys * 100).toFixed(2) * 100 / 100 + '%)'
           }
           this.$set(problem.status, 'percentage', tmp)
+          problem.userSubmissions.sort((a, b) => {
+            return b.submitTime - a.submitTime
+          })
         })
         return ret
       },

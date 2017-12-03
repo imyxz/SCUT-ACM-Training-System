@@ -83,7 +83,7 @@ export default {
     time_filter: (val) => timeFilter(val)
   },
   mounted: function () {
-    $('.modal').modal()
+    $(this.$refs.code_modal).modal()
     // eslint-disable-next-line
     ace.require('ace/ext/language_tools')
     // eslint-disable-next-line

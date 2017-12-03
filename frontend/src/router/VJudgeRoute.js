@@ -3,6 +3,7 @@ import AllProblem from '@/pages/VJudge/AllProblem'
 import ViewProblem from '@/pages/VJudge/ViewProblem'
 import AllContest from '@/pages/VJudge/AllContest'
 import VJudgeContestRoute from './VJudgeContestRoute'
+import OnlineIDE from '@/pages/VJudge/OnlineIDE'
 
 export default {
   path: '/vJudge',
@@ -41,6 +42,14 @@ export default {
       path: 'allContest',
       redirect: '/vJudge/allContest/1',
       name: 'vjudge.allContest.index'
+    },
+    {
+      path: 'onlineIDE',
+      name: 'vjudge.onlineIDE',
+      component: OnlineIDE,
+      meta: {
+        title: 'onlineIDE'
+      }
     }
   ],
   component: VJudge

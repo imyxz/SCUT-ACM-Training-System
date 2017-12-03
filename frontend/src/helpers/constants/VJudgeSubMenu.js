@@ -23,7 +23,8 @@ export default [
   },
   {
     title: 'Online IDE',
-    routeName: 'Index'
+    routeName: 'vjudge.onlineIDE',
+    finalName: 'vjduge.onlineIDE'
   },
   {
     title: '爬虫状态',
