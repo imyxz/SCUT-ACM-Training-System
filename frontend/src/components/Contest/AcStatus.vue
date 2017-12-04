@@ -36,7 +36,7 @@
 
       </p>
     </div>
-    <div id="modal_ac" class="modal bottom-sheet">
+    <div ref="modal_ac" class="modal bottom-sheet">
             <div class="modal-content">
                 <div class="container">
                     <h4>更新做题状况 </h4>
@@ -78,8 +78,8 @@ export default {
       this.$emit('player-summary-change', this.playerSummary)
     },
     openModal: function () {
-      $('.modal').modal()
-      $('#modal_ac').modal('open')
+      $(this.$refs.modal_ac).modal()
+      $(this.$refs.modal_ac).modal('open')
     }
   }
 }

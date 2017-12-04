@@ -3,6 +3,7 @@
     <thead>
       <tr>
         <th class='center-align'>Rank</th>
+        <th class='center-align'></th>
         <th class='left-align'>Team</th>
         <th class='center-align'>Solve</th>
         <th class='center-align'>Penalty</th>
@@ -13,6 +14,7 @@
     <tbody>
       <tr v-for='team in contestBoardInfo' :class="{'blue lighten-5': team.highlight}" :key='team.name'>
         <td class='center-align'>{{ team.rank_index }}</td>
+        <td class='center-align' style="width:48px;padding:0"><img v-if="team.avatar!=undefined" :src="team.avatar" class="circle valign-wrapper" style="height:48px;width:48px;opacity:1"></td>
         <td class='left-align'>{{ team.group_name }}</td>
         <td class='center-align'>{{ team.problem_solved }}</td>
         <td class='center-align'>{{ team.penalty }}</td>

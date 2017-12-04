@@ -97,6 +97,7 @@ export default function () {
           userStatus[person.user_id] = {
             rank_index: 0,
             user_name: person.user_nickname,
+            user_avatar: person.user_avatar,
             user_id: person.user_id,
             problem_solved: 0,
             penalty: 0,
@@ -147,6 +148,7 @@ export default function () {
           return {
             rank_index: item.rank_index,
             group_name: item.user_name,
+            avatar: item.user_avatar,
             problem_solved: item.problem_solved,
             penalty: getAcTime(item.penalty),
             problems: Object.values(item.problems).map(tem => {
