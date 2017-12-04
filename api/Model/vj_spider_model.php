@@ -13,6 +13,13 @@ class vj_spider_model extends SlimvcModel
             "i",
             $spider_id)->row();
     }
+    function setSpiderNeedReboot($spider_id,$need_reboot)
+    {
+        return $this->queryStmt("update spider_info set need_reboot=? where spider_id=?",
+            "ii",
+            $need_reboot,
+            $spider_id);
+    }
     function updateSpiderAdditionInfo($spider_id,$info)
     {
         return $this->queryStmt("update spider_info set spider_addition_info=? where spider_id=?",
@@ -32,6 +39,14 @@ class vj_spider_model extends SlimvcModel
             "ii",
             $how_much,
             $spider_id);
+    }
+    function getSpiderQueryingJob($spider_id)
+    {
+        return $this->queryStmt("select count(1) from run_job where spider_id=? and running_status=2","i",$spider_id)->row()['count(1)'];
+    }
+    function getSpiderSubmittingJob($spider_id)
+    {
+        return $this->queryStmt("select count(1) from run_job where spider_id=? and running_status=1","i",$spider_id)->row()['count(1)'];
     }
     function getSpiderMotherInfo($oj_id)
     {

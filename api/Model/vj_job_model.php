@@ -39,11 +39,11 @@ class vj_job_model extends SlimvcModel
             $running_status,
             $job_id);
     }
-    function getSpiderUnSubmitJobs($spider_id)
+    function getSpiderUnSubmitJobs($spider_id,$limit=10)
     {
-        return $this->queryStmt("select * from run_job where spider_id=? and running_status=1",
-            "i",
-            $spider_id)->all();
+        return $this->queryStmt("select * from run_job where spider_id=? and running_status=1 order by job_id asc limit ?",
+            "ii",
+            $spider_id,$limit)->all();
     }
     function addJobSubmitCount($job_id)
     {
@@ -117,5 +117,11 @@ class vj_job_model extends SlimvcModel
             "ii",
             $is_shared,
             $job_id);
+    }
+    function isRemoteIdExist($oj_id,$remote_id)
+    {
+        return $this->queryStmt("select * from run_job where oj_id=? and remote_run_id=?",
+            "ii",
+            $oj_id,$remote_id)->sum()>0;
     }
 }

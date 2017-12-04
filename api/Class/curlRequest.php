@@ -28,7 +28,6 @@ class curlRequest{
     public function setProxy($address,$port)
     {
 
-        return;
         $this->proxy_enable=true;
         $this->proxy_address=$address;
         $this->proxy_port=$port;

@@ -34,6 +34,10 @@ abstract class SpiderBasic
     {
         return json_encode($this->additionInfo);
     }
+    public function getJobLimit()
+    {
+        return 10;
+    }
     protected function getSubStr($str,$needle1,$needle2,$start_pos)
     {
         $pos1=strpos($str,$needle1,$start_pos);

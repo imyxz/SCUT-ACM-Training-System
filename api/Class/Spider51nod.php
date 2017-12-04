@@ -7,6 +7,11 @@ class Spider51nod extends SpiderBasic
     private $query_job_info=array();
     private $is_login=true;
     private $submit_result;
+    function getJobLimit()
+    {
+        return 1;
+    }
+
     function submitJob()
     {
         $ac_status=new acStatus();
@@ -34,6 +39,7 @@ class Spider51nod extends SpiderBasic
             "ProblemId"=>intval($problem_id),
             "ProgramContent"=>$source_code);
         $request=json_encode($request);
+        $curl->get("http://www.51nod.com/ajax?n=/onlineJudge/questionCode.html&c=fastCSharp.Pub.AjaxCallBack&j=%7B%22problemId%22%3A%22". $problem_id ."%22%7D");
         $html=$curl->post("http://www.51nod.com/ajax?n=judge.Append&c=fastCSharp.IndexPool.Get%281%2C1%29.CallBack",$request,10);
         $return=$this->getSubStr($html,"CallBack(",")",0);
         if(strpos($html,"Get(1,1)")!==false &&!empty($return))
@@ -46,7 +52,7 @@ class Spider51nod extends SpiderBasic
             $curl->setHeader("Origin: http://www.51nod.com/");
             $curl->setHeader("Accept: */*");
             //$html=$curl->get("http://www.51nod.com/ajax?n=/onlineJudge/userProblemSubmitList.html&c=fastCSharp.Pub.AjaxCallBack&j=%7B%22userId%22%3A%2229003%22%7D");
-                $html=$curl->get("http://www.51nod.com/ajax?n=/include/userProblemJudges.html&c=fastCSharp.Pub.AjaxCallBack&j=%7B%22userId%22%3A". $user_id ."%2C%22problemId%22%3A". $problem_id ."%7D",10);
+                $html=$curl->get("http://www.51nod.com/ajax?n=/include/userProblemJudges.html&c=fastCSharp.Pub.AjaxCallBack&j=%7B%22userId%22%3A". $user_id ."%2C%22problemId%22%3A". $problem_id ."%7D&t" . time(),10);
                 $id=$this->getSubStr($html,'",[[',',',0);
                 if(!$id)
                     return false;
