@@ -1,7 +1,7 @@
 <template>
   <div ref="result_modal" class="modal modal-fixed-footer black white-text" style="overflow: visible;">
     <div class="modal-content " style="padding:0;overflow: visible;">
-      <ul class="tabs black white-text tabs-fixed-width">
+      <ul class="tabs black white-text tabs-fixed-width" ref="tabs">
         <li class="tab col s4">
           <a class="active" href="#input_div">输入数据</a>
         </li>
@@ -14,15 +14,15 @@
       </ul>
 
       <div id="input_div" class="col s12 input-field" style="height: 90%">
-        <textarea ref="input_code" rows="100" style="height: 100%" v-model="input_code"></textarea>
+        <textarea ref="input_code"style="height: 100%" v-model="input_code"></textarea>
         <label for="input_code"></label>
       </div>
       <div id="output_div" class="col s12 input-field" style="height: 90%">
-        <textarea ref="output_code" rows="100" style="height: 100%" v-model="output_code" readonly="readonly"></textarea>
+        <textarea ref="output_code" style="height: 100%" v-model="output_code" readonly="readonly"></textarea>
         <label for="output_code"></label>
       </div>
       <div id="error_div" class="col s12 input-field" style="height: 90%">
-        <textarea ref="error_code" rows="100" style="height: 100%" v-model="error_code" readonly="readonly"></textarea>
+        <textarea ref="error_code" style="height: 100%" v-model="error_code" readonly="readonly"></textarea>
         <label for="error_code"></label>
       </div>
 
@@ -67,6 +67,7 @@ export default {
     this.$on('openModal', event => {
       $(this.$refs.result_modal).modal('open')
     })
+    $(this.$refs.tabs).tabs()
   }
 }
 </script>

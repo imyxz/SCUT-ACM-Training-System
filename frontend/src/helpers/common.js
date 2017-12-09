@@ -87,5 +87,5 @@ export function addZero (val) {
 }
 export function fromUnixTime (second) {
   let time = new Date(second * 1000)
-  return time.getFullYear() + '/' + (time.getMonth() + 1) + '/' + (time.getDate() + 1) + ' ' + addZero(time.getHours()) + ':' + addZero(time.getMinutes())
+  return time.getFullYear() + '/' + (time.getMonth() + 1) + '/' + (time.getDate()) + ' ' + addZero(time.getHours()) + ':' + addZero(time.getMinutes())
 }

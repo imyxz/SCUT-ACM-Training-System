@@ -50,7 +50,7 @@ export default {
   data () {
     return {
       codeType: 'c_cpp',
-      running_status: 0,
+      running_status: '',
       output_code: '',
       error_code: ''
     }
