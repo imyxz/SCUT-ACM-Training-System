@@ -48,7 +48,6 @@ export default {
   props: ['running_status', 'output_code', 'error_code'],
   data () {
     return {
-      running_status: '',
       input_code: ''
     }
   },
@@ -66,6 +65,10 @@ export default {
     $(this.$refs.result_modal).contents('.indicator').css('background-color', 'white')
     this.$on('openModal', event => {
       $(this.$refs.result_modal).modal('open')
+      $(this.$refs.tabs).tabs('select_tab', 'input_div')
+    })
+    this.$on('changeTab', event => {
+      $(this.$refs.tabs).tabs('select_tab', event)
     })
     $(this.$refs.tabs).tabs()
   }

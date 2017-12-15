@@ -23,6 +23,38 @@ const acStatus = [
   'Output Limit Exceeded',
   'In Queue'
 ]
+export const codeType = [
+  {
+    name: 'C',
+    mode: 'c_cpp'
+  },
+  {
+    name: 'C++',
+    mode: 'c_cpp'
+  },
+  {
+    name: 'java',
+    mode: 'java'
+  },
+  {
+    name: 'PHP7',
+    mode: 'php'
+  },
+  {
+    name: 'Pascal',
+    mode: 'pascal'
+  },
+  {
+    name: 'Python3',
+    mode: 'python'
+  }
+]
+export function getCodeTypeName (typeId) {
+  return codeType[parseInt(typeId)].name
+}
+export function getCodeTypeMode (typeId) {
+  return codeType[parseInt(typeId)].mode
+}
 export function getAcStatus (status) {
   return acStatus[parseInt(status)]
 }

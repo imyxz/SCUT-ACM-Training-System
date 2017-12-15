@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import {getCodeTypeMode} from '@/helpers/constants/VJudge'
 export default {
   name: 'CodeEditor',
   props: ['codeType'],
@@ -28,7 +29,9 @@ export default {
     ace.require('ace/ext/language_tools')
     // eslint-disable-next-line
     this.editor = ace.edit(this.$refs.editor)
-    this.editor.getSession().setMode('ace/mode/' + this.codeType)
+    if (this.codeType >= 0) {
+      this.editor.getSession().setMode('ace/mode/' + getCodeTypeMode(this.codeType))
+    }
     this.editor.setTheme('ace/theme/twilight')
     this.editor.setFontSize(16)
     this.editor.setOptions({
@@ -39,7 +42,9 @@ export default {
   },
   watch: {
     codeType: function (newType) {
-      this.editor.getSession().setMode('ace/mode/' + this.codeType)
+      if (newType >= 0) {
+        this.editor.getSession().setMode('ace/mode/' + getCodeTypeMode(newType))
+      }
     }
   }
 }

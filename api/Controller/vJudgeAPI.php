@@ -420,6 +420,7 @@ class vJudgeAPI extends SlimvcController
             if($contest_info['contest_type']==$contestType->NormalContest)
             {
                 $return["contest_problem"]=array();
+                $user_id=$this->helper("user_helper")->getUserID();
                 $problems=$contest_model->getContestProblems($contest_id);
                 foreach($problems as $one)
                 {

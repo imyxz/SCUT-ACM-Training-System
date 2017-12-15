@@ -57,6 +57,17 @@ export default {
     },
     spider: {
       getSpiderStatus: PREFIX + 'vJudgeAPI/getSpiderStatus/'
+    },
+    onlineide: {
+      submitJob: PREFIX + 'onlineIDE/submitJob/',
+      getJobResult: PREFIX + 'onlineIDE/getJobResult/',
+      getCodeTypeDefaultCode: PREFIX + 'onlineIDE/getCodeTypeDefaultCode/',
+      saveDraft: PREFIX + 'onlineIDE/saveDraft/',
+      shareCode: PREFIX + 'onlineIDE/shareCode/',
+      getShareCode: PREFIX + 'onlineIDE/getShareCode/',
+      getUserDraft: PREFIX + 'onlineIDE/getUserDraft/',
+      getDraftCode: PREFIX + 'onlineIDE/getDraftCode/',
+      formatCode: PREFIX + 'onlineIDE/formatCode/'
     }
   }
 }
