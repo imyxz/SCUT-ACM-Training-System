@@ -16,7 +16,8 @@ export default [
   },
   {
     title: '提交状态',
-    routeName: 'Index'
+    routeName: 'vjudge.myStatus.index',
+    finalName: 'vjudge.myStatus'
   },
   {
     title: '新建比赛',

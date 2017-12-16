@@ -5,6 +5,7 @@ import AllContest from '@/pages/VJudge/AllContest'
 import VJudgeContestRoute from './VJudgeContestRoute'
 import OnlineIDE from '@/pages/VJudge/OnlineIDE'
 import AllTag from '@/pages/VJudge/AllTag'
+import myStatus from '@/pages/VJudge/MyStatus'
 export default {
   path: '/vJudge',
   children: [
@@ -66,7 +67,21 @@ export default {
       meta: {
         title: '标签列表'
       }
+    },
+    {
+      path: 'myStatus/:page',
+      name: 'vjudge.myStatus',
+      component: myStatus,
+      meta: {
+        title: '提交状态'
+      }
+    },
+    {
+      path: 'myStatus',
+      redirect: '/vJudge/myStatus/1',
+      name: 'vjudge.myStatus.index'
     }
+
   ],
   component: VJudge
 }

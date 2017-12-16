@@ -51,6 +51,7 @@ import SettingModal from '@/components/VJudge/OnlineIDE/SettingModal'
 import ShareModal from '@/components/VJudge/OnlineIDE/ShareModal'
 import { submitJob, getJobResult, getUserDraft, getDraftCode, formatCode, getCodeTypeDefaultCode, shareCode, getShareCode, saveDraft } from '@/helpers/api/vjudge/onlineide'
 import { toast, ramFilter, timeFilter } from '@/helpers/common'
+import {getJobSourceCode} from '@/helpers/api/vjudge/problem'
 export default {
   name: 'OnlineIDE',
   data () {
@@ -112,6 +113,8 @@ export default {
     this.updateUserDraft(false)
     if (this.$route.query.shareCode !== undefined) {
       this.readShareCode(this.$route.query.shareCode)
+    } else if (this.$route.query.jobCode !== undefined) {
+      this.readJobCode(this.$route.query.jobCode)
     } else {
       this.readDefaultCode(this.codeType)
     }
@@ -186,6 +189,13 @@ export default {
         .then(r => {
           this.$refs.editor.setCode(r.source_code)
           this.codeType = r.code_type
+          toast('读取代码成功')
+        })
+    },
+    readJobCode: function (jobId) {
+      getJobSourceCode(jobId)
+        .then(r => {
+          this.$refs.editor.setCode(r.source_code)
           toast('读取代码成功')
         })
     },

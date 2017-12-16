@@ -74,7 +74,10 @@ class vJudgeAPI extends SlimvcController
     {
         try {
             if ($this->helper("user_helper")->isLogin() == false) throw new Exception("请先登录");
-            $tmp = $this->model("vj_job_model")->getUserJobStatus($this->helper("user_helper")->getUserID(), 30);
+            $page = intval(@$_GET['page']);
+            if ($page < 1)
+                $page = 1;
+            $tmp = $this->model("vj_job_model")->getUserJobStatus($this->helper("user_helper")->getUserID(),$page, 30);
             /*$return['status_info']=array();
             foreach($tmp as $one)
             {

@@ -26,7 +26,7 @@
         <td class="center-align" :class="{'green-text':status.ac_status==1,'red-text':status.ac_status!=1}">{{ status.wrong_info }}</td>
         <td class="center-align">{{ status.time_usage | time_filter }}</td>
         <td class="center-align">{{ status.ram_usage | ram_filter }}</td>
-        <td class="center-align">{{ status.submit_time | getAcTime}}</td>
+        <td class="center-align">{{ status.submit_time}}</td>
         <td class="center-align">
           <a class="btn-floating" @click="displaySourceCode(status.job_id)">
             <i class="material-icons">search</i>
@@ -73,10 +73,12 @@ export default {
       .then(r => {
         if (isShare) {
           toast('代码已设置为分享')
+          this.$emit('share-code', jobId)
         } else {
           toast('代码已取消分享')
+          this.$emit('unshare-code', jobId)
         }
-        obj.is_share = isShare
+        obj.is_shared = isShare
       })
     }
   },

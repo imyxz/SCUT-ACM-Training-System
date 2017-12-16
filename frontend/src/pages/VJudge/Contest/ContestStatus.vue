@@ -11,6 +11,7 @@
 import StatusTable from '@/components/VJudge/StatusTable'
 import PageIndicator from '@/components/PageIndicator'
 import {getContestStatus} from '@/helpers/api/vjudge/contest'
+import { getAcTime } from '@/helpers/common'
 export default {
   name: 'ContestStatus',
   props: ['ContestData'],
@@ -56,7 +57,7 @@ export default {
           wrong_info: item.wrong_info,
           time_usage: item.time_usage,
           ram_usage: item.ram_usage,
-          submit_time: item.submit_time
+          submit_time: getAcTime(item.submit_time)
         }
       })
     }

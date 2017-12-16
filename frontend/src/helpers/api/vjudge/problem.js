@@ -26,5 +26,5 @@ export function getJobSourceCode (jobId, cache = true) {
   return get(API.vjudge.job.getJobSourceCode, {id: jobId}, cache)
 }
 export function setJobShare (jobId, isShare) {
-  return postJson(API.vjudge.job.setJobShare, {}, {job_id: jobId, is_share: isShare})
+  return postJson(API.vjudge.job.setJobShare, {}, {job_id: jobId, is_shared: isShare})
 }
