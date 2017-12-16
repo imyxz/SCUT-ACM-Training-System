@@ -29,13 +29,21 @@ export default {
           this.curSelected = index
         }
       })
+      this.$nextTick(() => {
+        $(this.$refs.menuer).tabs()
+      })
     }
   },
   mounted: function () {
-    $('.tabs-transparent').each(function () {
-      $(this).unbind('click')
-    })
     this.onUpdateRoute(this.$route)
+    $(this.$refs.menuer).each(function () {
+      // $(this).unbind('click')
+    })
+  },
+  watch: {
+    $route: function (newRoute) {
+      this.onUpdateRoute(newRoute)
+    }
   }
 }
 </script>

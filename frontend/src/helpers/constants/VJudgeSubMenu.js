@@ -11,7 +11,8 @@ export default [
   },
   {
     title: '标签列表',
-    routeName: 'Index'
+    routeName: 'vjudge.viewTagIndex',
+    finalName: 'vjudge.viewTag'
   },
   {
     title: '提交状态',

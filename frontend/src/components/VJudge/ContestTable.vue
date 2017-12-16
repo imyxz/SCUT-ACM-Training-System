@@ -1,6 +1,6 @@
 <template>
 
-  <table class="highlight bordered auto-break">
+  <table class="highlight bordered auto-break" style="font-size: 20px;">
     <thead>
       <tr>
         <th class="center-align">contest id</th>

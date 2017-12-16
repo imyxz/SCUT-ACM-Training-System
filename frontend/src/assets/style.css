@@ -6,3 +6,6 @@
   word-wrap: normal;
   word-break: keep-all;
 }
+a {
+  cursor: pointer;
+}
