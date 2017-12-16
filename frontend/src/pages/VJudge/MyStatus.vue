@@ -19,7 +19,8 @@ export default {
   data () {
     return {
       page: 0,
-      submit_status: []
+      submit_status: [],
+      isLoading: false
     }
   },
   components: {
@@ -31,7 +32,7 @@ export default {
     this.page = this.$route.params.page
   },
   beforeRouteUpdate: function (to, from, next) {
-    this.page = to.params.page
+    // this.page = to.params.page
     next()
   },
   methods: {
@@ -40,7 +41,6 @@ export default {
         .then(r => {
           this.submit_status = r.status_info
           if (updatePage) {
-            this.page = page
             this.$router.push({ name: 'vjudge.myStatus', params: { page: page } })
           }
         })
