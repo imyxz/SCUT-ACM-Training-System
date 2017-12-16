@@ -21,15 +21,12 @@ export default [
   },
   {
     title: '新建比赛',
-    routeName: 'Index'
+    routeName: 'vjudge.addContest',
+    finalName: 'vjudge.addContest'
   },
   {
     title: 'Online IDE',
     routeName: 'vjudge.onlineIDE',
     finalName: 'vjduge.onlineIDE'
-  },
-  {
-    title: '爬虫状态',
-    routeName: 'Index'
   }
 ]

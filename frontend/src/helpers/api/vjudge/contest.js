@@ -27,3 +27,13 @@ export function getContestStatus (contestId, page, cache = false) {
 export function joinContest (contestId) {
   return postJson(API.vjudge.contest.joinContest, {id: contestId}, {})
 }
+export function newContest (title, desc, problemList, startTime, lastTime, type) {
+  return postJson(API.vjudge.contest.newContest, {}, {
+    contest_title: title,
+    contest_desc: desc,
+    problem_list: problemList,
+    contest_start_time: startTime,
+    contest_last_time: lastTime,
+    contest_type: type
+  })
+}
