@@ -1,0 +1,11 @@
+.auto-break {
+  word-wrap:break-word;
+  word-break: break-all;
+}
+.not-break {
+  word-wrap: normal;
+  word-break: keep-all;
+}
+a {
+  cursor: pointer;
+}

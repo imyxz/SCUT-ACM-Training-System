@@ -3,8 +3,6 @@
 lib/*
 *.ids
 *.iml
-composer.phar
-composer.lock
-vendor/*
-.idea/*
+api/composer.phar
+api/vendor/*
 files/*
