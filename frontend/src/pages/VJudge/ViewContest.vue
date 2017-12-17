@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 10px">
+  <div style="margin: 10px"  class="router-container">
     <contest-header :contest-name="ContestData.contest_info.contest_title" :running-time="ContestData.running_time" :contest-long="ContestData.contest_info.contest_last_seconds" :contest-start-time="ContestData.contest_info.contest_start_time_ts"></contest-header>
     <contest-noticer :err_info="ContestData.err_info" :need_participant="ContestData.need_participant" :contest_id="ContestData.contest_id"></contest-noticer>
     <contest-path-indicator :contest-id="ContestData.contest_id"></contest-path-indicator>

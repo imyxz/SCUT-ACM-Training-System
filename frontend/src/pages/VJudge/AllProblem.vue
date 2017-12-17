@@ -1,10 +1,12 @@
 <template>
+<div class="router-container">
   <div class="container">
     <div class="card-panel hoverable">
       <page-indicator :cur-page="page" :max-page="100" @page-change="page = $event"></page-indicator>
       <problem-table :problem-list="problem_list"></problem-table>
     </div>
   </div>
+</div>
 </template>
 
 <script>

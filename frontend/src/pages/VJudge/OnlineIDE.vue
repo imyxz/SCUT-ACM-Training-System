@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="row">
     <div class="l12">
       <code-editor ref="editor" :code-type="codeType"></code-editor>
@@ -41,6 +42,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
