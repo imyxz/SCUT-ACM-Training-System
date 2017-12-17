@@ -53,7 +53,7 @@ class Spider51nod extends SpiderBasic
             $curl->setHeader("Accept: */*");
             //$html=$curl->get("http://www.51nod.com/ajax?n=/onlineJudge/userProblemSubmitList.html&c=fastCSharp.Pub.AjaxCallBack&j=%7B%22userId%22%3A%2229003%22%7D");
                 $html=$curl->get("http://www.51nod.com/ajax?n=/include/userProblemJudges.html&c=fastCSharp.Pub.AjaxCallBack&j=%7B%22userId%22%3A". $user_id ."%2C%22problemId%22%3A". $problem_id ."%7D&t" . time(),10);
-                $id=$this->getSubStr($html,'",[[',',',0);
+                $id=$this->getSubStr($html,'",[',',',0);
                 if(!$id)
                     return false;
                 if(strpos($id,"0x")!==false)
@@ -87,7 +87,12 @@ class Spider51nod extends SpiderBasic
             $html=$curl->get("http://www.51nod.com/ajax?n=/onlineJudge/submitDetail.html&c=fastCSharp.Pub.AjaxCallBack&j=%7B%22judgeId%22%3A%22". $remote_run_id  ."%22%7D",10);
             $start_pos=strpos($html,'judge:diantou.Judge.Get');
             if($start_pos===false)
-                continue;
+            {
+                $start_pos=strpos($html,'Judge:diantou.Judge.Get');
+                if($start_pos===false)
+                    continue;
+            }
+
             $IsFinished=$this->getSubStr($html,"IsFinished:",",",$start_pos);
             $JudgeValue=$this->getSubStr($html,'JudgeValue:"','",',$start_pos);
             $MemoryUse=$this->getSubStr($html,"MemoryUse:",",",$start_pos);
