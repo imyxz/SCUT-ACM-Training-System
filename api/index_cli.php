@@ -24,3 +24,4 @@ include(_Slimvc . 'Slimvc.php');
 $Slimvc=new Slimvc();
 $Slimvc->processor->initCliProcess();
 $Slimvc->processor->startController();
+
