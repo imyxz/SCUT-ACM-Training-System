@@ -101,7 +101,8 @@ export default function () {
             user_id: person.user_id,
             problem_solved: 0,
             penalty: 0,
-            problems: newProblem
+            problems: newProblem,
+            total_trys: 0
           }
         })
         this.contest_submissions.forEach(submit => {
@@ -121,6 +122,7 @@ export default function () {
               problem.is_try = true
             }
           }
+          user.total_trys++
         })
         userStatus = Object.values(userStatus)
         userStatus.forEach(user => {
@@ -143,6 +145,16 @@ export default function () {
         })
         return userStatus
       },
+      usersStatusMap: function () {
+        let ret = {}
+        if (this.users_status.forEach === undefined) {
+          return
+        }
+        this.users_status.forEach(e => {
+          ret[e.user_id] = e
+        })
+        return ret
+      },
       rank: function () {
         return Object.values(this.users_status).map(item => {
           return {
@@ -159,7 +171,8 @@ export default function () {
                 trys: tem.trys
               }
             }),
-            highlight: item.user_id === this.user_id
+            highlight: item.user_id === this.user_id,
+            total_trys: item.total_trys
           }
         })
       }
