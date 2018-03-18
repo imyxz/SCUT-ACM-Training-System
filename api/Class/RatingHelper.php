@@ -8,6 +8,7 @@
 require_once('RatingHelperCompare.php');
 class RatingHelper
 {
+    const INIT_SCORE = 1500;
     private $userRating=[];
     private $newRank=[];
     private $userNewRating=[];
@@ -18,23 +19,25 @@ class RatingHelper
             $this->userRating[$one['user_id']]=$one;
         }
         $this->newRank=$new_rank;
+        foreach($new_rank as $one){
+            if(!isset($this->userRating[$one[0]]))//加入新的选手
+                $this->userRating[$one[0]]=['rating'=>RatingHelper::INIT_SCORE,
+                    'user_id'=>$one[0],
+                    'cur_rating_id'=>0];
+        }
         for($i=0;$i<count($new_rank);$i++)
         {
-            if(!isset($this->userRating[$new_rank[$i][0]]))
-                $me=['rating'=>intval(count($new_rank)/2 +1),
-                'user_id'=>$new_rank[$i][0],
-                'cur_rating_id'=>0];
-            else
-                $me=$this->userRating[$new_rank[$i][0]];
-
+            $me=$this->userRating[$new_rank[$i][0]];
             $helper=new RatingHelperCompare($me['rating']);
             for($x=0;$x<$i;$x++)
             {
-                $helper->addComparer($new_rank[$x][1],false);
+                $target=$new_rank[$x][0];
+                $helper->addComparer($this->getUserRating($target),false);
             }
             for($x=$i+1;$x<count($new_rank);$x++)
             {
-                $helper->addComparer($new_rank[$x][1],true);
+                $target=$new_rank[$x][0];
+                $helper->addComparer($this->getUserRating($target),true);
             }
             $this->userNewRating[]=[
                 'user_id'=>$me['user_id'],
@@ -48,6 +51,10 @@ class RatingHelper
     function getNewRating()
     {
         return $this->userNewRating;
+    }
+    private function getUserRating($user_id)
+    {
+        return $this->userRating[$user_id]['rating'];
     }
 
 }
