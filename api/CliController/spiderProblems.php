@@ -383,6 +383,7 @@ class spiderProblems extends SlimvcControllerCli
 
         }
     }
+
     function scutse()
     {
         /** @var curlRequest $curl */
@@ -1007,6 +1008,47 @@ class spiderProblems extends SlimvcControllerCli
             $problem_title=trim($this->getSubStr($html,'<span class="bigProblemTitle">',"</span>",0));
             $problem_url="http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=$problem_id";
             $this->model("vj_problem_model")->insertProblem(9,$problem_id,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
+            echo "Done $problem_id\n";
+
+        }
+    }
+    function uva()
+    {
+        /** @var curlRequest $curl */
+        $curl=$this->newClass("curlRequest");
+        $curl->setHeader("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
+        $curl->setHeader("Referer: https://uva.onlinejudge.org/");
+        $curl->setHeader("Origin: https://uva.onlinejudge.org/");
+        $curl->setHeader("Upgrade-Insecure-Requests: 1");
+        $curl->setHeader("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+        $curl->setFollowRedirect(true);
+        $problem_start_id=intval(self::$cliArg['start']);
+        $problem_end_id=intval(self::$cliArg['end']);
+        for($problem_id=$problem_start_id;$problem_id<=$problem_end_id;$problem_id++)
+        {
+            $problem_list=array();
+            while(!($html=$curl->get("https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=$problem_id",10)))
+            {
+                echo "Retry $problem_id\n";
+                sleep(1);
+            }
+            if(strpos($html,"Download as PDF")===false)
+            {
+                echo "Empty $problem_id\n";
+                continue;
+            }
+            $content_start=strpos($html,"<!-- #col3: Main Content -->");
+            $pdf_url='https://uva.onlinejudge.org/external' . $this->getSubStr($html,'<a href="external','">',$content_start);
+            $problem_desc='<div id="pdf-div" data-pdf-url="' . str_replace('"',"\\\"",$pdf_url)  . '"></div>';
+
+            $compiler='{"1":"ANSI C 5.3.0 - GNU C Compiler with options: -lm -lcrypt -O2 -pipe -ansi -DONLINE_JUDGE","2":"JAVA 1.8.0 - OpenJDK Java","3":"C++ 5.3.0 - GNU C++ Compiler with options: -lm -lcrypt -O2 -pipe -DONLINE_JUDGE","4":"PASCAL 3.0.0 - Free Pascal Compiler","5":"C++11 5.3.0 - GNU C++ Compiler with options: -lm -lcrypt -O2 -std=c++11 -pipe -DONLINE_JUDGE","6":"PYTH3 3.5.1 - Python 3"}';
+            $problem_title=trim($this->getSubStr($html,' - ',"</h3>",$content_start));
+            $time_limit=doubleval($this->getSubStr($html,"Time limit: "," seconds",$content_start))*1000;
+
+            $memory_limit=0;
+
+            $problem_url="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=$problem_id";
+            $this->model("vj_problem_model")->insertProblem(10,$problem_id,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
             echo "Done $problem_id\n";
 
         }
