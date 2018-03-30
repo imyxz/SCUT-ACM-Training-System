@@ -72,7 +72,7 @@
           let regExp = new RegExp(FindText, 'g')
           return this.replace(regExp, RepText)
         }
-        val=val.replaceAll('<br>','<p></p>')
+        val=val.replaceAll('<br>','</p><p>')
         return '<p>' + val + '</p>'
       }
       function fill2(val) {
