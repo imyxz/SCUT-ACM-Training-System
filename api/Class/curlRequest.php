@@ -9,6 +9,16 @@ class curlRequest{
     private $proxy_address="";
     private $proxy_port=0;
     private $cookie_filename="";
+    private $follow_redirect=false;
+    private $cur_url="";
+    public function getCurUrl()
+    {
+        return $this->cur_url;
+    }
+    public function setFollowRedirect($bool)
+    {
+        $this->follow_redirect=$bool;
+    }
     public function setCookie($arr)
     {
         $this->cookie='';
@@ -33,7 +43,7 @@ class curlRequest{
         $this->proxy_address=$address;
         $this->proxy_port=$port;
     }
-    private function _before($ch)
+    private function _before(&$ch)
     {
         if($this->proxy_enable)
         {
@@ -45,14 +55,19 @@ class curlRequest{
             curl_setopt($ch,CURLOPT_HTTPHEADER,$this->header);
         $this->cookie_filename=tempnam(sys_get_temp_dir(),"scutvj");
         curl_setopt($ch,CURLOPT_COOKIEJAR,$this->cookie_filename);
+        if($this->follow_redirect)
+        {
+            curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
+        }
         $this->response_code=0;
     }
-    private function _after($ch)
+    private function _after(&$ch)
     {
         $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
-        $this->response_cookie=$this->processCookieJar(file_get_contents($this->cookie_filename));
-        unlink($this->cookie_filename);
+        $this->cur_url=curl_getinfo($ch,CURLINFO_EFFECTIVE_URL);
         curl_close($ch);
+        $this->response_cookie=$this->processCookieJar(file_get_contents($this->cookie_filename));
+        unlink($this->cookie_filename);//only close the connection could we get cookie
     }
     public function post($url, $post,$timeout=10)
     {
@@ -198,5 +213,14 @@ class curlRequest{
                 $ret[trim($three[0])]=trim($three[1]);
         }
         return $ret;
+    }
+    public function mergeCookieRaw($target,$from)
+    {
+        $arr1=$this->cookieStr2Arr($target);
+        $arr2=$this->cookieStr2Arr($from);
+        foreach($arr2 as $key=>&$one){
+            $arr1[$key]=$one;
+        }
+        return $this->cookieArr2Str($arr1);
     }
 }
