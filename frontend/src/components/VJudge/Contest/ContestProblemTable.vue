@@ -5,19 +5,19 @@
         <th class="center-align">AC状态</th>
         <th class="center-align">State</th>
         <th class="center-align">#</th>
-        <th class="center-align">Title</th>
+        <th class="left-align">Title</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="problem in problemInfo" :key="problem.info.problem_index">
         <td class="center-align">
           <span v-show="problem.status.is_try" :class="{'yellow-text text-darken-3':!problem.status.is_ac,'green-text text-darken-2':problem.status.is_ac}" style="font-size: 20px;" data-badge-caption="">
-            {{problem.status.is_ac?'Accept':'Try'}}
+            {{problem.status.is_ac?'Accepted':'Try'}}
           </span>
         </td>
         <td class="center-align">{{ problem.status.percentage }}</td>
         <td class="center-align">{{String.fromCharCode(problem.info.problem_index+64)}}</td>
-        <td class="center-align blue-text">
+        <td class="left-align blue-text">
           <a @click="goProblem(problem.info.problem_index)">{{ problem.info.problem_title }}</a>
         </td>
       </tr>
