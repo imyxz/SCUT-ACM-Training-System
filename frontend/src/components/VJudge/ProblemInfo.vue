@@ -58,8 +58,10 @@ export default {
         // eslint-disable-next-line
         MathJax.Hub.Queue(['Typeset', MathJax.Hub, document.getElementById('problem_desc')])
         if ($('#pdf-div').length > 0) {
+          let target = $('#pdf-div').data('pdf-url')
+          target = target.substr(0, 4) === 'http' ? target : '/' + target
           // eslint-disable-next-line
-          PDFObject.embed('/' + $('#pdf-div').data('pdf-url'), '#pdf-div', { width: '100%', height: $(window).height() + 'px' })
+          PDFObject.embed(target, '#pdf-div', { width: '100%', height: $(window).height() + 'px' })
         }
       })
     }
