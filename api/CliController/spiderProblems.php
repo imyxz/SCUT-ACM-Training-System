@@ -1044,11 +1044,11 @@ class spiderProblems extends SlimvcControllerCli
             $compiler='{"1":"ANSI C 5.3.0 - GNU C Compiler with options: -lm -lcrypt -O2 -pipe -ansi -DONLINE_JUDGE","2":"JAVA 1.8.0 - OpenJDK Java","3":"C++ 5.3.0 - GNU C++ Compiler with options: -lm -lcrypt -O2 -pipe -DONLINE_JUDGE","4":"PASCAL 3.0.0 - Free Pascal Compiler","5":"C++11 5.3.0 - GNU C++ Compiler with options: -lm -lcrypt -O2 -std=c++11 -pipe -DONLINE_JUDGE","6":"PYTH3 3.5.1 - Python 3"}';
             $problem_title=trim($this->getSubStr($html,' - ',"</h3>",$content_start));
             $time_limit=doubleval($this->getSubStr($html,"Time limit: "," seconds",$content_start))*1000;
-
+            $real_problem_id=intval($this->getSubStr($html,'<h3>',' - ',$content_start));
             $memory_limit=0;
 
             $problem_url="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=$problem_id";
-            $this->model("vj_problem_model")->insertProblem(10,$problem_id,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
+            $this->model("vj_problem_model")->insertProblem(10,$real_problem_id,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
             echo "Done $problem_id\n";
 
         }
