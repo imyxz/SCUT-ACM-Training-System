@@ -4,7 +4,20 @@
     <p>{{ContestData.contest_info.contest_title}}</p>
     <div class="row">
       <div class="card-panel">
-        <h5>Ranking：<button class="btn" @click="display_rank=!display_rank">{{display_rank?'隐藏':'显示'}}</button></h5>
+        <h5>导入以下选手成绩</h5>
+        <div class='card-content not-break' style='display:flex;width: 100%;flex-wrap:wrap;'>
+          <div v-for="status in addStatus" :key="status.user_id" style="margin: 0 20px;width: 120px;">
+            <input type="checkbox" :id="'status-' + status.user_id" v-model="status.add" />
+            <label :for="'status-' + status.user_id">{{status.nickname}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card-panel">
+        <h5>Ranking：
+          <button class="btn" @click="display_rank=!display_rank">{{display_rank?'隐藏':'显示'}}</button>
+        </h5>
         <div class='card-content not-break' style='overflow-x:auto'>
           <contest-board-table v-show="display_rank" :contest-board-info="ContestData.rank" :problem-count="ContestData.contest_problem.length"></contest-board-table>
         </div>
@@ -12,7 +25,9 @@
     </div>
     <div class="row">
       <div class="card-panel">
-        <h5>Preview：<button class="btn" @click="refreshPreview">刷新</button></h5>
+        <h5>Preview：
+          <button class="btn" @click="refreshPreview">刷新</button>
+        </h5>
         <div class='card-content not-break' style='overflow-x:auto'>
           <contset-history-table :history="history"></contset-history-table>
         </div>
@@ -27,7 +42,7 @@ import ContestBoardTable from '@/components/Contest/ContestBoardTable'
 import ContestDataInstance from '@/components/VJudge/Contest/ContestData'
 import ContestHistoryTable from '@/components/Rating/ContestHistoryTable'
 import { getContestInfo, getContestSubmission } from '@/helpers/api/vjudge/contest'
-import {addNewRating} from '@/helpers/api/rating'
+import { addNewRating } from '@/helpers/api/rating'
 import { toast } from '@/helpers/common'
 
 export default {
@@ -37,7 +52,8 @@ export default {
       contest_id: 0,
       ContestData: ContestDataInstance(),
       display_rank: false,
-      preview: []
+      preview: [],
+      addStatus: []
     }
   },
   components: {
@@ -81,15 +97,15 @@ export default {
     },
     refreshPreview: function () {
       addNewRating(this.contest_id, this.ContestData.contest_info.contest_title, true, true, this.rank)
-      .then(r => {
-        this.preview = r.preview
-      })
+        .then(r => {
+          this.preview = r.preview
+        })
     },
     submit: function () {
       addNewRating(this.contest_id, this.ContestData.contest_info.contest_title, true, false, this.rank)
-      .then(r => {
-        toast('已更新')
-      })
+        .then(r => {
+          toast('已更新')
+        })
     }
   },
   created: function () {
@@ -102,14 +118,27 @@ export default {
   watch: {
     contest_id: function (newVal) {
       this.init(newVal)
+    },
+    'ContestData.users_status': function (newVal) {
+      this.addStatus = newVal.filter(r => {
+        return r.total_trys > 0
+      }).map(e => {
+        return {
+          user_id: e.user_id,
+          nickname: e.user_name,
+          add: true,
+          rank_index: e.rank_index,
+          penalty: e.penalty
+        }
+      })
     }
   },
   mounted: function () {
   },
   computed: {
     rank: function () {
-      return this.ContestData.users_status.filter(r => {
-        return r.total_trys > 0
+      return this.addStatus.filter(e => {
+        return e.add === true
       }).map(r => {
         return [r.user_id, r.rank_index, r.penalty]
       })

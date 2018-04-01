@@ -82,7 +82,7 @@ export default function () {
       users_status: function () {
         let userStatus = {}
         if (this.participants.length === 0 || this.contest_problem.length === 0) {
-          return {}
+          return []
         }
         this.participants.forEach(person => {
           let newProblem = []
