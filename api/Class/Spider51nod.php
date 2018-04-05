@@ -92,15 +92,21 @@ class Spider51nod extends SpiderBasic
                 if($start_pos===false)
                     continue;
             }
-
+            $result=new jobResult();
+            $acStatus=new acStatus();
             $IsFinished=$this->getSubStr($html,"IsFinished:",",",$start_pos);
             $JudgeValue=$this->getSubStr($html,'JudgeValue:"','",',$start_pos);
             $MemoryUse=$this->getSubStr($html,"MemoryUse:",",",$start_pos);
             $TestCount=$this->getSubStr($html,"TestCount:",",",$start_pos);
             $TimeUse=$this->getSubStr($html,"TimeUse:",",",$start_pos);
+            $pos2=strpos($html,'diantou.JudgeItem',$start_pos);
+            $items=$this->getSubStr($html,'[','].FormatView()',$pos2);
+            $items = '[[' . $items . ']';
+            $items=$this->jsonFormatHex($items);
 
-            $result=new jobResult();
-            $acStatus=new acStatus();
+            $result->result_info=$items;
+            $items=json_decode($items,true);
+
 
             if(strpos($MemoryUse,"0x")!==false)
             {
@@ -157,7 +163,23 @@ class Spider51nod extends SpiderBasic
                         break;
                 }
                 if($result->ac_status!=$acStatus->OK)
-                    $result->wrong_info=$result->wrong_info . ' on Case #' . $TestCount;
+                {
+                    $finded=false;
+                    for($item = 0;$item<count($items);$item++)
+                    {
+                        if($items[$item][3][2]!='Accepted')
+                        {
+                            $result->wrong_info=$result->wrong_info . ' on Case #' . ($item +1);
+                            $finded =true;
+                            break;
+                        }
+                    }
+                    if(!$finded)
+                    {
+                        $result->wrong_info=$result->wrong_info . ' on Case UNKNOWN';
+                    }
+                }
+
 
 
             }
@@ -237,5 +259,33 @@ class Spider51nod extends SpiderBasic
             $ret= $ret . substr($str,rand(0,strlen($str)-1),1);
         }
         return $ret;
+    }
+    protected function jsonFormatHex($html)
+    {
+        while(true)
+        {
+            $tmp=$this->getSubStr($html,",0x",",",0);
+            if($tmp===false)
+                break;
+            $tmp='0x' . $tmp ;
+            $html=str_replace($tmp . ',','"' . $tmp . '",',$html);
+        }
+        while(true)
+        {
+            $tmp=$this->getSubStr($html,"[0x",",",0);
+            if($tmp===false)
+                break;
+            $tmp='0x' . $tmp ;
+            $html=str_replace($tmp . ',','"' . $tmp . '",',$html);
+        }
+        while(true)
+        {
+            $tmp=$this->getSubStr($html,":0x",",",0);
+            if($tmp===false)
+                break;
+            $tmp='0x' . $tmp ;
+            $html=str_replace($tmp . ',','"' . $tmp . '",',$html);
+        }
+        return $html;
     }
 }
