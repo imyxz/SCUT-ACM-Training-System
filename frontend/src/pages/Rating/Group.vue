@@ -2,11 +2,7 @@
 <div class="container">
   <div class="card">
     <div class="card-content">
-      <div class="flex-two-end">
-        <span class="card-title">Rank:</span>
-        <router-link to="/rating/group/rank/" class="btn">查看队伍排名</router-link>
-      </div>
-
+      <span class="card-title">{{group_name}}:</span>
       <rating-table :rank="rank" :is-user="true"></rating-table>
     </div>
   </div>
@@ -15,23 +11,33 @@
 
 <script>
 import RatingTable from '@/components/Rating/RatingTable'
-import { getRank } from '@/helpers/api/rating'
+import { getGroupPlayers } from '@/helpers/api/rating'
 
 export default {
-  name: 'Rank',
+  name: 'Group',
   props: [''],
   data () {
     return {
-      origin_rank: []
+      origin_rank: [],
+      group_name: '',
+      group_id: 0
     }
   },
   created: function () {
+    this.group_id = this.$route.params.group_id
   },
-  mounted: function () {
-    getRank()
+  beforeRouteUpdate: function (to, from, next) {
+    this.group_id = to.params.group_id
+    next()
+  },
+  watch: {
+    group_id: function (newVal) {
+      getGroupPlayers(newVal)
       .then(r => {
-        this.origin_rank = r.rank
+        this.origin_rank = r.players
+        this.group_name = r.group_name
       })
+    }
   },
   methods: {
   },
@@ -56,10 +62,6 @@ export default {
 }
 </script>
 
-<style scoped>
-.flex-two-end{
-  display: flex;
-  justify-content: space-between;
-}
-</style>
+<style>
 
+</style>

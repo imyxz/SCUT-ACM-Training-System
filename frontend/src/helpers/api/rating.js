@@ -6,6 +6,14 @@ import API from '../constants/api'
 export function getRank (cache = true) {
   return get(API.rating.getRank, {}, cache)
 }
+export function getGroupRank (cache = true) {
+  return get(API.rating.getGroupRank, {}, cache)
+}
+export function getGroupPlayers (groupId, cache = true) {
+  return get(API.rating.getGroupPlayers, {
+    id: groupId
+  }, cache)
+}
 export function getList (cache = true) {
   return get(API.rating.getList, {}, cache)
 }

@@ -4,21 +4,19 @@
     <div class="card-content">
       <div class="flex-two-end">
         <span class="card-title">Rank:</span>
-        <router-link to="/rating/group/rank/" class="btn">查看队伍排名</router-link>
+        <router-link to="/rating/user/rank/" class="btn">查看个人排名</router-link>
       </div>
-
-      <rating-table :rank="rank" :is-user="true"></rating-table>
+      <rating-table :rank="rank" :is-user="false"></rating-table>
     </div>
   </div>
 </div>
 </template>
-
 <script>
 import RatingTable from '@/components/Rating/RatingTable'
-import { getRank } from '@/helpers/api/rating'
+import { getGroupRank } from '@/helpers/api/rating'
 
 export default {
-  name: 'Rank',
+  name: 'GroupRank',
   props: [''],
   data () {
     return {
@@ -28,7 +26,7 @@ export default {
   created: function () {
   },
   mounted: function () {
-    getRank()
+    getGroupRank()
       .then(r => {
         this.origin_rank = r.rank
       })
@@ -44,10 +42,8 @@ export default {
     rank: function () {
       return this.origin_rank.map(r => {
         return {
-          user_id: r.user_id,
-          nickname: r.user_nickname,
-          avatar: r.user_avatar,
-          contest_count: r.contest_cnt,
+          group_id: r.group_id,
+          group_name: r.group_name,
           rating: parseFloat(r.rating).toFixed(2)
         }
       })
@@ -62,4 +58,3 @@ export default {
   justify-content: space-between;
 }
 </style>
-

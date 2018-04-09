@@ -24,6 +24,44 @@ class ratingAPI extends SlimvcController
 
         }
     }
+    function getRankByGroup(){
+        try{
+            /** @var rating_model $rating_model */
+            $rating_model=$this->model("rating_model");
+            $return['rank']=$rating_model->getRankByGroup();
+            $return['status']=0;
+            $this->outputJson($return);
+
+        }catch(Exception $e)
+        {
+            $return['status']=1;
+            $return['err_msg']=$e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
+    function getGroupPlayers(){
+        try{
+            $id = intval($_GET['id']);
+            /** @var rating_model $rating_model */
+            $rating_model=$this->model("rating_model");
+            /** @var group_model $group_model */
+            $group_model=$this->model("group_model");
+            $group_info=$group_model->getGroupInfo($id);
+            if(!$group_info)  throw new Exception("No such group!");
+            $return['group_name'] = $group_info['group_name'];
+            $return['players']=$rating_model->getGroupPlayers($id);
+            $return['status']=0;
+            $this->outputJson($return);
+
+        }catch(Exception $e)
+        {
+            $return['status']=1;
+            $return['err_msg']=$e->getMessage();
+            $this->outputJson($return);
+
+        }
+    }
     function getList()
     {
         try{

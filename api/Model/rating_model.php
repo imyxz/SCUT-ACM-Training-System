@@ -70,4 +70,23 @@ class rating_model extends SlimvcModel{
             "i",
             $rating_id)->row();
     }
+    function getRankByGroup()
+    {
+        return $this->query("select sum(user_rating.rating) as rating,acm_group.group_name as group_name,acm_group.group_id as group_id
+                              from acm_group,acm_player,user_info,user_rating
+                              where user_info.user_id = user_rating.user_id
+                              and acm_player.player_id = user_info.player_id
+                              and acm_group.group_id = acm_player.player_group_id
+                              group by acm_group.group_id
+                              order by rating desc")->all();
+    }
+    function getGroupPlayers($group_id)
+    {
+        return $this->queryStmt("select user_info.user_nickname,user_info.user_avatar,user_rating.*,T.contest_cnt from user_info,user_rating,(select count(*) as contest_cnt,user_id from rating_history where user_id in(select user_info.user_id
+                              from acm_group,acm_player,user_info
+                              where acm_player.player_id = user_info.player_id
+                              and acm_group.group_id = acm_player.player_group_id
+                              and acm_group.group_id = ?) group by user_id) T where user_info.user_id=user_rating.user_id and T.user_id=user_rating.user_id order by rating desc",'i',$group_id)->all();
+    }
+
 }
