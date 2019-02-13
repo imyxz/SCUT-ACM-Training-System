@@ -1,4 +1,5 @@
 <template>
+<div class="router-container">
 <div class="container">
   <share-modal ref="share_modal"></share-modal>
     <div class="card-panel hoverable">
@@ -6,6 +7,7 @@
         <status-table :in-contest="false" :status-info="status_info" @share-code="onShareCode($event)" @unshare-code="onUnShareCode($event)"></status-table>
     </div>
   </div>
+</div>
 </template>
 
 <script>

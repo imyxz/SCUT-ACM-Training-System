@@ -69,5 +69,15 @@ export default {
       getDraftCode: PREFIX + 'onlineIDE/getDraftCode/',
       formatCode: PREFIX + 'onlineIDE/formatCode/'
     }
+  },
+  rating: {
+    getRank: PREFIX + 'ratingAPI/getRank/',
+    getGroupRank: PREFIX + 'ratingAPI/getRankByGroup/',
+    getGroupPlayers: PREFIX + 'ratingAPI/getGroupPlayers/',
+    getList: PREFIX + 'ratingAPI/getList/',
+    getRatingInfo: PREFIX + 'ratingAPI/getRatingInfo/',
+    getUserRatingHistory: PREFIX + 'ratingAPI/getUserRatingHistory/',
+    getContestRatingHistory: PREFIX + 'ratingAPI/getContestRatingHistory/',
+    addNewRating: PREFIX + 'ratingAPI/addNewRating/'
   }
 }

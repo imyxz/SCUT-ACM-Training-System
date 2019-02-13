@@ -4,6 +4,7 @@ import Common404 from '@/components/Common404'
 import UserRoute from './UserRoute'
 import ContestRoute from './ContestRoute'
 import VJudgeRoute from './VJudgeRoute'
+import RatingRoute from './RatingRoute'
 Vue.use(Router)
 
 export default new Router({
@@ -20,6 +21,7 @@ export default new Router({
     UserRoute,
     ContestRoute,
     VJudgeRoute,
+    RatingRoute,
     {
       path: '*',
       name: 'Notice404',

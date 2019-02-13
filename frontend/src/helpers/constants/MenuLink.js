@@ -16,6 +16,10 @@ export default [
     routeName: 'user.bindTeam'
   },
   {
+    title: 'RATING',
+    routeName: 'rating.rank'
+  },
+  {
     title: 'SCUTVJ',
     routeName: 'vjudge.index'
   }

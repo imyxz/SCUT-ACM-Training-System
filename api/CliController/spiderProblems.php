@@ -383,6 +383,7 @@ class spiderProblems extends SlimvcControllerCli
 
         }
     }
+
     function scutse()
     {
         /** @var curlRequest $curl */
@@ -501,18 +502,27 @@ class spiderProblems extends SlimvcControllerCli
         $page_end=intval(self::$cliArg['end']);
         for($page_id=$page_start;$page_id<=$page_end;$page_id++)
         {
+            echo "start page $page_id \n";
             $problem_list=array();
             while(!($html=$curl->get("http://www.51nod.com/ajax?n=/onlineJudge/problemList.html&v=&c=fastCSharp.IndexPool.Get%284%2C1%29.CallBack&j=%7B%22groupId%22%3A%22-1%22%2C%22isAsc%22%3A1%2C%22page%22%3A". $page_id ."%7D&t=1501771361223",10)))
             {
                 echo "Retry $page_id\n";
                 sleep(1);
             }
-            $html=$this->getSubStr($html,"problems:",".FormatView()",0);
-            $html=iconv("gb2312","UTF-8//IGNORE",$html);
+            $html=$this->getSubStr($html,"Problems:",".FormatView()",0,false);
 
             $html=$this->jsonFormatHex($html);
+            //$html=iconv("gb2312","UTF-8//IGNORE",$html);
+            $html=mb_convert_encoding($html,"UTF-8","gb2312");
+            /** @var Services_JSON $json_service */
+            $json_service = $this->newClass("JSON",'Services_JSON');
+            $json= $json_service->decode($html);
 
-            $json=json_decode($html);
+            if(!$json)
+            {
+                echo 'decode error';
+                exit();
+            }
             unset($json[0]);
             foreach($json as &$one)
             {
@@ -544,15 +554,15 @@ class spiderProblems extends SlimvcControllerCli
                     sleep(1);
                 }
 
-                $json1=$this->getSubStr($html,"diantou.problem.Get(",",Remote:{",0) . "}";
+                $json1=$this->getSubStr($html,"diantou.problem.Get(",",Remote:{",0,false) . "}";
                 $json1=iconv("gb2312","UTF-8//IGNORE",$json1);
                 $json1=str_replace('\n',"<br />",$json1);
-                $problem_info->description=$this->getSubStr($json1,'Description:"','",',0);
+                $problem_info->description=$this->getSubStr($json1,'Description:"','",',0,false);
 
-                $problem_info->input= $this->getSubStr($json1,'InputDescription:"','",',0) ;
-                $problem_info->output= $this->getSubStr($json1,'OutputDescription:"','",',0) ;
-                $problem_info->examples[0]->example_input=$this->getSubStr($json1,'Input:"','",',0);
-                $problem_info->examples[0]->example_output=$this->getSubStr($json1,'Output:"','",',0);
+                $problem_info->input= $this->getSubStr($json1,'InputDescription:"','",',0,false) ;
+                $problem_info->output= $this->getSubStr($json1,'OutputDescription:"','",',0,false) ;
+                $problem_info->examples[0]->example_input=$this->getSubStr($json1,'Input:"','",',0,false);
+                $problem_info->examples[0]->example_output=$this->getSubStr($json1,'Output:"','",',0,false);
                 /*
                 $problem_info->input=$this->filter($problem_info->input,"http://www.51nod.com/",array());
                 $problem_info->output=$this->filter($problem_info->output,"http://www.51nod.com/",array());
@@ -569,9 +579,9 @@ class spiderProblems extends SlimvcControllerCli
                 $id=$this->model("vj_problem_model")->insertProblem(4,$problem_id,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
 
 
-                $tag=$this->getSubStr($html,'diantou.problemGroup.Get(','),',0);
+                $tag=$this->getSubStr($html,'diantou.problemGroup.Get(','),',0,false);
                 $tag=iconv("gb2312","UTF-8//IGNORE",$tag);
-                $tag=$this->getSubStr($tag,'Name:"','"',0);
+                $tag=$this->getSubStr($tag,'Name:"','"',0,false);
                 if(!empty($tag))
                     $all_tags[$tag]=0;
                 foreach($all_tags as $key=>&$one)
@@ -1002,6 +1012,47 @@ class spiderProblems extends SlimvcControllerCli
 
         }
     }
+    function uva()
+    {
+        /** @var curlRequest $curl */
+        $curl=$this->newClass("curlRequest");
+        $curl->setHeader("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
+        $curl->setHeader("Referer: https://uva.onlinejudge.org/");
+        $curl->setHeader("Origin: https://uva.onlinejudge.org/");
+        $curl->setHeader("Upgrade-Insecure-Requests: 1");
+        $curl->setHeader("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+        $curl->setFollowRedirect(true);
+        $problem_start_id=intval(self::$cliArg['start']);
+        $problem_end_id=intval(self::$cliArg['end']);
+        for($problem_id=$problem_start_id;$problem_id<=$problem_end_id;$problem_id++)
+        {
+            $problem_list=array();
+            while(!($html=$curl->get("https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=$problem_id",10)))
+            {
+                echo "Retry $problem_id\n";
+                sleep(1);
+            }
+            if(strpos($html,"Download as PDF")===false)
+            {
+                echo "Empty $problem_id\n";
+                continue;
+            }
+            $content_start=strpos($html,"<!-- #col3: Main Content -->");
+            $pdf_url='https://uva.onlinejudge.org/external' . $this->getSubStr($html,'<a href="external','">',$content_start);
+            $problem_desc='<div id="pdf-div" data-pdf-url="' . str_replace('"',"\\\"",$pdf_url)  . '"></div>';
+
+            $compiler='{"1":"ANSI C 5.3.0 - GNU C Compiler with options: -lm -lcrypt -O2 -pipe -ansi -DONLINE_JUDGE","2":"JAVA 1.8.0 - OpenJDK Java","3":"C++ 5.3.0 - GNU C++ Compiler with options: -lm -lcrypt -O2 -pipe -DONLINE_JUDGE","4":"PASCAL 3.0.0 - Free Pascal Compiler","5":"C++11 5.3.0 - GNU C++ Compiler with options: -lm -lcrypt -O2 -std=c++11 -pipe -DONLINE_JUDGE","6":"PYTH3 3.5.1 - Python 3"}';
+            $problem_title=trim($this->getSubStr($html,' - ',"</h3>",$content_start));
+            $time_limit=doubleval($this->getSubStr($html,"Time limit: "," seconds",$content_start))*1000;
+            $real_problem_id=intval($this->getSubStr($html,'<h3>',' - ',$content_start));
+            $memory_limit=0;
+
+            $problem_url="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=$problem_id";
+            $this->model("vj_problem_model")->insertProblem(10,$real_problem_id,$problem_title,$problem_desc,$problem_url,$time_limit,$memory_limit,$compiler);
+            echo "Done $problem_id\n";
+
+        }
+    }
     function importCodeForcesTags()
     {
 
@@ -1084,11 +1135,17 @@ class spiderProblems extends SlimvcControllerCli
         });
         return strval($dom);
     }
-    protected function getSubStr($str,$needle1,$needle2,$start_pos)
+    protected function getSubStr($str,$needle1,$needle2,$start_pos,$case_sensitive = true)
     {
-        $pos1=strpos($str,$needle1,$start_pos);
+        if($case_sensitive)
+            $pos1=strpos($str,$needle1,$start_pos);
+        else
+            $pos1=stripos($str,$needle1,$start_pos);
         if($pos1===false) return false;
-        $pos2=strpos($str,$needle2,$pos1+strlen($needle1));
+        if($case_sensitive)
+            $pos2=strpos($str,$needle2,$pos1+strlen($needle1));
+        else
+            $pos2=stripos($str,$needle2,$pos1+strlen($needle1));
         if($pos2===false)   return false;
         return substr($str,$pos1+strlen($needle1),$pos2-$pos1-strlen($needle1));
     }
@@ -1099,24 +1156,24 @@ class spiderProblems extends SlimvcControllerCli
             $tmp=$this->getSubStr($html,",0x",",",0);
             if($tmp===false)
                 break;
-            $tmp='0x' . $tmp;
-            $html=str_replace($tmp,'"' . $tmp . '"',$html);
+            $tmp='0x' . $tmp ;
+            $html=str_replace($tmp . ',','"' . $tmp . '",',$html);
         }
         while(true)
         {
             $tmp=$this->getSubStr($html,"[0x",",",0);
             if($tmp===false)
                 break;
-            $tmp='0x' . $tmp;
-            $html=str_replace($tmp,'"' . $tmp . '"',$html);
+            $tmp='0x' . $tmp ;
+            $html=str_replace($tmp . ',','"' . $tmp . '",',$html);
         }
         while(true)
         {
             $tmp=$this->getSubStr($html,":0x",",",0);
             if($tmp===false)
                 break;
-            $tmp='0x' . $tmp;
-            $html=str_replace($tmp,'"' . $tmp . '"',$html);
+            $tmp='0x' . $tmp ;
+            $html=str_replace($tmp . ',','"' . $tmp . '",',$html);
         }
         return $html;
     }

@@ -1,7 +1,9 @@
 <template>
   <div>
     <common-sub-header :menus="menus"></common-sub-header>
-    <router-view/>
+    <transition enter-active-class="animated fadeIn delay-3" leave-active-class="animated fadeOut delay-3">
+      <router-view />
+    </transition>
   </div>
 </template>
 
@@ -30,5 +32,16 @@ export default {
 </script>
 
 <style>
-
+.delay-1 {
+animation-duration: .25s;
+}
+.delay-2 {
+animation-duration: .5s;
+}
+.delay-3 {
+animation-duration: .75s;
+}
+.delay-4 {
+animation-duration: 1s;
+}
 </style>

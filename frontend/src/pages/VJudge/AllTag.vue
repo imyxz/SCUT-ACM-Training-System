@@ -1,10 +1,12 @@
 <template>
+<div class="router-container">
 <div class="container">
 <div class="card-panel hoverable over-flow-auto">
     <tag-table ref="tag_table" :tag-list="tag_list" :cur-tag-name="tag_name"></tag-table>
     <page-indicator ref="page_indicator" :cur-page="page" :max-page="100" ></page-indicator>
     <problem-table :problem-list="problem_list"></problem-table>
   </div>
+</div>
 </div>
 </template>
 

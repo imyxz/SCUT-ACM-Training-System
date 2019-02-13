@@ -33,11 +33,6 @@ class Spider51nod extends SpiderBasic
         $language='{"1":"C","2":"C 11","11":"C++","12":"C++ 11","21":"C#","31":"Java","41":"Python2","42":"Python3","45":"PyPy2","46":"PyPy3","51":"Ruby","61":"PHP","71":"Haskell","81":"Scala","91":"Javascript","101":"Go","111":"Visual C++","121":"Objective-C","131":"Pascal"}';
         $compiler='{"1":"C","2":"C11","11":"CPlus","12":"CPlus11","21":"CSharp","31":"Java","41":"Python2","42":"Python3","45":"PyPy2","46":"PyPy3","51":"Ruby","61":"Php","71":"Haskell","81":"Scala","91":"Javascript","101":"Go","111":"VCPlus","121":"OC","131":"Pascal"}';
         $compiler=json_decode($compiler,true);
-        $request=array();
-        $request['value']=array("IsPublic"=>1,
-            "Language"=>$compiler[$compiler_id],
-            "ProblemId"=>intval($problem_id),
-            "ProgramContent"=>$source_code);
         $request=json_encode($request);
         $curl->get("http://www.51nod.com/ajax?n=/onlineJudge/questionCode.html&c=fastCSharp.Pub.AjaxCallBack&j=%7B%22problemId%22%3A%22". $problem_id ."%22%7D");
         $html=$curl->post("http://www.51nod.com/ajax?n=judge.Append&c=fastCSharp.IndexPool.Get%281%2C1%29.CallBack",$request,10);
@@ -92,21 +87,15 @@ class Spider51nod extends SpiderBasic
                 if($start_pos===false)
                     continue;
             }
-            $result=new jobResult();
-            $acStatus=new acStatus();
+
             $IsFinished=$this->getSubStr($html,"IsFinished:",",",$start_pos);
             $JudgeValue=$this->getSubStr($html,'JudgeValue:"','",',$start_pos);
             $MemoryUse=$this->getSubStr($html,"MemoryUse:",",",$start_pos);
             $TestCount=$this->getSubStr($html,"TestCount:",",",$start_pos);
             $TimeUse=$this->getSubStr($html,"TimeUse:",",",$start_pos);
-            $pos2=strpos($html,'diantou.JudgeItem',$start_pos);
-            $items=$this->getSubStr($html,'[','].FormatView()',$pos2);
-            $items = '[[' . $items . ']';
-            $items=$this->jsonFormatHex($items);
 
-            $result->result_info=$items;
-            $items=json_decode($items,true);
-
+            $result=new jobResult();
+            $acStatus=new acStatus();
 
             if(strpos($MemoryUse,"0x")!==false)
             {
@@ -163,23 +152,7 @@ class Spider51nod extends SpiderBasic
                         break;
                 }
                 if($result->ac_status!=$acStatus->OK)
-                {
-                    $finded=false;
-                    for($item = 0;$item<count($items);$item++)
-                    {
-                        if($items[$item][3][2]!='Accepted')
-                        {
-                            $result->wrong_info=$result->wrong_info . ' on Case #' . ($item +1);
-                            $finded =true;
-                            break;
-                        }
-                    }
-                    if(!$finded)
-                    {
-                        $result->wrong_info=$result->wrong_info . ' on Case UNKNOWN';
-                    }
-                }
-
+                    $result->wrong_info=$result->wrong_info . ' on Case #' . $TestCount;
 
 
             }
@@ -259,33 +232,5 @@ class Spider51nod extends SpiderBasic
             $ret= $ret . substr($str,rand(0,strlen($str)-1),1);
         }
         return $ret;
-    }
-    protected function jsonFormatHex($html)
-    {
-        while(true)
-        {
-            $tmp=$this->getSubStr($html,",0x",",",0);
-            if($tmp===false)
-                break;
-            $tmp='0x' . $tmp ;
-            $html=str_replace($tmp . ',','"' . $tmp . '",',$html);
-        }
-        while(true)
-        {
-            $tmp=$this->getSubStr($html,"[0x",",",0);
-            if($tmp===false)
-                break;
-            $tmp='0x' . $tmp ;
-            $html=str_replace($tmp . ',','"' . $tmp . '",',$html);
-        }
-        while(true)
-        {
-            $tmp=$this->getSubStr($html,":0x",",",0);
-            if($tmp===false)
-                break;
-            $tmp='0x' . $tmp ;
-            $html=str_replace($tmp . ',','"' . $tmp . '",',$html);
-        }
-        return $html;
     }
 }

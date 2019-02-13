@@ -8,6 +8,17 @@ class curlRequest{
     private $proxy_enable=false;
     private $proxy_address="";
     private $proxy_port=0;
+    private $cookie_filename="";
+    private $follow_redirect=false;
+    private $cur_url="";
+    public function getCurUrl()
+    {
+        return $this->cur_url;
+    }
+    public function setFollowRedirect($bool)
+    {
+        $this->follow_redirect=$bool;
+    }
     public function setCookie($arr)
     {
         $this->cookie='';
@@ -31,6 +42,32 @@ class curlRequest{
         $this->proxy_enable=true;
         $this->proxy_address=$address;
         $this->proxy_port=$port;
+    }
+    private function _before(&$ch)
+    {
+        if($this->proxy_enable)
+        {
+            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxy_address . ':' . $this->proxy_port); //代理服务器地址
+        }
+        curl_setopt($ch,CURLOPT_COOKIE,$this->cookie);
+        if(!empty($this->header))
+            curl_setopt($ch,CURLOPT_HTTPHEADER,$this->header);
+        $this->cookie_filename=tempnam(sys_get_temp_dir(),"scutvj");
+        curl_setopt($ch,CURLOPT_COOKIEJAR,$this->cookie_filename);
+        if($this->follow_redirect)
+        {
+            curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
+        }
+        $this->response_code=0;
+    }
+    private function _after(&$ch)
+    {
+        $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
+        $this->cur_url=curl_getinfo($ch,CURLINFO_EFFECTIVE_URL);
+        curl_close($ch);
+        $this->response_cookie=$this->processCookieJar(file_get_contents($this->cookie_filename));
+        unlink($this->cookie_filename);//only close the connection could we get cookie
     }
     public function post($url, $post,$timeout=10)
     {
@@ -60,32 +97,49 @@ class curlRequest{
         );
 
         $ch = curl_init();
-        //curl_setopt ($ch, CURLOPT_PROXY, "127.0.0.1:8888");
+        $this->_before($ch);
+
         curl_setopt_array($ch, ( $defaults));
-        if($this->proxy_enable)
-        {
-            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
-            curl_setopt($ch, CURLOPT_PROXY, $this->proxy_address . ':' . $this->proxy_port); //代理服务器地址
-        }
-        curl_setopt($ch,CURLOPT_COOKIE,$this->cookie);
-        if(!empty($this->header))
-            curl_setopt($ch,CURLOPT_HTTPHEADER,$this->header);
-        $cookie_filename=tempnam(sys_get_temp_dir(),"scutvj");
-        curl_setopt($ch,CURLOPT_COOKIEJAR,$cookie_filename);
-        $this->response_code=0;
+
         $result = curl_exec($ch);
         $this->response=$result;
-        $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
         $error=curl_error($ch);
-        curl_close($ch);
-        $this->response_cookie=$this->processCookieJar(file_get_contents($cookie_filename));
-        unlink($cookie_filename);
+        $this->_after($ch);
         if( ! $result)
         {
             echo $error;
             return false;
         }
+        return $result;
+    }
+    public function postFromData($url, $formData,$timeout=10)
+    {
 
+        $defaults = array(
+            CURLOPT_HEADER => 0,
+            CURLOPT_URL => $url,
+            CURLOPT_FRESH_CONNECT => 1,
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_FORBID_REUSE => 1,
+            CURLOPT_TIMEOUT => $timeout,
+            CURLOPT_POSTFIELDS =>$formData,
+            CURLOPT_SAFE_UPLOAD => true
+        );
+
+        $ch = curl_init();
+        $this->_before($ch);
+
+        curl_setopt_array($ch, ( $defaults));
+
+        $result = curl_exec($ch);
+        $this->response=$result;
+        $error=curl_error($ch);
+        $this->_after($ch);
+        if( ! $result)
+        {
+            echo $error;
+            return false;
+        }
         return $result;
     }
     public function get($url,$timeout=10)
@@ -100,28 +154,13 @@ class curlRequest{
         );
         $timeout=120;
         $ch = curl_init();
+        $this->_before($ch);
         curl_setopt_array($ch, ( $defaults));
-        if($this->proxy_enable)
-        {
-            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
-            curl_setopt($ch, CURLOPT_PROXY, $this->proxy_address . ':' . $this->proxy_port); //代理服务器地址
 
-        }
-        curl_setopt($ch,CURLOPT_COOKIE,$this->cookie);
-        $this->response_code=0;
-
-        if(!empty($this->header))
-            curl_setopt($ch,CURLOPT_HTTPHEADER,$this->header);
-        $cookie_filename=tempnam(sys_get_temp_dir(),"scutvj");
-        curl_setopt($ch,CURLOPT_COOKIEJAR,$cookie_filename);
-        $this->response_code=0;
         $result = curl_exec($ch);
         $this->response=$result;
-        $this->response_code=curl_getinfo($ch,CURLINFO_HTTP_CODE );
         $error=curl_error($ch);
-        curl_close($ch);
-        $this->response_cookie=$this->processCookieJar(file_get_contents($cookie_filename));
-        unlink($cookie_filename);
+        $this->_after($ch);
 
         if( ! $result)
         {
@@ -174,5 +213,14 @@ class curlRequest{
                 $ret[trim($three[0])]=trim($three[1]);
         }
         return $ret;
+    }
+    public function mergeCookieRaw($target,$from)
+    {
+        $arr1=$this->cookieStr2Arr($target);
+        $arr2=$this->cookieStr2Arr($from);
+        foreach($arr2 as $key=>&$one){
+            $arr1[$key]=$one;
+        }
+        return $this->cookieArr2Str($arr1);
     }
 }

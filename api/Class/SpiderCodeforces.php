@@ -112,7 +112,7 @@ class SpiderCodeforces extends SpiderBasic
     function queryJob()
     {
         $curl=new curlRequest();
-        $curl->setProxy("127.0.0.1",60010);
+        //$curl->setProxy("127.0.0.1",60010);
         $this->query_job_info=array();
         $username=$this->spider_info['oj_username'];
         $html=$curl->get("http://codeforces.com/api/user.status?handle=$username&from=1&count=20",10);
@@ -200,7 +200,7 @@ class SpiderCodeforces extends SpiderBasic
     function checkLogin()
     {
         $curl=new curlRequest();
-        $curl->setProxy("127.0.0.1",60010);
+        //$curl->setProxy("127.0.0.1",60010);
         $curl->setCookieRaw($this->additionInfo['cookie']);
         $html=$curl->get("http://codeforces.com/",20);
         if(strpos($html,'<a href="/register">')!==false || $curl->getResponseCode()=='302')
@@ -211,7 +211,7 @@ class SpiderCodeforces extends SpiderBasic
     function login()
     {
         $curl=new curlRequest();
-        $curl->setProxy("127.0.0.1",60010);
+        //$curl->setProxy("127.0.0.1",60010);
         $curl->setHeader("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36");
         $curl->setHeader("Referer: http://codeforces.com/enter");
         $curl->setHeader("Origin: http://codeforces.com");

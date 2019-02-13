@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="router-container">
     <div class="row">
       <div class="col l3 s12">
         <div class="card-panel ">

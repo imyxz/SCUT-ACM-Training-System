@@ -16,6 +16,7 @@
 
 <script>
 import { ramFilter, timeFilter } from '@/helpers/common'
+import $ from 'jquery'
 export default {
   name: 'ProblemInfo',
   props: ['problem_title', 'problem_desc', 'memory_limit', 'time_limit', 'problem_url', 'problem_id', 'problem_identity', 'oj_id', 'oj_name'],
@@ -56,6 +57,12 @@ export default {
         document.getElementById('problem_desc').innerHTML = this.problem_desc
         // eslint-disable-next-line
         MathJax.Hub.Queue(['Typeset', MathJax.Hub, document.getElementById('problem_desc')])
+        if ($('#pdf-div').length > 0) {
+          let target = $('#pdf-div').data('pdf-url')
+          target = target.substr(0, 4) === 'http' ? target : '/' + target
+          // eslint-disable-next-line
+          PDFObject.embed(target, '#pdf-div', { width: '100%', height: $(window).height() + 'px' })
+        }
       })
     }
   }
